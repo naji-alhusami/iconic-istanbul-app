@@ -22,7 +22,7 @@ const Centers = () => {
   const healthCenters = center;
 
   const [isListed, setIsListed] = useState(healthCenters.map(() => true));
-  
+
   const handleCheckboxChange = (event, index) => {
     const newList = [...isListed];
     newList[index] = event.target.checked;
@@ -98,12 +98,24 @@ const Centers = () => {
             <label htmlFor="category" className="block font-medium mb-2">
               Category
             </label>
-            <input
+            {/* <input
               type="text"
               name="category"
               placeholder="Enter category"
               className="border border-gray-300 rounded-md py-2 px-3 w-full"
-            />
+            /> */}
+            <select
+              name="category"
+              className="border border-gray-300 rounded-md py-2 px-3 w-full"
+            >
+              <option value="">-- Select a category --</option>
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="C">C</option>
+              <option value="D">D</option>
+              <option value="E">E</option>
+              <option value="F">F</option>
+            </select>
           </div>
           <button
             type="submit"
