@@ -4,7 +4,7 @@ import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import Login from "./components/Login/Login";
 import Home from "./components/Home/Home";
-import Centers from "./components/Centers/Centers";
+import CentersTable from "./components/AddCenter/CentersTable";
 import Singup from "./components/Signup/Signup";
 import Thanks from "./components/Thanks/Thanks";
 import RequireAuth from "./components/RequireAuth/RequireAuth";
@@ -39,7 +39,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />
         <Route element={<RequireAuth />}>
-          <Route path="/centers" element={<Centers />} />
+          <Route path="/addcenter" element={<CentersTable />} />
         </Route>
         <Route path="/signup" element={<Singup />} />
         <Route path="/thanks" element={<Thanks />} />

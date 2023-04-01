@@ -146,7 +146,7 @@ const Navbar = () => {
                             <div className="flex relative peer-hover:flex hover:flex w-[100px] flex-col bg-white drop-shadow-lg">
                               <Link
                                 className="p-2 pl-5 text-black hover:bg-cyan-400 hover:text-white"
-                                to="/centers"
+                                to="/addcenter"
                                 onClick={() => {
                                   setShowNavbarInResponsive(
                                     !showNavbarInResponsive
@@ -215,7 +215,7 @@ const Navbar = () => {
                   <div className="hidden absolute peer-hover:flex hover:flex w-[100px] flex-col bg-white drop-shadow-lg">
                     <Link
                       className="p-2 pl-6 text-black hover:bg-cyan-500 hover:text-white"
-                      to="/centers"
+                      to="/addcenter"
                     >
                       Centers
                     </Link>
