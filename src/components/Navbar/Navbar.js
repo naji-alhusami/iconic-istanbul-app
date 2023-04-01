@@ -1,12 +1,16 @@
 import React, { useState } from "react";
+
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { AiFillCaretDown } from "react-icons/ai";
+
 import { logoutUser } from "../../features/users/usersSlice";
+
 import HERA from "../Images/HERA.jpg";
 
 const Navbar = () => {
   const userLogin = useSelector((state) => state.users);
+  console.log(userLogin);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showNavbarInResponsive, setShowNavbarInResponsive] = useState(false);
@@ -94,7 +98,7 @@ const Navbar = () => {
                 <li>
                   <Link
                     className="w-fit p-2 hover:text-white hover:bg-cyan-400 hover:rounded-md"
-                    to="/centers"
+                    to="/healthcenters"
                     onClick={() => {
                       setShowNavbarInResponsive(!showNavbarInResponsive);
                     }}
@@ -182,7 +186,7 @@ const Navbar = () => {
             </Link>
 
             <Link
-              to="/contactus"
+              to="/healthcenters"
               className=" p-2 hover:text-white hover:bg-cyan-400 hover:rounded-md"
             >
               <li>Health Centers</li>

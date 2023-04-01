@@ -1,21 +1,21 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 // import axios from 'axios';
 
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithPopup,
-  // updatePassword,
-  // deleteUser,
   sendEmailVerification,
   signOut,
-} from 'firebase/auth';
+  getAuth,
+  onAuthStateChanged,
+} from "firebase/auth";
 import {
   doc,
   setDoc,
   getDoc,
   // deleteDoc
-} from 'firebase/firestore';
+} from "firebase/firestore";
 
 // import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import {
@@ -23,11 +23,11 @@ import {
   auth,
   googleAuth,
   // storage,
-} from '../../firebase-config';
+} from "../../firebase-config";
 
 // start of signup:
 export const signupUser = createAsyncThunk(
-  'user/signupUser',
+  "user/signupUser",
   async (payload, { rejectWithValue }) => {
     const { email, password, birthdayDay, birthdayMonth, birthdayYear } =
       payload;
@@ -40,7 +40,7 @@ export const signupUser = createAsyncThunk(
       );
       await sendEmailVerification(auth.currentUser);
 
-      const docRef = doc(db, 'users', user.uid);
+      const docRef = doc(db, "users", user.uid);
       await setDoc(docRef, {
         id: user.uid,
         email,
@@ -59,16 +59,16 @@ export const signupUser = createAsyncThunk(
 
 // Start of Login:
 export const loginUser = createAsyncThunk(
-  'user/loginUser',
+  "user/loginUser",
   async (payload, { rejectWithValue }) => {
     const { email, password } = payload;
     try {
       const { user } = await signInWithEmailAndPassword(auth, email, password);
       if (user.emailVerified === false) {
-        return { error: 'Email is Not Verified' };
+        return { error: "Email is Not Verified" };
       }
-      console.log('inside login');
-      const docRef = doc(db, 'users', user.uid);
+      console.log("inside login");
+      const docRef = doc(db, "users", user.uid);
       const docSnap = await getDoc(docRef);
 
       return docSnap.data();
@@ -81,12 +81,12 @@ export const loginUser = createAsyncThunk(
 
 // Sign in with Google:
 export const loginUserWithGoogle = createAsyncThunk(
-  'user/loginUserWithGoogle',
+  "user/loginUserWithGoogle",
   async ({ rejectWithValue }) => {
     try {
       const { user } = await signInWithPopup(auth, googleAuth);
       console.log(user);
-      const docRef = doc(db, 'users', user.uid);
+      const docRef = doc(db, "users", user.uid);
       await setDoc(docRef, {
         id: user.uid,
         email: user.email,
@@ -102,9 +102,9 @@ export const loginUserWithGoogle = createAsyncThunk(
 
 // Start of Logout User:
 export const logoutUser = createAsyncThunk(
-  'user/logoutUser',
+  "user/logoutUser",
   async (_, { rejectWithValue }) => {
-    console.log('inside logout');
+    console.log("inside logout");
     try {
       await signOut(auth);
       return {};
@@ -115,38 +115,38 @@ export const logoutUser = createAsyncThunk(
 );
 // End of Logout User:
 
-// Start of addHealthCenter:
-// export const addHealthCenter = createAsyncThunk(
-//   'user/addMarker',
-//   async (playload, { rejectWithValue }) => {
-//     try {
-//       const { name, address, category } = playload;
-//       await axios
-//         .get(
-//           `https://nominatim.openstreetmap.org/search?q=${address}&format=json`
-//         )
-//         .then((response) => response.data[0]);
-//       // const data = await response.json();
-//       // const { lat, lon } = data[0];
-//       // console.log(lat, lon);
-//       // const newHealthCenter = { name, address, category, lat, lon };
-//       // setHealthCenters([...healthCenters, newHealthCenter]);
-//       return { name, address, category };
-//     } catch (error) {
-//       return rejectWithValue(error.message);
-//     }
-//   }
-// );
-// End of Add Marker.
-
+export const loadUser = createAsyncThunk(
+  "user/loadUser",
+  async (id, { rejectWithValue }) => {
+    // const auth = await getAuth();
+    // const user = auth.currentUser;
+    //  onAuthStateChanged(auth, (user) => {
+    //   if (user) {
+    //     return user.uid;
+    //   } else {
+    //     return null;
+    //   }
+    // });
+    console.log(id);
+    try {
+      console.log("inside login");
+      const docRef = doc(db, "users", id);
+      const docSnap = await getDoc(docRef);
+      return docSnap.data();
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+// End of signup
 
 const usersSlice = createSlice({
-  name: 'users',
+  name: "users",
   initialState: {
     loading: false,
     user: {},
-    marker: {},
     error: null,
+    userlogin: false,
   },
 
   extraReducers: (builder) => {
@@ -155,7 +155,7 @@ const usersSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(signupUser.fulfilled, (state, action) => {
-      console.log('naji');
+      console.log("naji");
       state.loading = false;
       state.user = action.payload;
       state.signedup = true;
@@ -203,22 +203,6 @@ const usersSlice = createSlice({
       state.error = action.payload;
     });
 
-    // Add Marker to the Map cases:
-    // builder.addCase(addHealthCenter.pending, (state) => {
-    //   state.loading = true;
-    // });
-    // builder.addCase(addHealthCenter.fulfilled, (state, action) => {
-    //   console.log(action.payload);
-    //   state.loading = false;
-    //   state.marker = action.payload;
-    //   state.error = null;
-    // });
-    // builder.addCase(addHealthCenter.rejected, (state, action) => {
-    //   state.loading = false;
-    //   state.marker = {};
-    //   state.error = action.payload;
-    // });
-
     // Logout Cases:
     builder.addCase(logoutUser.pending, (state) => {
       state.loading = true;
@@ -234,6 +218,30 @@ const usersSlice = createSlice({
       state.loading = false;
       state.user = {};
       state.error = action.payload;
+    });
+
+    // load user Cases:
+    builder.addCase(loadUser.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(loadUser.fulfilled, (state, action) => {
+      state.loading = false;
+      if (action.payload.error) {
+        console.log(action.payload);
+        state.user = null;
+        state.userlogin = false;
+        state.error = action.payload.error;
+      } else {
+        state.user = action.payload;
+        state.userlogin = true;
+        state.error = null;
+      }
+    });
+    builder.addCase(loadUser.rejected, (state, action) => {
+      state.loading = false;
+      state.user = {};
+      state.error = action.payload;
+      console.log(action.payload);
     });
   },
 });

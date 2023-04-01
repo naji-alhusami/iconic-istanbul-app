@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+
 import { loginUser } from "../../features/users/usersSlice";
 import LoginWithGoogle from "./LoginWithGoogle";
 
-const FormCard = () => {
+const LoginWithUser = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -13,15 +15,6 @@ const FormCard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // const navigate = useNavigate();
-
-  // const loginNavigate = (event) => {
-  //   event.preventDefault();
-  //   if (userLogin.userlogin) {
-  //     navigate('/');
-  //   }
-  // };
-
   const handleSubmit = (event) => {
     event.preventDefault();
     dispatch(loginUser({ email, password }));
@@ -29,16 +22,12 @@ const FormCard = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setError("Please Enter Valid Email");
-      return;
-    }
-
-    if (userLogin.error) {
+    } else if (userLogin.error) {
       setError(userLogin.error);
     } else {
       setError("");
+      navigate("/");
     }
-
-    navigate('/')
   };
 
   return (
@@ -87,4 +76,4 @@ const FormCard = () => {
   );
 };
 
-export default FormCard;
+export default LoginWithUser;

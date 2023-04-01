@@ -1,7 +1,10 @@
 import React from 'react';
+
 import { useDispatch } from 'react-redux';
-import GoogleLogo from '../Images/GoogleLogo.svg';
+
 import { loginUserWithGoogle } from '../../features/users/usersSlice';
+
+import GoogleLogo from '../Images/GoogleLogo.svg';
 
 const LoginWithGoogle = () => {
   const dispatch = useDispatch();

@@ -1,29 +1,18 @@
-import React, {
-  // useState
-  useEffect,
-} from "react";
+import React from "react";
+
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-// import { Alert } from '@mui/material';
+
 import {
   signupUser,
-  //   loginUserWithFacebook,
   //   loginUserWithGoogle,
 } from "../../features/users/usersSlice";
-// import facebookicon from '../Images/FacebookLogo.svg';
+
 import googleicon from "../Images/GoogleLogo.svg";
-// import signupImage from '../Images/Singup.svg';
-// import Line from '../Images/Line.svg';
 import BackgroundImage from "../Images/BackgroundImage.jpg";
 
 const Singup = () => {
-  // const userInfo = useSelector((state) => state.users);
-  const { signedup } = useSelector((state) => state.users);
-
-  // const [enteredInput, setEnteredInput] = useState(true);
-  // const [alertitem, showalertitm] = useState(false);
-  // const [error, setError] = useState('');
   const {
     register,
     handleSubmit,

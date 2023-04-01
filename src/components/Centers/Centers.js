@@ -1,19 +1,33 @@
-import React, { useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-// import { useDispatch, useSelector } from 'react-redux';
-import L from 'leaflet';
-// import { addHealthCenter } from '../../features/users/usersSlice';
-import markerIconx from '../Images/marker-icon.png';
-import markerIcon2x from '../Images/marker-icon-2x.png';
-import 'leaflet/dist/leaflet.css';
-import './Centers.css';
+import React, { useEffect } from "react";
+
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import L from "leaflet";
+import { useDispatch, useSelector } from "react-redux";
+
+import {
+  addHealthCenter,
+  getCenters,
+  deleteCenter,
+} from "../../features/healthCenters/healthCentersSlice";
+import "leaflet/dist/leaflet.css";
+import "./Centers.css";
+
+import markerIconx from "../Images/marker-icon.png";
+import markerIcon2x from "../Images/marker-icon-2x.png";
 
 const Centers = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const { center, loading } = useSelector((state) => state.center);
+  console.log(center);
+  const healthCenters = center;
 
-  // const marker = useSelector((state) => state.users.marker);
-  // console.log(marker);
-  const [healthCenters, setHealthCenters] = useState([]);
+  useEffect(() => {
+    const getData = () => {
+      dispatch(getCenters());
+    };
+
+    getData();
+  }, [dispatch]);
 
   const markerIcon = new L.Icon({
     iconUrl: markerIconx,
@@ -23,44 +37,27 @@ const Centers = () => {
     popupAnchor: [0, -41],
   });
 
-  const addHealthCenter = async (name, address, category) => {
-    try {
-      const response = await fetch(
-        `https://nominatim.openstreetmap.org/search?q=${address}&format=json`
-      );
-      const data = await response.json();
-      const { lat, lon } = data[0];
-      console.log(lat);
-      const newHealthCenter = { name, address, category, lat, lon };
-      setHealthCenters([...healthCenters, newHealthCenter]);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const handleAddressSubmit = (event) => {
     event.preventDefault();
     const name = event.target.elements.name.value;
     const address = event.target.elements.address.value;
     const category = event.target.elements.category.value;
-    addHealthCenter(name, address, category);
     console.log(name, address, category);
-    // const newHealthCenter = { name, address, category };
-    // setHealthCenters([...healthCenters, newHealthCenter]);
+    dispatch(addHealthCenter({ name, address, category }));
     event.target.reset();
-    // console.log(healthCenters);
   };
 
   const deleteHealthCenter = (index) => {
-    const newHealthCenters = [...healthCenters];
-    newHealthCenters.splice(index, 1);
-    setHealthCenters(newHealthCenters);
+    dispatch(deleteCenter(index));
   };
 
+  if (loading) {
+    return "loading...";
+  }
+
+  console.log(healthCenters);
   return (
-    <div
-      className="container"
-    >
+    <div className="container">
       <div className=" box">
         <form
           onSubmit={handleAddressSubmit}
@@ -131,13 +128,13 @@ const Centers = () => {
                     type="text"
                     className="w-full"
                     value={healthCenter.name}
-                    onChange={(e) =>
-                      setHealthCenters([
-                        ...healthCenters.slice(0, index),
-                        { ...healthCenter, name: e.target.value },
-                        ...healthCenters.slice(index + 1),
-                      ])
-                    }
+                    // onChange={(e) =>
+                    //   setHealthCenters([
+                    //     ...healthCenters.slice(0, index),
+                    //     { ...healthCenter, name: e.target.value },
+                    //     ...healthCenters.slice(index + 1),
+                    //   ])
+                    // }
                     readOnly
                   />
                 </td>
@@ -146,13 +143,13 @@ const Centers = () => {
                     type="text"
                     className="w-full"
                     value={healthCenter.address}
-                    onChange={(e) =>
-                      setHealthCenters([
-                        ...healthCenters.slice(0, index),
-                        { ...healthCenter, address: e.target.value },
-                        ...healthCenters.slice(index + 1),
-                      ])
-                    }
+                    // onChange={(e) =>
+                    //   setHealthCenters([
+                    //     ...healthCenters.slice(0, index),
+                    //     { ...healthCenter, address: e.target.value },
+                    //     ...healthCenters.slice(index + 1),
+                    //   ])
+                    // }
                     readOnly
                   />
                 </td>
@@ -161,13 +158,13 @@ const Centers = () => {
                     type="text"
                     className="w-full"
                     value={healthCenter.category}
-                    onChange={(e) =>
-                      setHealthCenters([
-                        ...healthCenters.slice(0, index),
-                        { ...healthCenter, category: e.target.value },
-                        ...healthCenters.slice(index + 1),
-                      ])
-                    }
+                    // onChange={(e) =>
+                    //   setHealthCenters([
+                    //     ...healthCenters.slice(0, index),
+                    //     { ...healthCenter, category: e.target.value },
+                    //     ...healthCenters.slice(index + 1),
+                    //   ])
+                    // }
                     readOnly
                   />
                 </td>
@@ -175,7 +172,7 @@ const Centers = () => {
                   <button
                     className="my-2 px-4 py-2 rounded-md shadowtransition-all duration-250 bg-cyan-400 hover:bg-cyan-500 text-m"
                     type="button"
-                    onClick={() => deleteHealthCenter(index)}
+                    onClick={() => deleteHealthCenter(healthCenter.docRef)}
                   >
                     Remove
                   </button>
@@ -208,7 +205,7 @@ const Centers = () => {
                     <p>Adress: {healthCenter.address}</p>
                     <p>Category: {healthCenter.category}</p>
                     <button
-                    className='bg-cyan-300 p-2 rounded-md'
+                      className="bg-cyan-300 p-2 rounded-md"
                       type="button"
                       onClick={() => deleteHealthCenter(index)}
                     >

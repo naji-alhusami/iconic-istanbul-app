@@ -1,4 +1,7 @@
+import React from "react";
+
 import { Link } from "react-router-dom";
+
 import BackgroundImage from "../Images/BackgroundImage.jpg";
 
 export default function Thanks() {
@@ -21,7 +24,6 @@ export default function Thanks() {
             {" "}
             you need to verify your account
           </p>
-          {/* <p className="text-5xl mb-5  md:text-7xl lg:text-9xl "></p> */}
           <Link to="/">
             <button
               type="button"

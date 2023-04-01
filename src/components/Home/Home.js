@@ -1,6 +1,8 @@
+import React from "react";
+
 import BackgroundImage from "../Images/BackgroundImage.jpg";
 
-export default function Home() {
+const Home = () => {
   return (
     <div
       className=" w-screen h-screen bg-cover bg-top bg-no-repeat"
@@ -28,4 +30,6 @@ export default function Home() {
       </div>
     </div>
   );
-}
+};
+
+export default Home;
