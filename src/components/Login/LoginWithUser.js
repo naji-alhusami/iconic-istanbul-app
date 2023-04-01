@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { loginUser } from '../../features/users/usersSlice';
-import LoginWithGoogle from './LoginWithGoogle';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { loginUser } from "../../features/users/usersSlice";
+import LoginWithGoogle from "./LoginWithGoogle";
 
 const FormCard = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  // const userLogin = useSelector((state) => state.users);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const userLogin = useSelector((state) => state.users);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // const navigate = useNavigate();
 
@@ -22,19 +24,29 @@ const FormCard = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    // perform some action with the email and password values
     dispatch(loginUser({ email, password }));
-    // if (error.length > 0) {
-    // setErrorshow(true);
-    // }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Please Enter Valid Email");
+      return;
+    }
+
+    if (userLogin.error) {
+      setError(userLogin.error);
+    } else {
+      setError("");
+    }
+
+    navigate('/')
   };
 
   return (
-    <div className='bg-white m-12 rounded-md'>
+    <div className="bg-white m-12 rounded-md">
       <h2 className='text-5xl font-["Poppins"] font-normal mb-44 max-[767px]:mt-10 md:mt-10 max-[767px]:mb-10 md:mb-10 text-center'>
         Login
       </h2>
+      {error && <p className="text-red-500 text-lg text-center">{error}</p>}
       <form
         onSubmit={handleSubmit}
         className="grid grid-rows-3 gap-6  px-2 py-6 md:px-10 md:py-10 sm:px-10 sm:py-10 xs:px-10 xs:py-10 max-w-lg"
