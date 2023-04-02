@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
@@ -8,25 +8,29 @@ import {
   addHealthCenter,
   getCenters,
   deleteCenter,
+  editCenter,
 } from "../../features/healthCenters/healthCentersSlice";
 import "leaflet/dist/leaflet.css";
 import "./AddCenter.css";
 
 import markerIconx from "../Images/marker-icon.png";
 import markerIcon2x from "../Images/marker-icon-2x.png";
+// import { compose } from "@reduxjs/toolkit";
 
 const CentersTable = () => {
   const dispatch = useDispatch();
 
   const { center, loading } = useSelector((state) => state.center);
+  // console.log(center);
   const healthCenters = center;
+  const listedHealthCenters = healthCenters.filter((center) => !center.isListed);
 
-  const [isListed, setIsListed] = useState(healthCenters.map(() => true));
+  // const [isListed, setIsListed] = useState(healthCenters.map(() => true));
 
-  const handleCheckboxChange = (event, index) => {
-    const newList = [...isListed];
-    newList[index] = event.target.checked;
-    setIsListed(newList);
+  const handleCheckboxChange = (id, isListed) => {
+    // event.preventDefault();
+    console.log(id, isListed);
+    dispatch(editCenter({ id, isListed }));
   };
 
   useEffect(() => {
@@ -50,7 +54,8 @@ const CentersTable = () => {
     const name = event.target.elements.name.value;
     const address = event.target.elements.address.value;
     const category = event.target.elements.category.value;
-    dispatch(addHealthCenter({ name, address, category }));
+    const isListed = false;
+    dispatch(addHealthCenter({ name, address, category, isListed }));
     event.target.reset();
   };
 
@@ -131,7 +136,7 @@ const CentersTable = () => {
                 Delete
               </th>
               <th className="w-[10rem] border border-gray-400 px-4 py-2">
-                List
+                Unlist
               </th>
             </tr>
           </thead>
@@ -175,8 +180,13 @@ const CentersTable = () => {
                   <input
                     type="checkbox"
                     className="form-checkbox h-5 w-5 px-4 py-2 text-gray-600"
-                    checked={isListed[index]}
-                    onChange={(event) => handleCheckboxChange(event, index)}
+                    checked={healthCenter.isListed}
+                    onChange={() =>
+                      handleCheckboxChange(
+                        healthCenter.docRef,
+                        healthCenter.isListed
+                      )
+                    }
                   />
                 </td>
               </tr>
@@ -194,30 +204,31 @@ const CentersTable = () => {
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            {healthCenters.map(
-              (healthCenter, index) =>
-                isListed[index] && (
-                  <Marker
-                    position={[healthCenter.lat, healthCenter.lon]}
-                    icon={markerIcon}
-                  >
-                    <Popup>
-                      <div>
-                        <h3>Name: {healthCenter.name}</h3>
-                        <p>Adress: {healthCenter.address}</p>
-                        <p>Category: {healthCenter.category}</p>
-                        <button
-                          className="bg-cyan-300 p-2 rounded-md"
-                          type="button"
-                          onClick={() => deleteHealthCenter(index)}
-                        >
-                          Remove
-                        </button>
-                      </div>
-                    </Popup>
-                  </Marker>
-                )
-            )}
+            {
+              listedHealthCenters.map((healthCenter, index) => (
+                // isListed[index] && (
+                <Marker
+                  position={[healthCenter.lat, healthCenter.lon]}
+                  icon={markerIcon}
+                >
+                  <Popup>
+                    <div>
+                      <h3>Name: {healthCenter.name}</h3>
+                      <p>Adress: {healthCenter.address}</p>
+                      <p>Category: {healthCenter.category}</p>
+                      <button
+                        className="bg-cyan-300 p-2 rounded-md"
+                        type="button"
+                        onClick={() => deleteHealthCenter(index)}
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </Popup>
+                </Marker>
+              ))
+              // )
+            }
           </MapContainer>
         </div>
       </div>

@@ -7,6 +7,7 @@ import {
   collection,
   getDocs,
   deleteDoc,
+  updateDoc,
 } from "firebase/firestore";
 
 import { db } from "../../firebase-config";
@@ -16,7 +17,7 @@ export const addHealthCenter = createAsyncThunk(
   "center/addHealthCenter",
   async (payload, { rejectWithValue }) => {
     try {
-      const { name, address, category } = payload;
+      const { name, address, category, isListed } = payload;
       const response = await axios.get(
         `https://nominatim.openstreetmap.org/search?q=${address}&format=json`
       );
@@ -28,8 +29,9 @@ export const addHealthCenter = createAsyncThunk(
         category,
         lat,
         lon,
+        isListed,
       });
-      return { docRef: docRef.id, name, address, category, lat, lon };
+      return { docRef: docRef.id, name, address, category, lat, lon, isListed };
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -55,6 +57,34 @@ export const getCenters = createAsyncThunk(
   }
 );
 // End of get health centers (get them from Firebase).
+
+// Start of Edit health centers (get them from Firebase):
+export const editCenter = createAsyncThunk(
+  "center/editCenter",
+  async (payload, { getState, rejectWithValue }) => {
+    const {center} = getState();
+    try {
+      const { id, isListed } = payload;
+      console.log(payload);
+      const docRef = doc(db, "healthcenters", id);
+      await updateDoc(docRef, {
+        isListed: !isListed,
+      });
+      const newState = center.center.map((cent)=>{
+        if(cent.docRef === id) {
+          return {...cent, isListed:!isListed}
+        } else {
+          return cent;
+        }
+      })
+      return newState;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.message);
+    }
+  }
+);
+// End of edit health centers (get them from Firebase).
 
 // Start of deleting health centers:
 export const deleteCenter = createAsyncThunk(
@@ -83,7 +113,7 @@ const healthCentersSlice = createSlice({
     builder.addCase(addHealthCenter.pending, (state) => {});
     builder.addCase(addHealthCenter.fulfilled, (state, action) => {
       state.loading = false;
-      state.center.push(action.payload);
+      state.center = [...state.center, action.payload];
       state.error = null;
     });
     builder.addCase(addHealthCenter.rejected, (state, action) => {
@@ -101,6 +131,21 @@ const healthCentersSlice = createSlice({
       state.error = null;
     });
     builder.addCase(getCenters.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+
+    // Edit health center cases:
+    builder.addCase(editCenter.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(editCenter.fulfilled, (state, action) => {
+      state.loading = false;
+      state.center = action.payload;
+      state.error = null;
+    });
+    builder.addCase(editCenter.rejected, (state, action) => {
+      console.log(action.payload);
       state.loading = false;
       state.error = action.payload;
     });
