@@ -112,7 +112,7 @@ const CentersTable = () => {
             type="submit"
             className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700"
           >
-            Add to Maps
+            Add
           </button>
         </form>
         <table className=" bg-white table-fixed w-[80%] border-collapse border border-gray-400 m-12">
@@ -198,7 +198,6 @@ const CentersTable = () => {
               (healthCenter, index) =>
                 isListed[index] && (
                   <Marker
-                    // key={index}
                     position={[healthCenter.lat, healthCenter.lon]}
                     icon={markerIcon}
                   >
