@@ -1,17 +1,18 @@
+import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import "./App.css";
-import Navbar from "./components/Navbar/Navbar";
-import Login from "./components/Login/Login";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
 import Home from "./components/Home/Home";
-import CentersTable from "./components/AddCenter/CentersTable";
+import Navbar from "./components/Navbar/Navbar";
 import Singup from "./components/Signup/Signup";
+import Login from "./components/Login/Login";
+import AddCenter from "./components/AddCenter/AddCenter";
 import Thanks from "./components/Thanks/Thanks";
 import RequireAuth from "./components/RequireAuth/RequireAuth";
-import { useEffect } from "react";
-import { loadUser } from "./features/users/usersSlice";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 import HealthCenters from "./components/HealthCenters/HealthCenters";
+import { loadUser } from "./features/users/usersSlice";
+import "./App.css";
 
 function App() {
   const dispatch = useDispatch();
@@ -23,8 +24,6 @@ function App() {
         if (user) {
           dispatch(loadUser(user.uid));
         } else {
-          // User is signed out
-          // ...
         }
       });
     };
@@ -39,7 +38,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />
         <Route element={<RequireAuth />}>
-          <Route path="/addcenter" element={<CentersTable />} />
+          <Route path="/addcenter" element={<AddCenter />} />
         </Route>
         <Route path="/signup" element={<Singup />} />
         <Route path="/thanks" element={<Thanks />} />

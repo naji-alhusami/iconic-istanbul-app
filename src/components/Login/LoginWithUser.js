@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -15,6 +14,7 @@ const LoginWithUser = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // dispatch user login with email: 
   const handleSubmit = (event) => {
     event.preventDefault();
     dispatch(loginUser({ email, password }));

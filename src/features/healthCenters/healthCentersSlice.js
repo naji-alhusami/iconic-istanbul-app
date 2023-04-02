@@ -11,9 +11,9 @@ import {
 
 import { db } from "../../firebase-config";
 
-// Start of addHealthCenter:
+// Start of add health center (send it to Firebase):
 export const addHealthCenter = createAsyncThunk(
-  "center/add",
+  "center/addHealthCenter",
   async (payload, { rejectWithValue }) => {
     try {
       const { name, address, category } = payload;
@@ -21,7 +21,6 @@ export const addHealthCenter = createAsyncThunk(
         `https://nominatim.openstreetmap.org/search?q=${address}&format=json`
       );
       const { lat, lon } = response.data[0];
-      console.log(payload);
       const docRef = await addDoc(collection(db, "healthcenters"), {
         id: uuidv4(),
         name,
@@ -30,19 +29,17 @@ export const addHealthCenter = createAsyncThunk(
         lat,
         lon,
       });
-      console.log(docRef);
       return { docRef: docRef.id, name, address, category, lat, lon };
     } catch (error) {
-      console.log(error);
       return rejectWithValue(error.message);
     }
   }
 );
-// End of Add Marker.
+// End of add health center (send it to Firebase).
 
-// Start of addHealthCenter:
+// Start of get health centers (get them from Firebase):
 export const getCenters = createAsyncThunk(
-  "center/get",
+  "center/getCenters",
   async (_, { rejectWithValue }) => {
     try {
       const centers = [];
@@ -50,31 +47,28 @@ export const getCenters = createAsyncThunk(
       querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
         centers.push({ docRef: doc.id, ...doc.data() });
-        console.log(doc.id, " => ", doc.data());
       });
       return centers;
     } catch (error) {
-      console.log(error);
       return rejectWithValue(error.message);
     }
   }
 );
-// End of Add Marker.
+// End of get health centers (get them from Firebase).
 
+// Start of deleting health centers:
 export const deleteCenter = createAsyncThunk(
-  "center/delete",
+  "center/deleteCenter",
   async (id, { rejectWithValue }) => {
     try {
-      console.log(id);
-      const response = await deleteDoc(doc(db, "healthcenters", id));
-      console.log(response);
+      await deleteDoc(doc(db, "healthcenters", id));
       return id;
     } catch (error) {
-      console.log(error);
       return rejectWithValue(error);
     }
   }
 );
+// End of deleting health centers.
 
 const healthCentersSlice = createSlice({
   name: "centers",
@@ -85,12 +79,9 @@ const healthCentersSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-    // Add Marker to the Map cases:
-    builder.addCase(addHealthCenter.pending, (state) => {
-      //   state.loading = true;
-    });
+    // Add health center cases:
+    builder.addCase(addHealthCenter.pending, (state) => {});
     builder.addCase(addHealthCenter.fulfilled, (state, action) => {
-      console.log(action.payload);
       state.loading = false;
       state.center.push(action.payload);
       state.error = null;
@@ -100,12 +91,11 @@ const healthCentersSlice = createSlice({
       state.error = action.payload;
     });
 
-    // get Marker to the Map cases:
+    // Get health center cases:
     builder.addCase(getCenters.pending, (state) => {
       state.loading = true;
     });
     builder.addCase(getCenters.fulfilled, (state, action) => {
-      console.log(action.payload);
       state.loading = false;
       state.center = action.payload;
       state.error = null;
@@ -115,12 +105,9 @@ const healthCentersSlice = createSlice({
       state.error = action.payload;
     });
 
-    // delete Marker to the Map cases:
-    builder.addCase(deleteCenter.pending, (state) => {
-      //   state.loading = true;
-    });
+    // Delete health center cases:
+    builder.addCase(deleteCenter.pending, (state) => {});
     builder.addCase(deleteCenter.fulfilled, (state, action) => {
-      console.log(action.payload);
       state.loading = false;
       state.center = state.center.filter(
         (cent) => cent.docRef !== action.payload

@@ -1,10 +1,9 @@
 import React from "react";
-
 import { Link } from "react-router-dom";
 
 import BackgroundImage from "../Images/BackgroundImage.jpg";
 
-export default function Thanks() {
+const Thanks = () => {
   return (
     <div
       className=" w-screen h-screen bg-cover bg-top bg-no-repeat"
@@ -36,4 +35,6 @@ export default function Thanks() {
       </div>
     </div>
   );
-}
+};
+
+export default Thanks;

@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-// import axios from 'axios';
 
 import {
   createUserWithEmailAndPassword,
@@ -7,23 +6,10 @@ import {
   signInWithPopup,
   sendEmailVerification,
   signOut,
-  getAuth,
-  onAuthStateChanged,
 } from "firebase/auth";
-import {
-  doc,
-  setDoc,
-  getDoc,
-  // deleteDoc
-} from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 
-// import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import {
-  db,
-  auth,
-  googleAuth,
-  // storage,
-} from "../../firebase-config";
+import { db, auth, googleAuth } from "../../firebase-config";
 
 // start of signup:
 export const signupUser = createAsyncThunk(
@@ -55,7 +41,7 @@ export const signupUser = createAsyncThunk(
     }
   }
 );
-// End of signup
+// End of signup.
 
 // Start of Login:
 export const loginUser = createAsyncThunk(
@@ -67,7 +53,6 @@ export const loginUser = createAsyncThunk(
       if (user.emailVerified === false) {
         return { error: "Email is Not Verified" };
       }
-      console.log("inside login");
       const docRef = doc(db, "users", user.uid);
       const docSnap = await getDoc(docRef);
 
@@ -85,7 +70,6 @@ export const loginUserWithGoogle = createAsyncThunk(
   async ({ rejectWithValue }) => {
     try {
       const { user } = await signInWithPopup(auth, googleAuth);
-      console.log(user);
       const docRef = doc(db, "users", user.uid);
       await setDoc(docRef, {
         id: user.uid,
@@ -104,7 +88,6 @@ export const loginUserWithGoogle = createAsyncThunk(
 export const logoutUser = createAsyncThunk(
   "user/logoutUser",
   async (_, { rejectWithValue }) => {
-    console.log("inside logout");
     try {
       await signOut(auth);
       return {};
@@ -113,23 +96,13 @@ export const logoutUser = createAsyncThunk(
     }
   }
 );
-// End of Logout User:
+// End of Logout User.
 
+// Start of Load User:
 export const loadUser = createAsyncThunk(
   "user/loadUser",
   async (id, { rejectWithValue }) => {
-    // const auth = await getAuth();
-    // const user = auth.currentUser;
-    //  onAuthStateChanged(auth, (user) => {
-    //   if (user) {
-    //     return user.uid;
-    //   } else {
-    //     return null;
-    //   }
-    // });
-    console.log(id);
     try {
-      console.log("inside login");
       const docRef = doc(db, "users", id);
       const docSnap = await getDoc(docRef);
       return docSnap.data();
@@ -138,7 +111,7 @@ export const loadUser = createAsyncThunk(
     }
   }
 );
-// End of signup
+// End of of Load User.
 
 const usersSlice = createSlice({
   name: "users",
@@ -155,7 +128,6 @@ const usersSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(signupUser.fulfilled, (state, action) => {
-      console.log("naji");
       state.loading = false;
       state.user = action.payload;
       state.signedup = true;
@@ -165,6 +137,7 @@ const usersSlice = createSlice({
       state.user = {};
       state.error = action.payload;
     });
+
     // Login Cases:
     builder.addCase(loginUser.pending, (state) => {
       state.loading = true;
@@ -172,7 +145,6 @@ const usersSlice = createSlice({
     builder.addCase(loginUser.fulfilled, (state, action) => {
       state.loading = false;
       if (action.payload.error) {
-        console.log(action.payload);
         state.user = null;
         state.userlogin = false;
         state.error = action.payload.error;
@@ -186,8 +158,8 @@ const usersSlice = createSlice({
       state.loading = false;
       state.user = {};
       state.error = action.payload;
-      console.log(action.payload);
     });
+
     // Login with Google Cases:
     builder.addCase(loginUserWithGoogle.pending, (state) => {
       state.loading = true;
@@ -220,14 +192,13 @@ const usersSlice = createSlice({
       state.error = action.payload;
     });
 
-    // load user Cases:
+    // Load user Cases:
     builder.addCase(loadUser.pending, (state) => {
       state.loading = true;
     });
     builder.addCase(loadUser.fulfilled, (state, action) => {
       state.loading = false;
       if (action.payload.error) {
-        console.log(action.payload);
         state.user = null;
         state.userlogin = false;
         state.error = action.payload.error;
@@ -241,7 +212,6 @@ const usersSlice = createSlice({
       state.loading = false;
       state.user = {};
       state.error = action.payload;
-      console.log(action.payload);
     });
   },
 });

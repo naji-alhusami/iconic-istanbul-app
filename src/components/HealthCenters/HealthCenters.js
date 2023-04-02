@@ -1,12 +1,9 @@
 import React, { useEffect } from "react";
-
+import { useDispatch, useSelector } from "react-redux";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
-import { useDispatch, useSelector } from "react-redux";
 
-import {
-  getCenters,
-} from "../../features/healthCenters/healthCentersSlice";
+import { getCenters } from "../../features/healthCenters/healthCentersSlice";
 import "leaflet/dist/leaflet.css";
 import "./HealthCenters.css";
 
@@ -16,9 +13,9 @@ import markerIcon2x from "../Images/marker-icon-2x.png";
 const HealthCenters = () => {
   const dispatch = useDispatch();
   const { center, loading } = useSelector((state) => state.center);
-  console.log(center);
   const healthCenters = center;
 
+  // useEffect for getting data from Firebase
   useEffect(() => {
     const getData = () => {
       dispatch(getCenters());
@@ -39,7 +36,6 @@ const HealthCenters = () => {
     return "loading...";
   }
 
-  console.log(healthCenters);
   return (
     <div className="container">
       <div className=" box">

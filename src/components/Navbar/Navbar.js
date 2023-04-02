@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { AiFillCaretDown } from "react-icons/ai";
@@ -10,12 +9,12 @@ import HERA from "../Images/HERA.jpg";
 
 const Navbar = () => {
   const userLogin = useSelector((state) => state.users);
-  console.log(userLogin);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showNavbarInResponsive, setShowNavbarInResponsive] = useState(false);
   const [showProfileInResponsive, setShowProfileInResponsive] = useState(false);
 
+  // dispatch logout user:
   const logOut = (e) => {
     e.preventDefault();
     navigate("/");

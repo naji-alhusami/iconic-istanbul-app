@@ -1,12 +1,11 @@
 import React from "react";
-
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 import {
   signupUser,
-  //   loginUserWithGoogle,
+  loginUserWithGoogle,
 } from "../../features/users/usersSlice";
 
 import googleicon from "../Images/GoogleLogo.svg";
@@ -22,9 +21,8 @@ const Singup = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // dispatch signup new user:
   const onSubmitform = async (userData) => {
-    console.log(userData);
-
     dispatch(
       signupUser({
         email: userData.email,
@@ -255,14 +253,11 @@ const Singup = () => {
             <button
               type="button"
               style={{ height: 32, width: 32 }}
-              // onClick={(userData) => {
-              //   dispatch(
-              //     loginUserWithGoogle({
-              //       id: userData.id,
-              //       email: userData.email,
-              //     })
-              //   );
-              // }}
+              onClick={(userDat) => {
+                dispatch(
+                  loginUserWithGoogle({ id: userDat.id, email: userDat.email })
+                );
+              }}
             >
               <img src={googleicon} alt="Google Icon" />{" "}
             </button>

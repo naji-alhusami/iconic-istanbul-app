@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { useDispatch } from 'react-redux';
 
 import { loginUserWithGoogle } from '../../features/users/usersSlice';
@@ -18,7 +17,6 @@ const LoginWithGoogle = () => {
         <button
           type="button"
           onClick={(userDat) => {
-            console.log(userDat);
             dispatch(
               loginUserWithGoogle({ id: userDat.id, email: userDat.email })
             );

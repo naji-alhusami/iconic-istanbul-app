@@ -1,12 +1,10 @@
 import React from "react";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import BackgroundImage from "../Images/BackgroundImage.jpg";
 
 const Home = () => {
-  const navigate = useNavigate();
-
   return (
     <div
       className=" w-screen h-screen bg-cover bg-top bg-no-repeat"
@@ -22,7 +20,6 @@ const Home = () => {
             {" "}
             Our Health Centers
           </p>
-          {/* <p className="text-5xl mb-5  md:text-7xl lg:text-9xl "></p> */}
           <Link to="/healthcenters">
             <button
               type="button"
