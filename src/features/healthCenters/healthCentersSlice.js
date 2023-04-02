@@ -65,7 +65,6 @@ export const editCenter = createAsyncThunk(
     const {center} = getState();
     try {
       const { id, isListed } = payload;
-      console.log(payload);
       const docRef = doc(db, "healthcenters", id);
       await updateDoc(docRef, {
         isListed: !isListed,
@@ -79,7 +78,6 @@ export const editCenter = createAsyncThunk(
       })
       return newState;
     } catch (error) {
-      console.log(error);
       return rejectWithValue(error.message);
     }
   }
@@ -145,7 +143,6 @@ const healthCentersSlice = createSlice({
       state.error = null;
     });
     builder.addCase(editCenter.rejected, (state, action) => {
-      console.log(action.payload);
       state.loading = false;
       state.error = action.payload;
     });

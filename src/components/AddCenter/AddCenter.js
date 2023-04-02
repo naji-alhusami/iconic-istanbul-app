@@ -21,15 +21,11 @@ const CentersTable = () => {
   const dispatch = useDispatch();
 
   const { center, loading } = useSelector((state) => state.center);
-  // console.log(center);
   const healthCenters = center;
   const listedHealthCenters = healthCenters.filter((center) => !center.isListed);
 
-  // const [isListed, setIsListed] = useState(healthCenters.map(() => true));
 
   const handleCheckboxChange = (id, isListed) => {
-    // event.preventDefault();
-    console.log(id, isListed);
     dispatch(editCenter({ id, isListed }));
   };
 
