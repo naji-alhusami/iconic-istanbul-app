@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
@@ -10,26 +10,20 @@ import {
   deleteCenter,
   editCenter,
 } from "../../features/healthCenters/healthCentersSlice";
+// import CentersTable from "./CentersTable";
 import "leaflet/dist/leaflet.css";
 import "./AddCenter.css";
 
 import markerIconx from "../Images/marker-icon.png";
 import markerIcon2x from "../Images/marker-icon-2x.png";
-// import { compose } from "@reduxjs/toolkit";
 
-const CentersTable = () => {
+const AddCenter = () => {
   const dispatch = useDispatch();
+  const [show, setShow] = useState(false);
 
-  const { center, loading } = useSelector((state) => state.center);
+  const { center } = useSelector((state) => state.center);
   const healthCenters = center;
-  const listedHealthCenters = healthCenters.filter(
-    (center) => !center.isListed
-  );
-  console.log(listedHealthCenters);
-
-  const handleCheckboxChange = (id, isListed) => {
-    dispatch(editCenter({ id, isListed }));
-  };
+  const listedHealthCenters = healthCenters.filter((center) => center.isListed);
 
   useEffect(() => {
     const getData = () => {
@@ -52,18 +46,53 @@ const CentersTable = () => {
     const name = event.target.elements.name.value;
     const address = event.target.elements.address.value;
     const category = event.target.elements.category.value;
-    const isListed = false;
+    const isListed = true;
     dispatch(addHealthCenter({ name, address, category, isListed }));
+
     event.target.reset();
   };
 
-  const deleteHealthCenter = (index) => {
-    dispatch(deleteCenter(index));
+  const mapRef = useRef();
+
+  useEffect(() => {
+    if (mapRef.current && healthCenters.length > 0) {
+      mapRef.current.fitBounds(getBounds());
+    } else if (mapRef.current) {
+      mapRef.current.setView([0, 0], 2);
+    }
+
+    function getBounds() {
+      const bounds = L.latLngBounds([[0, 0]]);
+      healthCenters.forEach((healthCenter) => {
+        bounds.extend([healthCenter.lat, healthCenter.lon]);
+      });
+      return bounds;
+    }
+  }, [healthCenters]);
+
+  function getBounds() {
+    const bounds = L.latLngBounds([[0, 0]]);
+    healthCenters.forEach((healthCenter) => {
+      bounds.extend([healthCenter.lat, healthCenter.lon]);
+    });
+    return bounds;
+  }
+
+  const handleCheckboxChange = (id, isListed) => {
+    mapRef.current.flyToBounds(getBounds());
+    dispatch(editCenter({ id, isListed }));
   };
 
-  if (loading) {
-    return "loading...";
-  }
+  const backToCentersHandler = () => {
+    mapRef.current.flyToBounds(getBounds());
+    setShow(false);
+  };
+
+  const deleteHealthCenter = (index) => {
+    mapRef.current.flyToBounds(getBounds());
+    dispatch(deleteCenter(index));
+    setShow(false);
+  };
 
   return (
     <div className="container">
@@ -115,9 +144,16 @@ const CentersTable = () => {
             type="submit"
             className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700"
           >
-            Add
+            Add To Map
           </button>
         </form>
+
+        {/* <CentersTable
+          deleteHealthCenter={deleteHealthCenter}
+          healthCenters={healthCenters}
+          getBounds={getBounds}
+        /> */}
+
         <table className=" bg-white table-fixed  border-collapse border border-gray-400 sm:m-12 table">
           <thead>
             <tr>
@@ -134,7 +170,7 @@ const CentersTable = () => {
                 Delete
               </th>
               <th className="w-[10rem] border border-gray-400 sm:px-4 sm:py-2">
-                Unlist
+                List/Unlist
               </th>
             </tr>
           </thead>
@@ -191,38 +227,63 @@ const CentersTable = () => {
             ))}
           </tbody>
         </table>
+
         <div className="rounded-md bg-white w-fit p-2 m-12">
           <MapContainer
             id="map"
             className="justify-center "
-            center={[51.505, -0.09]}
-            zoom={13}
+            ref={mapRef}
+            center={[0, 0]}
+            zoom={2}
           >
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             {
-               listedHealthCenters.map((healthCenter, index) => (
+              listedHealthCenters.map((healthCenter, index) => (
                 <Marker
                   key={index}
                   position={[healthCenter.lat, healthCenter.lon]}
                   icon={markerIcon}
+                  eventHandlers={{
+                    click: () => {
+                      const map = mapRef.current;
+                      map.flyTo([healthCenter.lat, healthCenter.lon], 10, {
+                        animate: true,
+                        duration: 2,
+                      });
+                      setShow(true);
+                    },
+                  }}
                 >
-                  <Popup>
-                    <div>
-                      <h3>Name: {healthCenter.name}</h3>
-                      <p>Adress: {healthCenter.address}</p>
-                      <p>Category: {healthCenter.category}</p>
-                      <button
-                        className="bg-cyan-300 p-2 rounded-md"
-                        type="button"
-                        onClick={() => deleteHealthCenter(index)}
-                      >
-                        Remove
-                      </button>
-                    </div>
-                  </Popup>
+                  {show && (
+                    <Popup closeOnClick={true} closeButton={true}>
+                      <div>
+                        <h3 className="p-0">Name: {healthCenter.name}</h3>
+                        <p className="p-0">Adress: {healthCenter.address}</p>
+                        <p className="p-0">Category: {healthCenter.category}</p>
+                        <button
+                          className="bg-cyan-300 p-2 rounded-md"
+                          type="button"
+                          onClick={() => {
+                            deleteHealthCenter(healthCenter.docRef);
+                          }}
+                        >
+                          Remove
+                        </button>
+                        <button
+                          className="bg-cyan-300 p-2 rounded-md m-2"
+                          type="button"
+                          onClick={() => {
+                            backToCentersHandler();
+                          }}
+                        >
+                          Back to All Health Centers
+                        </button>
+                      </div>
+                    </Popup>
+                  )}
                 </Marker>
               ))
               // )
@@ -234,4 +295,4 @@ const CentersTable = () => {
   );
 };
 
-export default CentersTable;
+export default AddCenter;

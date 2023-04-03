@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useEffect, useRef } from "react";
+
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
+import { useDispatch, useSelector } from "react-redux";
 
 import { getCenters } from "../../features/healthCenters/healthCentersSlice";
 import "leaflet/dist/leaflet.css";
@@ -10,12 +11,14 @@ import "./HealthCenters.css";
 import markerIconx from "../Images/marker-icon.png";
 import markerIcon2x from "../Images/marker-icon-2x.png";
 
-const HealthCenters = () => {
+const AddCenter = () => {
   const dispatch = useDispatch();
-  const { center, loading } = useSelector((state) => state.center);
+  const [show, setShow] = useState(false);
+
+  const { center } = useSelector((state) => state.center);
   const healthCenters = center;
-  
-  // useEffect for getting data from Firebase
+  const listedHealthCenters = healthCenters.filter((center) => center.isListed);
+
   useEffect(() => {
     const getData = () => {
       dispatch(getCenters());
@@ -32,30 +35,57 @@ const HealthCenters = () => {
     popupAnchor: [0, -41],
   });
 
-  if (loading) {
-    return "loading...";
+  const mapRef = useRef();
+
+  useEffect(() => {
+    if (mapRef.current && healthCenters.length > 0) {
+      mapRef.current.fitBounds(getBounds());
+    } else if (mapRef.current) {
+      mapRef.current.setView([0, 0], 2);
+    }
+
+    function getBounds() {
+      const bounds = L.latLngBounds([[0, 0]]);
+      healthCenters.forEach((healthCenter) => {
+        bounds.extend([healthCenter.lat, healthCenter.lon]);
+      });
+      return bounds;
+    }
+  }, [healthCenters]);
+
+  function getBounds() {
+    const bounds = L.latLngBounds([[0, 0]]);
+    healthCenters.forEach((healthCenter) => {
+      bounds.extend([healthCenter.lat, healthCenter.lon]);
+    });
+    return bounds;
   }
+
+  const backToCentersHandler = () => {
+    mapRef.current.flyToBounds(getBounds());
+    setShow(false);
+  };
 
   return (
     <div className="container">
       <div className=" box">
-        <table className=" bg-white table-fixed sm:w-[80%] table border-collapse border border-gray-400 sm:m-12 table">
+        <table className=" bg-white table-fixed  border-collapse border border-gray-400 sm:m-12 table">
           <thead>
             <tr>
-              <th className="sm:w-[10rem] border border-gray-400 sm:px-4 sm:py-2 table-name">
+              <th className="w-[10rem] border border-gray-400 sm:px-4 sm:py-2">
                 Name
               </th>
-              <th className="w-[20rem] border border-gray-400 sm:px-4 sm:py-2 table-address">
+              <th className="w-[20rem] border border-gray-400 sm:px-4 sm:py-2">
                 Address
               </th>
-              <th className="w-[10rem] border border-gray-400 sm:px-4 sm:py-2 table-category">
-                Category
+              <th className="w-[10rem] border border-gray-400 sm:px-4 sm:py-2">
+                Ctg
               </th>
             </tr>
           </thead>
           <tbody>
-            {healthCenters.map((healthCenter) => (
-              <tr key={healthCenter.id}>
+            {healthCenters.map((healthCenter, index) => (
+              <tr key={index}>
                 <td className="border border-gray-400 sm:px-4 sm:py-2 table-name">
                   <input
                     type="text"
@@ -64,7 +94,7 @@ const HealthCenters = () => {
                     readOnly
                   />
                 </td>
-                <td className="border border-gray-400 sm:px-4 sm:py-2 table-address">
+                <td className="border border-gray-400 sm:px-4 sm:py-2">
                   <input
                     type="text"
                     className="w-full"
@@ -72,7 +102,7 @@ const HealthCenters = () => {
                     readOnly
                   />
                 </td>
-                <td className="border border-gray-400 sm:px-4 sm:py-2 table-category">
+                <td className="border border-gray-400 text-center sm:px-4 sm:py-2 ">
                   <input
                     type="text"
                     className="w-full"
@@ -84,32 +114,58 @@ const HealthCenters = () => {
             ))}
           </tbody>
         </table>
-        <div className=" rounded-md bg-white w-fit p-2 m-12 z-0">
+
+        <div className="rounded-md bg-white w-fit p-2 m-12">
           <MapContainer
             id="map"
             className="justify-center "
-            center={[51.505, -0.09]}
-            zoom={13}
+            ref={mapRef}
+            center={[0, 0]}
+            zoom={2}
           >
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            {healthCenters.map((healthCenter) => (
-              <Marker
-                key={healthCenter.id}
-                position={[healthCenter.lat, healthCenter.lon]}
-                icon={markerIcon}
-              >
-                <Popup>
-                  <div>
-                    <h3>Name: {healthCenter.name}</h3>
-                    <p>Adress: {healthCenter.address}</p>
-                    <p>Category: {healthCenter.category}</p>
-                  </div>
-                </Popup>
-              </Marker>
-            ))}
+            {
+              listedHealthCenters.map((healthCenter, index) => (
+                <Marker
+                  key={index}
+                  position={[healthCenter.lat, healthCenter.lon]}
+                  icon={markerIcon}
+                  onClick={setShow(false)}
+                  eventHandlers={{
+                    click: () => {
+                      const map = mapRef.current;
+                      map.flyTo([healthCenter.lat, healthCenter.lon], 10, {
+                        animate: true,
+                        duration: 2,
+                      });
+                    },
+                  }}
+                >
+                  {show && (
+                    <Popup closeOnClick={true} closeButton={true}>
+                      <div>
+                        <h3 className="p-0">Name: {healthCenter.name}</h3>
+                        <p className="p-0">Adress: {healthCenter.address}</p>
+                        <p className="p-0">Category: {healthCenter.category}</p>
+                        <button
+                          className="bg-cyan-300 p-2 rounded-md m-2"
+                          type="button"
+                          onClick={() => {
+                            backToCentersHandler();
+                          }}
+                        >
+                          Back to All Health Centers
+                        </button>
+                      </div>
+                    </Popup>
+                  )}
+                </Marker>
+              ))
+              // )
+            }
           </MapContainer>
         </div>
       </div>
@@ -117,4 +173,4 @@ const HealthCenters = () => {
   );
 };
 
-export default HealthCenters;
+export default AddCenter;
