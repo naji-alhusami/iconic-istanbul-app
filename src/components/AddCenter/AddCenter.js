@@ -68,7 +68,7 @@ const CentersTable = () => {
       <div className=" box">
         <form
           onSubmit={handleAddressSubmit}
-          className=" bg-white rounded-md mx-auto xl:m-20 lg:m-12 sm:m-12 form p-12"
+          className=" bg-white rounded-md sm:m-6 xl:m-20 lg:m-12 sm:m-12 form sm:p-12"
         >
           <div className="mb-4">
             <label htmlFor="name" className="block font-medium mb-2">
@@ -116,22 +116,22 @@ const CentersTable = () => {
             Add
           </button>
         </form>
-        <table className=" bg-white table-fixed  border-collapse border border-gray-400 sm:m-12">
+        <table className=" bg-white table-fixed  border-collapse border border-gray-400 sm:m-12 table">
           <thead>
             <tr>
-              <th className="w-[10rem] border border-gray-400 px-4 py-2">
+              <th className="w-[10rem] border border-gray-400 sm:px-4 sm:py-2">
                 Name
               </th>
-              <th className="w-[20rem] border border-gray-400 px-4 py-2">
+              <th className="w-[20rem] border border-gray-400 sm:px-4 sm:py-2">
                 Address
               </th>
-              <th className="w-[10rem] border border-gray-400 px-4 py-2">
-                Category
+              <th className="w-[10rem] border border-gray-400 sm:px-4 sm:py-2">
+                Ctg
               </th>
-              <th className="w-[10rem] border border-gray-400 px-4 py-2">
+              <th className="w-[10rem] border border-gray-400 sm:px-4 sm:py-2">
                 Delete
               </th>
-              <th className="w-[10rem] border border-gray-400 px-4 py-2">
+              <th className="w-[10rem] border border-gray-400 sm:px-4 sm:py-2">
                 Unlist
               </th>
             </tr>
@@ -139,7 +139,7 @@ const CentersTable = () => {
           <tbody>
             {healthCenters.map((healthCenter, index) => (
               <tr>
-                <td className="border border-gray-400 px-4 py-2">
+                <td className="border border-gray-400 sm:px-4 sm:py-2 table-name">
                   <input
                     type="text"
                     className="w-full"
@@ -147,7 +147,7 @@ const CentersTable = () => {
                     readOnly
                   />
                 </td>
-                <td className="border border-gray-400 px-4 py-2">
+                <td className="border border-gray-400 sm:px-4 sm:py-2">
                   <input
                     type="text"
                     className="w-full"
@@ -155,7 +155,7 @@ const CentersTable = () => {
                     readOnly
                   />
                 </td>
-                <td className="border border-gray-400 text-center px-4 py-2 ">
+                <td className="border border-gray-400 text-center sm:px-4 sm:py-2 ">
                   <input
                     type="text"
                     className="w-full"
@@ -163,19 +163,19 @@ const CentersTable = () => {
                     readOnly
                   />
                 </td>
-                <td className="border border-gray-400 px-4 py-2 flex justify-center">
+                <td className="border border-gray-400 sm:px-4 sm:py-2 flex justify-center">
                   <button
-                    className="my-2 px-4 py-2 rounded-md shadowtransition-all duration-250 bg-cyan-400 hover:bg-cyan-500 text-m"
+                    className="my-2 sm:px-4 sm:py-2 rounded-md shadowtransition-all duration-250 bg-cyan-400 hover:bg-cyan-500 text-m table-button"
                     type="button"
                     onClick={() => deleteHealthCenter(healthCenter.docRef)}
                   >
                     Remove
                   </button>
                 </td>
-                <td className="border border-gray-400 text-center px-4 py-2 ">
+                <td className="border border-gray-400 text-center sm:px-4 sm:py-2">
                   <input
                     type="checkbox"
-                    className="form-checkbox h-5 w-5 px-4 py-2 text-gray-600"
+                    className="form-checkbox h-5 w-5 sm:px-4 sm:py-2 text-gray-600"
                     checked={healthCenter.isListed}
                     onChange={() =>
                       handleCheckboxChange(

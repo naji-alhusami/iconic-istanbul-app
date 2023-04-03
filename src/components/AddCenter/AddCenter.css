@@ -21,6 +21,19 @@ body {
   height: 100%;
 }
 
+@media screen and (min-width: 401px) and (max-width: 641px) {
+  .form {
+    padding: 1rem;
+    margin: 1rem;
+  }
+  .table {
+    margin: 1rem;
+  }
+  .table-button {
+    padding:5%;
+  }
+}
+
 @media (max-width: 400px) {
   /* styles to apply when screen size is less than 400px */
   body {
@@ -29,7 +42,13 @@ body {
     /* margin-top: 0; */
   }
   .form {
-    margin-top: 1rem;
-    margin-left: 1rem;
+    padding: 1rem;
+    margin: 1rem;
+  }
+  .table {
+    margin: 1rem;
+  }
+  .table-button {
+    padding:5%;
   }
 }
