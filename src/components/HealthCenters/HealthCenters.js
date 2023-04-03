@@ -39,16 +39,16 @@ const HealthCenters = () => {
   return (
     <div className="container">
       <div className=" box">
-        <table className=" bg-white table-fixed w-[80%] border-collapse border border-gray-400 m-12">
+        <table className=" bg-white table-fixed sm:w-[80%] table border-collapse border border-gray-400 sm:m-12 table">
           <thead>
             <tr>
-              <th className="w-[10rem] border border-gray-400 px-4 py-2">
+              <th className="sm:w-[10rem] border border-gray-400 sm:px-4 sm:py-2 table-name">
                 Name
               </th>
-              <th className="w-[20rem] border border-gray-400 px-4 py-2">
+              <th className="w-[20rem] border border-gray-400 sm:px-4 sm:py-2 table-address">
                 Address
               </th>
-              <th className="w-[10rem] border border-gray-400 px-4 py-2">
+              <th className="w-[10rem] border border-gray-400 sm:px-4 sm:py-2 table-category">
                 Category
               </th>
             </tr>
@@ -56,7 +56,7 @@ const HealthCenters = () => {
           <tbody>
             {healthCenters.map((healthCenter, index) => (
               <tr>
-                <td className="border border-gray-400 px-4 py-2">
+                <td className="border border-gray-400 sm:px-4 sm:py-2 table-name">
                   <input
                     type="text"
                     className="w-full"
@@ -64,7 +64,7 @@ const HealthCenters = () => {
                     readOnly
                   />
                 </td>
-                <td className="border border-gray-400 px-4 py-2">
+                <td className="border border-gray-400 sm:px-4 sm:py-2 table-address">
                   <input
                     type="text"
                     className="w-full"
@@ -72,7 +72,7 @@ const HealthCenters = () => {
                     readOnly
                   />
                 </td>
-                <td className="border border-gray-400 px-4 py-2 ">
+                <td className="border border-gray-400 sm:px-4 sm:py-2 table-category">
                   <input
                     type="text"
                     className="w-full"

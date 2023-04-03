@@ -68,7 +68,7 @@ const CentersTable = () => {
       <div className=" box">
         <form
           onSubmit={handleAddressSubmit}
-          className=" max-w-lg bg-white rounded-md mx-auto xl:m-20 lg:m-12 p-12"
+          className=" bg-white rounded-md mx-auto xl:m-20 lg:m-12 sm:m-12 form p-12"
         >
           <div className="mb-4">
             <label htmlFor="name" className="block font-medium mb-2">
@@ -116,7 +116,7 @@ const CentersTable = () => {
             Add
           </button>
         </form>
-        <table className=" bg-white table-fixed w-[80%] border-collapse border border-gray-400 m-12">
+        <table className=" bg-white table-fixed  border-collapse border border-gray-400 sm:m-12">
           <thead>
             <tr>
               <th className="w-[10rem] border border-gray-400 px-4 py-2">
