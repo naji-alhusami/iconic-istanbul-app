@@ -22,8 +22,10 @@ const CentersTable = () => {
 
   const { center, loading } = useSelector((state) => state.center);
   const healthCenters = center;
-  const listedHealthCenters = healthCenters.filter((center) => !center.isListed);
-
+  const listedHealthCenters = healthCenters.filter(
+    (center) => !center.isListed
+  );
+  console.log(listedHealthCenters);
 
   const handleCheckboxChange = (id, isListed) => {
     dispatch(editCenter({ id, isListed }));
@@ -138,7 +140,7 @@ const CentersTable = () => {
           </thead>
           <tbody>
             {healthCenters.map((healthCenter, index) => (
-              <tr>
+              <tr key={index}>
                 <td className="border border-gray-400 sm:px-4 sm:py-2 table-name">
                   <input
                     type="text"
@@ -201,9 +203,9 @@ const CentersTable = () => {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             {
-              listedHealthCenters.map((healthCenter, index) => (
-                // isListed[index] && (
+               listedHealthCenters.map((healthCenter, index) => (
                 <Marker
+                  key={index}
                   position={[healthCenter.lat, healthCenter.lon]}
                   icon={markerIcon}
                 >

@@ -84,20 +84,21 @@ const Navbar = () => {
           <div className="mt-3 space-y-2 lg:hidden md:hidden ">
             <div className="flex flex-col items-start  text-xl ">
               <ul className="items-center justify-center  md:flex md:space-x-6 md:space-y-0">
-                <Link
-                  to="/"
-                  onClick={() => {
-                    setShowNavbarInResponsive(!showNavbarInResponsive);
-                  }}
-                >
-                  <li className="w-fit p-2 hover:text-white hover:bg-cyan-400 hover:rounded-md ">
-                    <a href="Home">Home</a>
-                  </li>
-                </Link>
-                <li>
+                <li className="my-2">
                   <Link
-                    className="w-fit p-2 hover:text-white hover:bg-cyan-400 hover:rounded-md"
+                    to="/"
+                    className="w-fit p-2 hover:text-white hover:bg-cyan-400 hover:rounded-md "
+                    onClick={() => {
+                      setShowNavbarInResponsive(!showNavbarInResponsive);
+                    }}
+                  >
+                    Home
+                  </Link>
+                </li>
+                <li className="my-3">
+                  <Link
                     to="/healthcenters"
+                    className="w-fit p-2 hover:text-white hover:bg-cyan-400 hover:rounded-md"
                     onClick={() => {
                       setShowNavbarInResponsive(!showNavbarInResponsive);
                     }}
@@ -111,62 +112,51 @@ const Navbar = () => {
                     {!userLogin.userlogin && (
                       <Link
                         to="/login"
+                        className="flex peer my-2 flex justify-center px-4 py-2 text-center rounded-md shadowtransition-all duration-250 bg-cyan-400 hover:bg-cyan-500 hover:text-white text-m"
                         onClick={() => {
                           setShowNavbarInResponsive(!showNavbarInResponsive);
                         }}
                       >
+                        Login
+                      </Link>
+                    )}
+                    {userLogin.userlogin && (
+                      <div className="w-fit hover:text-indigo-100 hover:bg-cyan-400 hover:rounded-md cursor-pointer relative  absolute">
                         <button
                           type="button"
-                          className="flex peer my-2 flex justify-center px-4 py-2 text-center rounded-md shadowtransition-all duration-250 bg-cyan-400 hover:bg-cyan-500 hover:text-white text-m"
+                          className="flex peer text-white bg-cyan-400 hover:bg-cyan-500 rounded-md p-2"
                           onClick={() =>
                             setShowProfileInResponsive(!showProfileInResponsive)
                           }
                         >
-                          Login
+                          Admin
+                          <AiFillCaretDown className=" mt-1 ml-2" />
                         </button>
-                      </Link>
-                    )}
-                    {userLogin.userlogin && (
-                      <li className="w-fit hover:text-indigo-100 hover:bg-cyan-400 hover:rounded-md cursor-pointer ">
-                        <div className=" relative  absolute">
-                          <button
-                            type="button"
-                            className="flex peer text-white bg-cyan-400 hover:bg-cyan-500 rounded-md p-2"
-                            onClick={() =>
-                              setShowProfileInResponsive(
-                                !showProfileInResponsive
-                              )
-                            }
-                          >
-                            Admin
-                            <AiFillCaretDown className=" mt-1 ml-2" />
-                          </button>
-                          {showProfileInResponsive ? (
-                            <div className="flex relative peer-hover:flex hover:flex w-[100px] flex-col bg-white drop-shadow-lg">
-                              <Link
-                                className="p-2 pl-5 text-black hover:bg-cyan-400 hover:text-white"
-                                to="/addcenter"
-                                onClick={() => {
-                                  setShowNavbarInResponsive(
-                                    !showNavbarInResponsive
-                                  );
-                                }}
-                              >
-                                Centers
-                              </Link>
-                              <button
-                                type="button"
-                                className="p-2 text-black hover:bg-cyan-400 hover:text-indigo-100"
-                                onClick={logOut}
-                              >
-                                Log Out
-                              </button>
-                            </div>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      </li>
+                        {showProfileInResponsive ? (
+                          <div className="flex relative peer-hover:flex hover:flex w-[100px] flex-col bg-white drop-shadow-lg">
+                            <Link
+                              className="p-2 pl-5 text-black hover:bg-cyan-400 hover:text-white"
+                              to="/addcenter"
+                              onClick={() => {
+                                setShowNavbarInResponsive(
+                                  !showNavbarInResponsive
+                                );
+                              }}
+                            >
+                              Centers
+                            </Link>
+                            <button
+                              type="button"
+                              className="p-2 text-black hover:bg-cyan-400 hover:text-indigo-100"
+                              onClick={logOut}
+                            >
+                              Log Out
+                            </button>
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                      </div>
                     )}
                   </div>
                 </li>
@@ -178,38 +168,39 @@ const Navbar = () => {
         {/* big screens */}
         <div className="hidden space-x-2 md:inline-block">
           <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
-            <Link to="/">
-              <li className=" p-2 hover:text-white hover:bg-cyan-400 hover:rounded-md">
-                <a href="Home">Home</a>
-              </li>
-            </Link>
-
-            <Link
-              to="/healthcenters"
-              className=" p-2 hover:text-white hover:bg-cyan-400 hover:rounded-md"
-            >
-              <li>Health Centers</li>
-            </Link>
+            <li>
+              <Link
+                to="/"
+                className=" p-2 hover:text-white hover:bg-cyan-400 hover:rounded-md"
+              >
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/healthcenters"
+                className=" p-2 hover:text-white hover:bg-cyan-400 hover:rounded-md"
+              >
+                Health Centers
+              </Link>
+            </li>
             {!userLogin.userlogin && (
-              <Link to="/login">
-                <button
-                  type="button"
+              <li>
+                <Link
+                  to="/login"
                   className="flex justify-center px-4 py-2 text-center rounded-md shadowtransition-all duration-250 bg-cyan-400  bg-cyan-400 hover:bg-cyan-500 hover:text-white text-m"
                 >
                   Login
-                </button>
-              </Link>
+                </Link>
+              </li>
             )}
             {userLogin.userlogin && (
               <li className="hover:text-indigo-100 hover:bg-cyan-400 hover:rounded-md cursor-pointer ">
                 <div className="relative absolute">
-                  <button
-                    type="button"
-                    className="flex peer text-white p-2 bg-cyan-500 hover:bg-cyan-600 hover:text-white rounded-md"
-                  >
+                  <div className="flex peer text-white p-2 bg-cyan-500 hover:bg-cyan-600 hover:text-white rounded-md">
                     Admin
                     <AiFillCaretDown className="mt-1 ml-2" />
-                  </button>
+                  </div>
 
                   <div className="hidden absolute peer-hover:flex hover:flex w-[100px] flex-col bg-white drop-shadow-lg">
                     <Link

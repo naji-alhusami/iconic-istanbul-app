@@ -14,7 +14,7 @@ const HealthCenters = () => {
   const dispatch = useDispatch();
   const { center, loading } = useSelector((state) => state.center);
   const healthCenters = center;
-
+  
   // useEffect for getting data from Firebase
   useEffect(() => {
     const getData = () => {
@@ -54,8 +54,8 @@ const HealthCenters = () => {
             </tr>
           </thead>
           <tbody>
-            {healthCenters.map((healthCenter, index) => (
-              <tr>
+            {healthCenters.map((healthCenter) => (
+              <tr key={healthCenter.id}>
                 <td className="border border-gray-400 sm:px-4 sm:py-2 table-name">
                   <input
                     type="text"
@@ -90,15 +90,14 @@ const HealthCenters = () => {
             className="justify-center "
             center={[51.505, -0.09]}
             zoom={13}
-            // scrollWheelZoom={true}
           >
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            {healthCenters.map((healthCenter, index) => (
+            {healthCenters.map((healthCenter) => (
               <Marker
-                // key={index}
+                key={healthCenter.id}
                 position={[healthCenter.lat, healthCenter.lon]}
                 icon={markerIcon}
               >
