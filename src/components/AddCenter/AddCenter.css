@@ -1,6 +1,7 @@
 #map {
   height: 70vh;
   width: 70vw;
+  z-index: 0;
 }
 
 body {
@@ -22,6 +23,9 @@ body {
 }
 
 @media screen and (min-width: 401px) and (max-width: 641px) {
+  /* .map {
+    position: flex;
+  } */
   .form {
     padding: 1rem;
     margin: 1rem;
