@@ -189,7 +189,7 @@ const CentersTable = () => {
             ))}
           </tbody>
         </table>
-        <div className="rounded-md bg-white w-fit p-2 m-12">
+        <div className="rounded-md bg-white w-fit p-2 m-12 z-0">
           <MapContainer
             id="map"
             className="justify-center "

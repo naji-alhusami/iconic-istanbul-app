@@ -75,7 +75,7 @@ const Navbar = () => {
 
         {/* mobile screens */}
         <div
-          className={`flex-1 justify-self-center bg-cyan-50 pt-4 pl-4 h-full text-base left-[-250px]  transition duration-300 transform fixed w-[250px] z-50 pb-3 md:block md:pb-0 md:mt-0 ${
+          className={`flex-1 z-10 justify-self-center bg-cyan-50 pt-4 pl-4 h-full text-base left-[-250px]  transition duration-300 transform fixed w-[250px] pb-3 md:block md:pb-0 md:mt-0 ${
             showNavbarInResponsive
               ? "translate-x-full "
               : "translate-x-[-250px]"
