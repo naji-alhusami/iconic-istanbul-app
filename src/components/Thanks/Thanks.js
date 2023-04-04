@@ -10,18 +10,14 @@ const Thanks = () => {
       style={{ backgroundImage: `url(${BackgroundImage})`, top: 0 }}
     >
       <div className="flex flex-col pt-3 pb-12 mr-6  items-end md:flex-col   lg:flex-row lg:justify-end md:items-end md:mr-12 sm:mr-12 lg:pt-30 xl:mr-12 lg:pb-20 md:pt-20">
-        <div className=" flex flex-col items-end   md:flex-col md:items-  lg:items-center lg:mr-12">
-          <p className="text-3xl mb-5 md:text-4xl lg:text-5xl text-bold">
+        <div className=" flex flex-col items-end   md:flex-col md:items-end  lg:items-end">
+          <p className="text-2xl mb-5 md:text-4xl lg:text-5xl text-bold">
             {" "}
             Thanks for signing-up,
           </p>
-          <p className="text-3xl mb-5 md:text-4xl lg:text-5xl text-bold">
+          <p className="text-2xl mb-5 md:text-4xl lg:text-5xl text-bold">
             {" "}
             please check your email
-          </p>
-          <p className="text-3xl mb-5 md:text-4xl lg:text-5xl text-bold">
-            {" "}
-            you need to verify your account
           </p>
           <Link to="/">
             <button
