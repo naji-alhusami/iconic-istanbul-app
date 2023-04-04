@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -10,25 +10,26 @@ const LoginWithUser = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const userLogin = useSelector((state) => state.users);
+  console.log(userLogin);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // dispatch user login with email: 
-  const handleSubmit = (event) => {
+  // dispatch user login with email:
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    dispatch(loginUser({ email, password }));
+    await dispatch(loginUser({ email, password }));
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setError("Please Enter Valid Email");
-    } else if (userLogin.error) {
+    if (userLogin.error) {
       setError(userLogin.error);
-    } else {
-      setError("");
-      navigate("/");
     }
   };
+
+  useEffect(() => {
+    if (userLogin.userlogin) {
+      navigate("/");
+    }
+  }, [userLogin.userlogin, navigate]);
 
   return (
     <div className="bg-white m-12 rounded-md">
