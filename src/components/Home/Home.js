@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 import BackgroundImage from "../Images/BackgroundImage.jpg";
 
@@ -12,14 +13,22 @@ const Home = () => {
     >
       <div className="flex flex-col pt-12 pb-12 mr-6  items-end md:flex-col   lg:flex-row lg:justify-end md:items-end md:mr-12 sm:mr-12 lg:pt-30 xl:mr-12 lg:pb-20 md:pt-20">
         <div className=" flex flex-col items-end   md:flex-col md:items-  lg:items-center lg:mr-12">
-          <p className="text-3xl mb-5 md:text-4xl lg:text-5xl text-bold">
-            {" "}
+          <motion.p
+            initial={{ x: 100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 1 }}
+            className="text-3xl mb-5 md:text-4xl lg:text-5xl text-bold"
+          >
             Please Check
-          </p>
-          <p className="text-3xl mb-5 md:text-4xl lg:text-5xl text-bold">
-            {" "}
+          </motion.p>
+          <motion.p
+            initial={{ x: -100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 1 }}
+            className="text-3xl mb-5 md:text-4xl lg:text-5xl text-bold"
+          >
             Our Health Centers
-          </p>
+          </motion.p>
           <Link to="/healthcenters">
             <button
               type="button"
