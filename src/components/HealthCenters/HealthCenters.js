@@ -133,7 +133,6 @@ const AddCenter = () => {
                   key={index}
                   position={[healthCenter.lat, healthCenter.lon]}
                   icon={markerIcon}
-                  onClick={()=>setShow(false)}
                   eventHandlers={{
                     click: () => {
                       const map = mapRef.current;
@@ -141,6 +140,7 @@ const AddCenter = () => {
                         animate: true,
                         duration: 2,
                       });
+                      setShow(true);
                     },
                   }}
                 >
