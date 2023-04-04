@@ -143,7 +143,6 @@ const usersSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(loginUser.fulfilled, (state, action) => {
-      console.log(action.payload);
       state.loading = false;
       if (action.payload.error) {
         state.user = null;
@@ -199,7 +198,7 @@ const usersSlice = createSlice({
     });
     builder.addCase(loadUser.fulfilled, (state, action) => {
       state.loading = false;
-      if (action.payload.error) {
+      if (action.payload && action.payload.error) {
         state.user = null;
         state.userlogin = false;
         state.error = action.payload.error;

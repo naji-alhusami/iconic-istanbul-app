@@ -24,6 +24,7 @@ function App() {
         if (user) {
           dispatch(loadUser(user.uid));
         } else {
+          dispatch(loadUser(null));
         }
       });
     };
