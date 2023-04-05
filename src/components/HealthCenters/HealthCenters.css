@@ -23,14 +23,11 @@ body {
 }
 
 @media (max-width: 400px) {
-  /* styles to apply when screen size is less than 400px */
   body {
     font-size: 14px;
     background: url("../Images/BackgroundImage.jpg") no-repeat fixed center;
-    /* margin-top: 0; */
   }
   .table {
-    /* width: 30%; */
     margin-left: 1rem;
     margin-top: 1rem;
     margin-right: 1rem;

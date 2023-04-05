@@ -47,7 +47,6 @@ export const getCenters = createAsyncThunk(
       const centers = [];
       const querySnapshot = await getDocs(collection(db, "healthcenters"));
       querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
         centers.push({ docRef: doc.id, ...doc.data() });
       });
       return centers;

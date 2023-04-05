@@ -52,6 +52,7 @@ const Singup = () => {
             SIGNUP NOW
           </h2>
           <div className="lg:flex lg:flex-row lg:justify-between flex flex-col gap-4">
+            
             {/* First Name */}
             <div>
               <input

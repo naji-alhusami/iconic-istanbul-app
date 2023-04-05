@@ -8,7 +8,6 @@ import {
   signOut,
 } from "firebase/auth";
 import { doc, setDoc, getDoc } from "firebase/firestore";
-
 import { db, auth, googleAuth } from "../../firebase-config";
 
 // start of signup:
@@ -24,7 +23,7 @@ export const signupUser = createAsyncThunk(
         email,
         password
       );
-      await sendEmailVerification(auth.currentUser);
+      await sendEmailVerification(auth.currentUser); // send email verification
 
       const docRef = doc(db, "users", user.uid);
       await setDoc(docRef, {

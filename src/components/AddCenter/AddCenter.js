@@ -10,7 +10,6 @@ import {
   deleteCenter,
   editCenter,
 } from "../../features/healthCenters/healthCentersSlice";
-// import CentersTable from "./CentersTable";
 import "leaflet/dist/leaflet.css";
 import "./AddCenter.css";
 
@@ -97,6 +96,7 @@ const AddCenter = () => {
   return (
     <div className="container">
       <div className=" box">
+        {/* Health Centers Adding Form */}
         <form
           onSubmit={handleAddressSubmit}
           className=" bg-white rounded-md sm:m-6 xl:m-20 lg:m-12 sm:m-12 form sm:p-12"
@@ -148,12 +148,7 @@ const AddCenter = () => {
           </button>
         </form>
 
-        {/* <CentersTable
-          deleteHealthCenter={deleteHealthCenter}
-          healthCenters={healthCenters}
-          getBounds={getBounds}
-        /> */}
-
+        {/* Health Centers Table */}
         <table className=" bg-white table-fixed  border-collapse border border-gray-400 sm:m-12 table">
           <thead>
             <tr>
@@ -228,6 +223,7 @@ const AddCenter = () => {
           </tbody>
         </table>
 
+        {/* Health Centers Map */}
         <div className="rounded-md bg-white w-fit p-2 m-12">
           <MapContainer
             id="map"

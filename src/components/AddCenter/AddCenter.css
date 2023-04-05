@@ -23,9 +23,6 @@ body {
 }
 
 @media screen and (min-width: 401px) and (max-width: 641px) {
-  /* .map {
-    position: flex;
-  } */
   .form {
     padding: 1rem;
     margin: 1rem;
@@ -39,11 +36,9 @@ body {
 }
 
 @media (max-width: 400px) {
-  /* styles to apply when screen size is less than 400px */
   body {
     font-size: 14px;
     background: url("../Images/BackgroundImage.jpg") no-repeat fixed center;
-    /* margin-top: 0; */
   }
   .form {
     padding: 1rem;

@@ -165,7 +165,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* big screens */}
+        {/* Large screens */}
         <div className="hidden space-x-2 md:inline-block">
           <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
             <li>

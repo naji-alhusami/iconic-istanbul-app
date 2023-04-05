@@ -69,6 +69,7 @@ const AddCenter = () => {
   return (
     <div className="container">
       <div className=" box">
+        {/* Health Center Table */}
         <table className=" bg-white table-fixed  border-collapse border border-gray-400 sm:m-12 table">
           <thead>
             <tr>
@@ -115,6 +116,7 @@ const AddCenter = () => {
           </tbody>
         </table>
 
+        {/* Health Center Map */}
         <div className="rounded-md bg-white w-fit p-2 m-12">
           <MapContainer
             id="map"
