@@ -35,6 +35,7 @@ export const signupUser = createAsyncThunk(
         birthdayMonth,
         birthdayYear,
       });
+
       return { id: user.uid, email: user.email };
     } catch (error) {
       return rejectWithValue(error.message);
@@ -49,11 +50,11 @@ export const loginUser = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     const { email, password } = payload;
     try {
-      const { user } = await signInWithEmailAndPassword(auth, email, password);
-      if (user.emailVerified === false) {
-        return { error: "Email is Not Verified" };
+      const response = await signInWithEmailAndPassword(auth, email, password);
+      if (response.user.emailVerified === false) {
+        return rejectWithValue("Email is Not Verified");
       }
-      const docRef = doc(db, "users", user.uid);
+      const docRef = doc(db, "users", response.user.uid);
       const docSnap = await getDoc(docRef);
 
       return docSnap.data();
@@ -101,9 +102,12 @@ export const logoutUser = createAsyncThunk(
 // Start of Load User:
 export const loadUser = createAsyncThunk(
   "user/loadUser",
-  async (id, { rejectWithValue }) => {
+  async (payload, { rejectWithValue }) => {
     try {
-      const docRef = doc(db, "users", id);
+      if(payload.emailVerified === false) {
+        return rejectWithValue("Email is not verified");
+      }
+      const docRef = doc(db, "users", payload.uid);
       const docSnap = await getDoc(docRef);
       return docSnap.data();
     } catch (error) {
@@ -116,7 +120,7 @@ export const loadUser = createAsyncThunk(
 const usersSlice = createSlice({
   name: "users",
   initialState: {
-    loading: false,
+    loading: true,
     user: {},
     error: null,
     userlogin: false,
@@ -143,7 +147,7 @@ const usersSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(loginUser.fulfilled, (state, action) => {
-      state.loading = false;
+      // state.loading = false;
       if (action.payload.error) {
         state.user = null;
         state.userlogin = false;

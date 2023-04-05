@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 import Home from "./components/Home/Home";
@@ -16,13 +16,16 @@ import "./App.css";
 
 function App() {
   const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.users);
 
   useEffect(() => {
     const load = () => {
       const auth = getAuth();
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          dispatch(loadUser(user.uid));
+          dispatch(
+            loadUser({ uid: user.uid, emailVerified: user.emailVerified })
+          );
         } else {
           dispatch(loadUser(null));
         }
@@ -31,6 +34,10 @@ function App() {
 
     load();
   }, [dispatch]);
+
+  if (loading) {
+    return "Loading...";
+  }
 
   return (
     <BrowserRouter>

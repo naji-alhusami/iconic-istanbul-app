@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState  } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 import { loginUser } from "../../features/users/usersSlice";
@@ -9,7 +9,6 @@ const LoginWithUser = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const userLogin = useSelector((state) => state.users);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -17,18 +16,15 @@ const LoginWithUser = () => {
   // dispatch user login with email:
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await dispatch(loginUser({ email, password }));
+    const response = await dispatch(loginUser({ email, password }));
 
-    if (userLogin.error) {
-      setError(userLogin.error);
+    if (response.meta.rejectedWithValue) {
+      setError(response.payload);
+      return; 
     }
+    navigate("/");
   };
 
-  useEffect(() => {
-    if (userLogin.userlogin) {
-      navigate("/");
-    }
-  }, [userLogin.userlogin, navigate]);
 
   return (
     <div className="bg-white m-12 rounded-md">
