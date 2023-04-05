@@ -68,7 +68,7 @@ export const loginUser = createAsyncThunk(
 // Sign in with Google:
 export const loginUserWithGoogle = createAsyncThunk(
   "user/loginUserWithGoogle",
-  async ({ rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       const { user } = await signInWithPopup(auth, googleAuth);
       const docRef = doc(db, "users", user.uid);
@@ -104,7 +104,7 @@ export const loadUser = createAsyncThunk(
   "user/loadUser",
   async (payload, { rejectWithValue }) => {
     try {
-      if(payload.emailVerified === false) {
+      if (payload.emailVerified === false) {
         return rejectWithValue("Email is not verified");
       }
       const docRef = doc(db, "users", payload.uid);
@@ -143,8 +143,7 @@ const usersSlice = createSlice({
     });
 
     // Login Cases:
-    builder.addCase(loginUser.pending, (state) => {
-    });
+    builder.addCase(loginUser.pending, (state) => {});
     builder.addCase(loginUser.fulfilled, (state, action) => {
       if (action.payload.error) {
         state.user = null;
@@ -164,11 +163,12 @@ const usersSlice = createSlice({
 
     // Login with Google Cases:
     builder.addCase(loginUserWithGoogle.pending, (state) => {
-      state.loading = true;
+      // state.loading = true;
     });
     builder.addCase(loginUserWithGoogle.fulfilled, (state, action) => {
       state.loading = false;
       state.user = action.payload;
+      state.userlogin = true;
       state.error = null;
     });
     builder.addCase(loginUserWithGoogle.rejected, (state, action) => {

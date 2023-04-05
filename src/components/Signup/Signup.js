@@ -253,10 +253,9 @@ const Singup = () => {
             <button
               type="button"
               style={{ height: 32, width: 32 }}
-              onClick={(userDat) => {
-                dispatch(
-                  loginUserWithGoogle({ id: userDat.id, email: userDat.email })
-                );
+              onClick={() => {
+                dispatch(loginUserWithGoogle());
+                navigate("/");
               }}
             >
               <img src={googleicon} alt="Google Icon" />{" "}

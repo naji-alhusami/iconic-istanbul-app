@@ -43,8 +43,8 @@ function App() {
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
         <Route element={<RequireAuth />}>
           <Route path="/addcenter" element={<AddCenter />} />
         </Route>
