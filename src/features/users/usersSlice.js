@@ -144,10 +144,8 @@ const usersSlice = createSlice({
 
     // Login Cases:
     builder.addCase(loginUser.pending, (state) => {
-      state.loading = true;
     });
     builder.addCase(loginUser.fulfilled, (state, action) => {
-      // state.loading = false;
       if (action.payload.error) {
         state.user = null;
         state.userlogin = false;
