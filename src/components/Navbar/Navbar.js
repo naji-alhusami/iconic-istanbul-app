@@ -5,7 +5,7 @@ import { AiFillCaretDown } from "react-icons/ai";
 
 import { logoutUser } from "../../features/users/usersSlice";
 
-import HERA from "../Images/HERA.jpg";
+import emergency from "../Images/emergency.png";
 
 const Navbar = () => {
   const userLogin = useSelector((state) => state.users);
@@ -65,9 +65,9 @@ const Navbar = () => {
           </div>
           <Link to="/">
             <div className="flex flex-row items-center">
-              <img src={HERA} alt="logo" className=" h-9 w-9 mt-2 ml-6" />
+              <img src={emergency} alt="logo" className=" h-9 w-9 mt-2 ml-6" />
               <h2 className="text-xl text-bold m-4 ml-3 font-medium">
-                HERA Digital Health
+                Digital Health Centers
               </h2>
             </div>
           </Link>
