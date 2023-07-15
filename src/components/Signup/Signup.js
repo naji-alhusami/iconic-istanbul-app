@@ -22,7 +22,7 @@ const Singup = () => {
   const navigate = useNavigate();
 
   // dispatch signup new user:
-  const onSubmitform = async (userData) => {
+  const onSubmitform = (userData) => {
     dispatch(
       signupUser({
         email: userData.email,
@@ -40,8 +40,11 @@ const Singup = () => {
 
   return (
     <div
-      style={{ backgroundImage: `url(${BackgroundImage})`, top: 0 }}
-      className="w-screen"
+      // style={{
+      //   backgroundImage: `url(${BackgroundImage})`,
+      //   backgroundSize: "cover",
+      // }}
+      className="w-screen h-screen bg-cover bg-no-repeat"
     >
       <div className="flex justify-center shadow-2xl">
         <form
@@ -52,7 +55,6 @@ const Singup = () => {
             SIGNUP NOW
           </h2>
           <div className="lg:flex lg:flex-row lg:justify-between flex flex-col gap-4">
-            
             {/* First Name */}
             <div>
               <input

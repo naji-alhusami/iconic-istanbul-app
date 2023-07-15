@@ -12,6 +12,7 @@ import Thanks from "./components/Thanks/Thanks";
 import RequireAuth from "./components/RequireAuth/RequireAuth";
 import HealthCenters from "./components/HealthCenters/HealthCenters";
 import { loadUser } from "./features/users/usersSlice";
+
 import "./App.css";
 
 function App() {
