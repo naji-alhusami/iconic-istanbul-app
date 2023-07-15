@@ -65,12 +65,16 @@ const Navbar = () => {
             </button>
           </div>
           <Link to="/">
-            <div className="flex flex-row items-center">
-              <img src={galata} alt="logo" className=" h-9 w-9 mt-2 ml-6" />
-              <h2 className="text-xl m-4 ml-3 font-bold text-orange-900 ">
+            <motion.div
+              className="flex flex-row items-center"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <img src={galata} alt="logo" className="h-9 w-9 mt-2 ml-6" />
+              <h2 className="text-xl m-4 ml-3 font-bold text-orange-900">
                 EXPLORE ISTANBUL
               </h2>
-            </div>
+            </motion.div>
           </Link>
         </div>
 
@@ -133,7 +137,7 @@ const Navbar = () => {
                     {!userLogin.userlogin && (
                       <li>
                         <motion.div
-                          whileHover={{ scale: 1.07 }}
+                          whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
                         >
                           <Link
@@ -194,7 +198,7 @@ const Navbar = () => {
         <div className="hidden space-x-2 md:inline-block">
           <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
             <li>
-              <Link to="/healthcenters" className="font-bold text-orange-900">
+              <Link to="/" className="font-bold text-orange-900">
                 <motion.div
                   className="p-2"
                   whileHover={{
@@ -226,7 +230,7 @@ const Navbar = () => {
             {!userLogin.userlogin && (
               <li>
                 <motion.div
-                  whileHover={{ scale: 1.07 }}
+                  whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                 >
                   <Link
