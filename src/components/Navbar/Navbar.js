@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { motion } from "framer-motion";
 import { AiFillCaretDown } from "react-icons/ai";
 
 import { logoutUser } from "../../features/users/usersSlice";
 
-import emergency from "../Images/emergency.png";
+import galata from "../Images/Galata.svg";
 
 const Navbar = () => {
   const userLogin = useSelector((state) => state.users);
@@ -65,9 +66,9 @@ const Navbar = () => {
           </div>
           <Link to="/">
             <div className="flex flex-row items-center">
-              <img src={emergency} alt="logo" className=" h-9 w-9 mt-2 ml-6" />
-              <h2 className="text-xl text-bold m-4 ml-3 font-medium">
-                Digital Health Centers
+              <img src={galata} alt="logo" className=" h-9 w-9 mt-2 ml-6" />
+              <h2 className="text-xl m-4 ml-3 font-bold text-orange-900 ">
+                EXPLORE ISTANBUL
               </h2>
             </div>
           </Link>
@@ -84,41 +85,65 @@ const Navbar = () => {
           <div className="mt-3 space-y-2 lg:hidden md:hidden ">
             <div className="flex flex-col items-start  text-xl ">
               <ul className="items-center justify-center  md:flex md:space-x-6 md:space-y-0">
-                <li className="my-2">
+                <li className="w-fit">
                   <Link
                     to="/"
-                    className="w-fit p-2 hover:text-white hover:bg-cyan-400 hover:rounded-md "
+                    className=" p-1 font-bold text-orange-900"
                     onClick={() => {
                       setShowNavbarInResponsive(!showNavbarInResponsive);
                     }}
                   >
-                    Home
+                    <motion.div
+                      className="p-2"
+                      whileHover={{
+                        scale: 1.07,
+                        backgroundColor: "brown",
+                        color: "white",
+                        borderRadius: "0.25rem",
+                      }}
+                    >
+                      HOME
+                    </motion.div>
                   </Link>
                 </li>
-                <li className="my-3">
+                <li className="w-fit">
                   <Link
                     to="/healthcenters"
-                    className="w-fit p-2 hover:text-white hover:bg-cyan-400 hover:rounded-md"
+                    className="p-1 font-bold text-orange-900"
                     onClick={() => {
                       setShowNavbarInResponsive(!showNavbarInResponsive);
                     }}
                   >
-                    Health Centers
+                    <motion.div
+                      className="p-2"
+                      whileHover={{
+                        scale: 1.07,
+                        backgroundColor: "brown",
+                        color: "white",
+                        borderRadius: "0.25rem",
+                      }}
+                    >
+                      ICONIC ISTANBUL
+                    </motion.div>
                   </Link>
                 </li>
 
                 <li className="w-fit hover:text-indigo-100 hover:bg-cyan-400 hover:rounded-md cursor-pointer ">
                   <div className=" relative  absolute">
                     {!userLogin.userlogin && (
-                      <Link
-                        to="/login"
-                        className="flex peer my-2 flex justify-center px-4 py-2 text-center rounded-md shadowtransition-all duration-250 bg-cyan-400 hover:bg-cyan-500 hover:text-white text-m"
-                        onClick={() => {
-                          setShowNavbarInResponsive(!showNavbarInResponsive);
-                        }}
-                      >
-                        Login
-                      </Link>
+                      <li>
+                        <motion.div
+                          whileHover={{ scale: 1.07 }}
+                          whileTap={{ scale: 0.9 }}
+                        >
+                          <Link
+                            to="/login"
+                            className="flex justify-center px-4 py-2 text-center font-bold rounded-md shadow transition-all duration-250 bg-cyan-400 bg-orange-400 hover:bg-orange-800 hover:text-white text-m"
+                          >
+                            Login
+                          </Link>
+                        </motion.div>
+                      </li>
                     )}
                     {userLogin.userlogin && (
                       <div className="w-fit hover:text-indigo-100 hover:bg-cyan-400 hover:rounded-md cursor-pointer relative  absolute">
@@ -169,29 +194,48 @@ const Navbar = () => {
         <div className="hidden space-x-2 md:inline-block">
           <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
             <li>
-              <Link
-                to="/"
-                className=" p-2 hover:text-white hover:bg-cyan-400 hover:rounded-md"
-              >
-                Home
+              <Link to="/healthcenters" className="font-bold text-orange-900">
+                <motion.div
+                  className="p-2"
+                  whileHover={{
+                    scale: 1.07,
+                    backgroundColor: "brown",
+                    color: "white",
+                    borderRadius: "0.25rem",
+                  }}
+                >
+                  HOME
+                </motion.div>
               </Link>
             </li>
             <li>
-              <Link
-                to="/healthcenters"
-                className=" p-2 hover:text-white hover:bg-cyan-400 hover:rounded-md"
-              >
-                Health Centers
+              <Link to="/healthcenters" className="font-bold text-orange-900">
+                <motion.div
+                  className="p-2"
+                  whileHover={{
+                    scale: 1.07,
+                    backgroundColor: "brown",
+                    color: "white",
+                    borderRadius: "0.25rem",
+                  }}
+                >
+                  ICONIC ISTANBUL
+                </motion.div>
               </Link>
             </li>
             {!userLogin.userlogin && (
               <li>
-                <Link
-                  to="/login"
-                  className="flex justify-center px-4 py-2 text-center rounded-md shadowtransition-all duration-250 bg-cyan-400  bg-cyan-400 hover:bg-cyan-500 hover:text-white text-m"
+                <motion.div
+                  whileHover={{ scale: 1.07 }}
+                  whileTap={{ scale: 0.9 }}
                 >
-                  Login
-                </Link>
+                  <Link
+                    to="/login"
+                    className="flex justify-center px-4 py-2 text-center font-bold rounded-md shadow transition-all duration-250 bg-cyan-400 bg-orange-400 hover:bg-orange-800 hover:text-white text-m"
+                  >
+                    Login
+                  </Link>
+                </motion.div>
               </li>
             )}
             {userLogin.userlogin && (
