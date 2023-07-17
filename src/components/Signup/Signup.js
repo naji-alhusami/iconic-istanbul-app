@@ -9,7 +9,6 @@ import {
 } from "../../features/users/usersSlice";
 
 import googleicon from "../Images/GoogleLogo.svg";
-import BackgroundImage from "../Images/BackgroundImage.jpg";
 
 const Singup = () => {
   const {
@@ -39,19 +38,13 @@ const Singup = () => {
   };
 
   return (
-    <div
-      // style={{
-      //   backgroundImage: `url(${BackgroundImage})`,
-      //   backgroundSize: "cover",
-      // }}
-      className="w-screen h-screen bg-cover bg-no-repeat"
-    >
+    <div className="w-screen h-screen bg-cover bg-no-repeat">
       <div className="flex justify-center shadow-2xl">
         <form
           className="bg-white lg:px-10 m-12 lg:w-[500px]  px-4 py-4 flex flex-col gap-4 rounded-md "
           onSubmit={handleSubmit(onSubmitform)}
         >
-          <h2 className='flex justify-center text-3xl lg:text-5xl font-["Poppins"] font-normal lg:mb-6 mb-10 lg:mt-10 lg:ml-0 ml-4 mt-10 '>
+          <h2 className='flex justify-center text-3xl lg:text-5xl font-["Poppins"] font-normal text-orange-900 lg:mb-6 mb-10 lg:mt-10 lg:ml-0 ml-4 mt-10 '>
             SIGNUP NOW
           </h2>
           <div className="lg:flex lg:flex-row lg:justify-between flex flex-col gap-4">
@@ -177,7 +170,7 @@ const Singup = () => {
 
           {/* Day of Birthday */}
           <div className="lg:flex lg:items-center lg:justify-between">
-            <p className="mr-7 ml-7 font-light text-[#9DAFBD]">Birth Date</p>
+            <p className="mr-8 font-light text-[#9DAFBD]">Birth Date</p>
             <input
               {...register("birthdayDay", {
                 pattern: {
@@ -187,7 +180,7 @@ const Singup = () => {
               })}
               type="text"
               placeholder="DD"
-              className="px-2 h-12 w-12 broder-solid border-2 border-[#D1DBE3] rounded-md placeholder-gray-300 md:mr-6"
+              className="px-2 h-12 w-12 broder-solid border-2 border-[#D1DBE3] rounded-md placeholder-gray-300 md:mr-8"
               aria-invalid={errors.birthdayDay ? "true" : "false"}
               required
             />
@@ -205,7 +198,7 @@ const Singup = () => {
               })}
               type="text"
               placeholder="MM"
-              className="px-2 h-12 w-12 broder-solid border-2 border-[#D1DBE3] rounded-md placeholder-gray-300 md:mr-6"
+              className="px-2 h-12 w-12 broder-solid border-2 border-[#D1DBE3] rounded-md placeholder-gray-300 md:mr-8"
               aria-invalid={errors.birthdayMonth ? "true" : "false"}
               required
             />
@@ -223,7 +216,7 @@ const Singup = () => {
               })}
               type="text"
               placeholder="YYYY"
-              className="px-3 h-12 w-12 broder-solid border-2 border-[#D1DBE3] rounded-md w-36 placeholder-gray-300 md:mr-6"
+              className="px-3 h-12 w-12 broder-solid border-2 border-[#D1DBE3] rounded-md w-36 placeholder-gray-300 md:mr-8"
               aria-invalid={errors.birthdayYear ? "true" : "false"}
               required
             />
@@ -233,21 +226,20 @@ const Singup = () => {
           </div>
 
           <div className="flex justify-around py-3 gap-8">
+            <button
+              type="submit"
+              className="bg-orange-400 hover:bg-orange-800 font-medium hover:text-white lg:text-2xl lg:px-14 py-3 px-4 rounded-md shadow-[0px_7px_20px_rgba(0,0,0,0.2)] lg:w-44"
+            >
+              Signup
+            </button>
             <Link to="/login">
               <button
                 type="button"
-                className="bg-[#2DD3E3] hover:bg-cyan-500 font-medium hover:text-white lg:text-2xl lg:px-14 py-3 px-4 rounded-md shadow-[0px_7px_20px_rgba(0,0,0,0.2)] lg:w-44"
+                className="broder-solid border-2 border-orange-800 hover:text-white bg-white hover:bg-orange-800 font-medium lg:text-2xl lg:px-14 py-3 px-4 rounded-md shadow-[0px_7px_20px_rgba(0,0,0,0.2)] lg:w-44 "
               >
                 Login
               </button>
             </Link>
-
-            <button
-              type="submit"
-              className="broder-solid border-2 border-[#2DD3E3] hover:text-white bg-white hover:bg-cyan-500 font-medium lg:text-2xl lg:px-14 py-3 px-4 rounded-md shadow-[0px_7px_20px_rgba(0,0,0,0.2)] lg:w-44 "
-            >
-              Signup
-            </button>
           </div>
           <div className="flex justify-around">
             <p className="text-bold text-xl">OR</p>

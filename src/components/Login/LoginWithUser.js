@@ -1,4 +1,4 @@
-import React, { useState  } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -14,21 +14,20 @@ const LoginWithUser = () => {
   const navigate = useNavigate();
 
   // dispatch user login with email:
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    const response = await dispatch(loginUser({ email, password }));
+    const response = dispatch(loginUser({ email, password }));
 
     if (response.meta.rejectedWithValue) {
       setError(response.payload);
-      return; 
+      return;
     }
     navigate("/");
   };
 
-
   return (
     <div className="bg-white m-12 rounded-md">
-      <h2 className='text-5xl font-["Poppins"] font-normal mb-44 max-[767px]:mt-10 md:mt-10 max-[767px]:mb-10 md:mb-10 text-center'>
+      <h2 className='text-5xl font-["Poppins"] font-normal mb-44 max-[767px]:mt-10 md:mt-10 max-[767px]:mb-10 md:mb-10 text-orange-900 text-center'>
         Login
       </h2>
       {error && <p className="text-red-500 text-lg text-center">{error}</p>}
@@ -54,14 +53,14 @@ const LoginWithUser = () => {
         />
         <div className="flex justify-around py-3 gap-8">
           <button
-            className="w-1/2 bg-[#2DD3E3] hover:bg-cyan-500 text-center font-medium text-2xl px-7 py-1 rounded-md shadow-[0px_7px_20px_rgba(0,0,0,0.2)"
+            className="w-1/2 bg-orange-400 hover:bg-orange-800 hover:text-white text-center font-medium text-2xl px-7 py-1 rounded-md shadow-[0px_7px_20px_rgba(0,0,0,0.2)"
             type="submit"
           >
             Login
           </button>
           <Link
             to="/signup"
-            className="w-1/2 broder-solid border-2 border-[#2DD3E3] hover:bg-[#2DD3E3] font-medium text-2xl px-7 py-1 rounded-md"
+            className="w-1/2 broder-solid border-2 border-orange-800 hover:text-white bg-white hover:bg-orange-800 font-medium text-2xl px-7 py-1 rounded-md"
           >
             <button type="button">Signup</button>
           </Link>
