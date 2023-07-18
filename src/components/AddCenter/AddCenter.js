@@ -22,7 +22,22 @@ const AddCenter = () => {
 
   const { center } = useSelector((state) => state.center);
   const healthCenters = center;
-  const listedHealthCenters = healthCenters.filter((center) => center.isListed);
+  const istanbulBounds = {
+    minLat: 40.8027,
+    maxLat: 41.3191,
+    minLon: 28.5836,
+    maxLon: 29.3474,
+  };
+
+  const listedHealthCenters = healthCenters.filter(
+    (center) =>
+      center.isListed &&
+      center.lat >= istanbulBounds.minLat &&
+      center.lat <= istanbulBounds.maxLat &&
+      center.lon >= istanbulBounds.minLon &&
+      center.lon <= istanbulBounds.maxLon
+  );
+  // const listedHealthCenters = healthCenters.filter((center) => center.isListed);
 
   useEffect(() => {
     const getData = () => {
@@ -57,11 +72,11 @@ const AddCenter = () => {
     if (mapRef.current && healthCenters.length > 0) {
       mapRef.current.fitBounds(getBounds());
     } else if (mapRef.current) {
-      mapRef.current.setView([0, 0], 2);
+      mapRef.current.setView([41.015137, 28.979530], 2);
     }
 
     function getBounds() {
-      const bounds = L.latLngBounds([[0, 0]]);
+      const bounds = L.latLngBounds([[41.0082376, 28.9783589]]);
       healthCenters.forEach((healthCenter) => {
         bounds.extend([healthCenter.lat, healthCenter.lon]);
       });
@@ -99,7 +114,7 @@ const AddCenter = () => {
         {/* Health Centers Adding Form */}
         <form
           onSubmit={handleAddressSubmit}
-          className=" bg-white rounded-md sm:m-6 xl:m-20 lg:m-12 sm:m-12 form sm:p-12"
+          className="bg-white rounded-md sm:m-6 xl:m-20 lg:m-12 sm:m-12 form sm:p-12"
         >
           <div className="mb-4">
             <label htmlFor="name" className="block font-medium mb-2">
@@ -229,7 +244,7 @@ const AddCenter = () => {
             id="map"
             className="justify-center "
             ref={mapRef}
-            center={[0, 0]}
+            center={[41.015137, 28.97953]}
             zoom={2}
           >
             <TileLayer
