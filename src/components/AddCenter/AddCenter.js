@@ -76,7 +76,11 @@ const AddCenter = () => {
     }
 
     function getBounds() {
-      const bounds = L.latLngBounds([[41.0082376, 28.9783589]]);
+      const bounds = L.latLngBounds(
+        [41.3204, 28.5506], // Southwest corner coordinates (e.g., Buyukcekmece)
+        [41.0567, 29.0519] // Northeast corner coordinates (e.g., Sabiha Gokcen Airport)
+      );
+      // const bounds = L.latLngBounds([[41.01003362171676, 29.002500402493958]]);
       healthCenters.forEach((healthCenter) => {
         bounds.extend([healthCenter.lat, healthCenter.lon]);
       });
