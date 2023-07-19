@@ -10,6 +10,7 @@ import galata from "../Images/Galata.svg";
 
 const Navbar = () => {
   const userLogin = useSelector((state) => state.users);
+  const userInfo = useSelector((state) => state.users.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showNavbarInResponsive, setShowNavbarInResponsive] = useState(false);
@@ -95,7 +96,7 @@ const Navbar = () => {
                 <li className="w-fit">
                   <Link
                     to="/"
-                    className=" p-1 font-bold text-orange-900"
+                    className=" font-bold text-orange-900"
                     onClick={() => {
                       setShowNavbarInResponsive(!showNavbarInResponsive);
                     }}
@@ -135,7 +136,7 @@ const Navbar = () => {
                   </Link>
                 </li>
 
-                <li className="w-fit hover:text-indigo-100 hover:bg-cyan-400 hover:rounded-md cursor-pointer ">
+                <li className="w-fit hover:text-indigo-100 hover:rounded-md cursor-pointer ">
                   <div className=" relative  absolute">
                     {!userLogin.userlogin && (
                       <li>
@@ -153,21 +154,21 @@ const Navbar = () => {
                       </li>
                     )}
                     {userLogin.userlogin && (
-                      <div className="w-fit hover:text-indigo-100 hover:bg-cyan-400 hover:rounded-md cursor-pointer relative  absolute">
+                      <div className="w-fit hover:text-indigo-100 hover:rounded-md cursor-pointer relative  absolute">
                         <button
                           type="button"
-                          className="flex peer text-white bg-cyan-400 hover:bg-cyan-500 rounded-md p-2"
+                          className="flex peer text-white bg-orange-400 hover:bg-orange-800 rounded-md p-2 hover:rounded-t-md"
                           onClick={() =>
                             setShowProfileInResponsive(!showProfileInResponsive)
                           }
                         >
-                          Admin
+                          {userInfo.name}
                           <AiFillCaretDown className=" mt-1 ml-2" />
                         </button>
                         {showProfileInResponsive ? (
-                          <div className="flex relative peer-hover:flex hover:flex w-[100px] flex-col bg-white drop-shadow-lg">
+                          <div className="flex relative peer-hover:flex hover:flex w-[9.5rem] flex-col bg-white drop-shadow-lg">
                             <Link
-                              className="p-2 pl-5 text-black hover:bg-cyan-400 hover:text-white"
+                              className="p-2  text-black hover:bg-orange-400 hover:text-white"
                               to="/addplace"
                               onClick={() => {
                                 setShowNavbarInResponsive(
@@ -175,11 +176,11 @@ const Navbar = () => {
                                 );
                               }}
                             >
-                              Centers
+                              Add New Place
                             </Link>
                             <button
                               type="button"
-                              className="p-2 text-black hover:bg-cyan-400 hover:text-indigo-100"
+                              className="p-2 text-black hover:bg-orange-400 hover:text-indigo-100 hover:rounded-b-md"
                               onClick={logOut}
                             >
                               Log Out
@@ -238,7 +239,7 @@ const Navbar = () => {
                 >
                   <Link
                     to="/login"
-                    className="flex justify-center px-4 py-2 text-center font-bold rounded-md shadow transition-all duration-250 bg-cyan-400 bg-orange-400 hover:bg-orange-800 hover:text-white text-m"
+                    className="flex justify-center px-4 py-2 text-center font-bold rounded-md shadow transition-all duration-250 bg-orange-400 hover:bg-orange-800 hover:text-white text-m"
                   >
                     Login
                   </Link>
@@ -246,23 +247,23 @@ const Navbar = () => {
               </li>
             )}
             {userLogin.userlogin && (
-              <li className="hover:text-indigo-100 hover:bg-cyan-400 hover:rounded-md cursor-pointer ">
+              <li className="hover:text-indigo-100 hover:rounded-md cursor-pointer ">
                 <div className="relative absolute">
-                  <div className="flex peer text-white p-2 bg-cyan-500 hover:bg-cyan-600 hover:text-white rounded-md">
-                    Admin
+                  <div className="flex peer text-white p-2 bg-orange-400 hover:bg-orange-800 hover:text-white rounded-md">
+                    {userInfo.name}
                     <AiFillCaretDown className="mt-1 ml-2" />
                   </div>
 
-                  <div className="hidden absolute peer-hover:flex hover:flex w-[100px] flex-col bg-white drop-shadow-lg">
+                  <div className="hidden absolute rounded-md peer-hover:flex hover:flex w-[8rem] flex-col bg-white drop-shadow-lg">
                     <Link
-                      className="p-2 pl-6 text-black hover:bg-cyan-500 hover:text-white"
+                      className="p-2 pl-3 text-black hover:bg-orange-400 hover:text-white"
                       to="/addplace"
                     >
-                      Centers
+                      Add New Place
                     </Link>
                     <button
                       type="button"
-                      className="py-2 text-black hover:bg-cyan-500 hover:text-white"
+                      className="py-2 text-black hover:bg-orange-400 hover:text-white hover:rounded-b-md"
                       onClick={logOut}
                     >
                       Log Out

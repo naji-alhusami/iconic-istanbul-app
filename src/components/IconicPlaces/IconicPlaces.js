@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { getPlaces } from "../../features/iconicPlaces/iconicPlacesSlice";
 import "leaflet/dist/leaflet.css";
-// import "./IconicPlaces.css";
 
 import markerIconx from "../Images/marker-icon.png";
 import markerIcon2x from "../Images/marker-icon-2x.png";
@@ -67,109 +66,97 @@ const IconicPlaces = () => {
   };
 
   return (
-    <div className="container">
-      <div className=" box">
+    <div>
+      <div className="flex flex-col justify-center items-center">
+        <h1 className="m-10 text-2xl md:text-4xl font-bold text-white bg-orange-700 p-4 rounded-md">ICONIC PLACES</h1>
         {/* Health Center Table */}
-        <table className=" bg-white table-fixed  border-collapse border border-gray-400 sm:m-12 table">
-          <thead>
+        <table className="bg-white table-fixed border-collapse border border-gray-400 m-4 my-8 w-auto md:w-[40rem]">
+          <tbody>
             <tr>
-              <th className="w-[10rem] border border-gray-400 sm:px-4 sm:py-2">
-                Name
+              <th className=" border border-gray-400 p-2 md:w-[10rem]">
+                Category
               </th>
-              <th className="w-[20rem] border border-gray-400 sm:px-4 sm:py-2">
+              {iconicPlaces.map((iconicPlace, index) => (
+                <td
+                  key={index}
+                  className="border border-gray-400 p-1 text-center"
+                >
+                  {iconicPlace.category}
+                </td>
+              ))}
+            </tr>
+            <tr>
+              <th className=" border border-gray-400 p-2 md:w-[10rem]">Name</th>
+              {iconicPlaces.map((iconicPlace, index) => (
+                <td
+                  key={index}
+                  className="border border-gray-400 p-1 text-center"
+                >
+                  {iconicPlace.name}
+                </td>
+              ))}
+            </tr>
+            <tr>
+              <th className=" border border-gray-400 p-2 md:w-[10rem]">
                 Address
               </th>
-              <th className="w-[10rem] border border-gray-400 sm:px-4 sm:py-2">
-                Ctg
-              </th>
+              {iconicPlaces.map((iconicPlace, index) => (
+                <td
+                  key={index}
+                  className="border border-gray-400 p-1 text-center"
+                >
+                  {iconicPlace.address}
+                </td>
+              ))}
             </tr>
-          </thead>
-          <tbody>
-            {iconicPlaces.map((iconicPlace, index) => (
-              <tr key={index}>
-                <td className="border border-gray-400 sm:px-4 sm:py-2 table-name">
-                  <input
-                    type="text"
-                    className="w-full"
-                    value={iconicPlace.name}
-                    readOnly
-                  />
-                </td>
-                <td className="border border-gray-400 sm:px-4 sm:py-2">
-                  <input
-                    type="text"
-                    className="w-full"
-                    value={iconicPlace.address}
-                    readOnly
-                  />
-                </td>
-                <td className="border border-gray-400 text-center sm:px-4 sm:py-2 ">
-                  <input
-                    type="text"
-                    className="w-full"
-                    value={iconicPlace.category}
-                    readOnly
-                  />
-                </td>
-              </tr>
-            ))}
           </tbody>
         </table>
+      </div>
 
-        {/* Health Center Map */}
-        <div className="rounded-md bg-white w-fit p-2 m-12">
-          <MapContainer
-            id="map"
-            className="justify-center "
-            ref={mapRef}
-            // center={[0, 0]}
-            // zoom={2}
-          >
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            {
-              listedIconicPlaces.map((iconicPlace, index) => (
-                <Marker
-                  key={index}
-                  position={[iconicPlace.lat, iconicPlace.lon]}
-                  icon={markerIcon}
-                  eventHandlers={{
-                    click: () => {
-                      const map = mapRef.current;
-                      map.flyTo([iconicPlace.lat, iconicPlace.lon], 15, {
-                        animate: true,
-                        duration: 2,
-                      });
-                      setShow(true);
-                    },
-                  }}
-                >
-                  {show && (
-                    <Popup closeOnClick={true} closeButton={true}>
-                      <div>
-                        <h3 className="p-0">Name: {iconicPlace.name}</h3>
-                        <p className="p-0">Adress: {iconicPlace.address}</p>
-                        <p className="p-0">Category: {iconicPlace.category}</p>
-                        <button
-                          className="bg-cyan-300 p-2 rounded-md m-2"
-                          type="button"
-                          onClick={() => {
-                            backToPlacesHandler();
-                          }}
-                        >
-                          Back to All Iconic Places
-                        </button>
-                      </div>
-                    </Popup>
-                  )}
-                </Marker>
-              ))
-              // )
-            }
-          </MapContainer>
-        </div>
+      {/* Health Center Map */}
+      <div className="rounded-md bg-white p-2 m-4 md:m-36">
+        <MapContainer className="z-40 h-[30rem]" ref={mapRef}>
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          {listedIconicPlaces.map((iconicPlace, index) => (
+            <Marker
+              key={index}
+              position={[iconicPlace.lat, iconicPlace.lon]}
+              icon={markerIcon}
+              eventHandlers={{
+                click: () => {
+                  const map = mapRef.current;
+                  map.flyTo([iconicPlace.lat, iconicPlace.lon], 15, {
+                    animate: true,
+                    duration: 2,
+                  });
+                  setShow(true);
+                },
+              }}
+            >
+              {show && (
+                <Popup closeOnClick={true} closeButton={true}>
+                  <div>
+                    <p className="p-0">Category: {iconicPlace.category}</p>
+                    <h3 className="p-0">Name: {iconicPlace.name}</h3>
+                    <p className="p-0">Adress: {iconicPlace.address}</p>
+                    <button
+                      className="bg-cyan-300 p-2 rounded-md m-2"
+                      type="button"
+                      onClick={() => {
+                        backToPlacesHandler();
+                      }}
+                    >
+                      Back to All Iconic Places
+                    </button>
+                  </div>
+                </Popup>
+              )}
+            </Marker>
+          ))}
+        </MapContainer>
       </div>
     </div>
   );

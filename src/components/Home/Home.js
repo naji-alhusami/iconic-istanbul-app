@@ -9,7 +9,7 @@ const Home = () => {
       className=" w-screen h-screen bg-cover bg-top bg-no-repeat"
     >
       <div className="flex flex-col pt-12 pb-12  items-end md:flex-col   lg:flex-row lg:justify-end md:items-end lg:pt-30 lg:pb-20 md:pt-20">
-        <div className="bg-opacity-90 bg-orange-800 rounded-l-md flex flex-col items-center p-10  md:flex-col md:items-center  lg:items-center">
+        <div className="bg-opacity-90 bg-orange-800 rounded-l-md flex flex-col items-center p-4 md:p-8  md:flex-col md:items-center  lg:items-center">
           <motion.p
             initial={{ x: 80, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
@@ -22,11 +22,11 @@ const Home = () => {
             initial={{ x: -40, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 1 }}
-            className="text-3xl mb-5 md:text-4xl lg:text-5xl text-white"
+            className="text-3xl mb-8 md:text-4xl lg:text-5xl text-white"
           >
             Iconic Places In Istanbul
           </motion.p>
-          <Link to="/healthcenters">
+          <Link to="/iconicplaces">
             <button
               type="button"
               className="text-md mb-8 rounded-md box-border p-2 transition-all duration-250 text-white font-bold bg-cyan-400 hover:bg-cyan-500 hover:text-white md:text-2xl"
