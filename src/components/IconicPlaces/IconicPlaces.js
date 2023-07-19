@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { getPlaces } from "../../features/iconicPlaces/iconicPlacesSlice";
 import "leaflet/dist/leaflet.css";
-import "./IconicPlaces.css";
+// import "./IconicPlaces.css";
 
 import markerIconx from "../Images/marker-icon.png";
 import markerIcon2x from "../Images/marker-icon-2x.png";
