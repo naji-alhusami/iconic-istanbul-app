@@ -18,6 +18,7 @@ const AddCenter = () => {
   const { center } = useSelector((state) => state.center);
   const healthCenters = center;
   const listedHealthCenters = healthCenters.filter((center) => center.isListed);
+  console.log(center);
 
   useEffect(() => {
     const getData = () => {
@@ -41,7 +42,7 @@ const AddCenter = () => {
     if (mapRef.current && healthCenters.length > 0) {
       mapRef.current.fitBounds(getBounds());
     } else if (mapRef.current) {
-      mapRef.current.setView([0, 0], 2);
+      mapRef.current.setView([41.0082, 28.9784], 2);
     }
 
     function getBounds() {
@@ -122,8 +123,8 @@ const AddCenter = () => {
             id="map"
             className="justify-center "
             ref={mapRef}
-            center={[0, 0]}
-            zoom={2}
+            // center={[0, 0]}
+            // zoom={2}
           >
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

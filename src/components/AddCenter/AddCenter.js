@@ -22,22 +22,23 @@ const AddCenter = () => {
 
   const { center } = useSelector((state) => state.center);
   const healthCenters = center;
-  const istanbulBounds = {
-    minLat: 40.8027,
-    maxLat: 41.3191,
-    minLon: 28.5836,
-    maxLon: 29.3474,
-  };
+  // const istanbulBounds = {
+  //   minLat: 40.8027,
+  //   maxLat: 41.3191,
+  //   minLon: 28.5836,
+  //   maxLon: 29.3474,
+  // };
 
-  const listedHealthCenters = healthCenters.filter(
-    (center) =>
-      center.isListed &&
-      center.lat >= istanbulBounds.minLat &&
-      center.lat <= istanbulBounds.maxLat &&
-      center.lon >= istanbulBounds.minLon &&
-      center.lon <= istanbulBounds.maxLon
-  );
-  // const listedHealthCenters = healthCenters.filter((center) => center.isListed);
+  // const listedHealthCenters = healthCenters.filter(
+  //   (center) =>
+  //     center.isListed &&
+  //     center.lat >= istanbulBounds.minLat &&
+  //     center.lat <= istanbulBounds.maxLat &&
+  //     center.lon >= istanbulBounds.minLon &&
+  //     center.lon <= istanbulBounds.maxLon
+  // );
+  const listedHealthCenters = healthCenters.filter((center) => center.isListed);
+  console.log(listedHealthCenters);
 
   useEffect(() => {
     const getData = () => {
@@ -72,15 +73,11 @@ const AddCenter = () => {
     if (mapRef.current && healthCenters.length > 0) {
       mapRef.current.fitBounds(getBounds());
     } else if (mapRef.current) {
-      mapRef.current.setView([41.015137, 28.979530], 2);
+      mapRef.current.setView([41.0282, 28.9784], 13);
     }
 
     function getBounds() {
-      const bounds = L.latLngBounds(
-        [41.3204, 28.5506], // Southwest corner coordinates (e.g., Buyukcekmece)
-        [41.0567, 29.0519] // Northeast corner coordinates (e.g., Sabiha Gokcen Airport)
-      );
-      // const bounds = L.latLngBounds([[41.01003362171676, 29.002500402493958]]);
+      const bounds = L.latLngBounds([[41.0282, 28.9784]]);
       healthCenters.forEach((healthCenter) => {
         bounds.extend([healthCenter.lat, healthCenter.lon]);
       });
@@ -89,7 +86,7 @@ const AddCenter = () => {
   }, [healthCenters]);
 
   function getBounds() {
-    const bounds = L.latLngBounds([[0, 0]]);
+    const bounds = L.latLngBounds([[41.0282, 28.9784]]);
     healthCenters.forEach((healthCenter) => {
       bounds.extend([healthCenter.lat, healthCenter.lon]);
     });
@@ -248,8 +245,8 @@ const AddCenter = () => {
             id="map"
             className="justify-center "
             ref={mapRef}
-            center={[41.015137, 28.97953]}
-            zoom={2}
+            // center={[41.01003362171676, 29.002500402493958]}
+            // zoom={2}
           >
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -264,7 +261,7 @@ const AddCenter = () => {
                   eventHandlers={{
                     click: () => {
                       const map = mapRef.current;
-                      map.flyTo([healthCenter.lat, healthCenter.lon], 10, {
+                      map.flyTo([healthCenter.lat, healthCenter.lon], 15, {
                         animate: true,
                         duration: 2,
                       });
