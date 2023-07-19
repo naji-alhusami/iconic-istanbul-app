@@ -42,11 +42,11 @@ const AddCenter = () => {
     if (mapRef.current && healthCenters.length > 0) {
       mapRef.current.fitBounds(getBounds());
     } else if (mapRef.current) {
-      mapRef.current.setView([41.0082, 28.9784], 2);
+      mapRef.current.setView([41.0282, 28.9784], 13);
     }
 
     function getBounds() {
-      const bounds = L.latLngBounds([[0, 0]]);
+      const bounds = L.latLngBounds([[41.0282, 28.9784]]);
       healthCenters.forEach((healthCenter) => {
         bounds.extend([healthCenter.lat, healthCenter.lon]);
       });
@@ -55,7 +55,7 @@ const AddCenter = () => {
   }, [healthCenters]);
 
   function getBounds() {
-    const bounds = L.latLngBounds([[0, 0]]);
+    const bounds = L.latLngBounds([[41.0282, 28.9784]]);
     healthCenters.forEach((healthCenter) => {
       bounds.extend([healthCenter.lat, healthCenter.lon]);
     });
@@ -139,7 +139,7 @@ const AddCenter = () => {
                   eventHandlers={{
                     click: () => {
                       const map = mapRef.current;
-                      map.flyTo([healthCenter.lat, healthCenter.lon], 10, {
+                      map.flyTo([healthCenter.lat, healthCenter.lon], 15, {
                         animate: true,
                         duration: 2,
                       });

@@ -22,21 +22,7 @@ const AddCenter = () => {
 
   const { center } = useSelector((state) => state.center);
   const healthCenters = center;
-  // const istanbulBounds = {
-  //   minLat: 40.8027,
-  //   maxLat: 41.3191,
-  //   minLon: 28.5836,
-  //   maxLon: 29.3474,
-  // };
 
-  // const listedHealthCenters = healthCenters.filter(
-  //   (center) =>
-  //     center.isListed &&
-  //     center.lat >= istanbulBounds.minLat &&
-  //     center.lat <= istanbulBounds.maxLat &&
-  //     center.lon >= istanbulBounds.minLon &&
-  //     center.lon <= istanbulBounds.maxLon
-  // );
   const listedHealthCenters = healthCenters.filter((center) => center.isListed);
   console.log(listedHealthCenters);
 
