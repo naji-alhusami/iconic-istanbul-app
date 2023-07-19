@@ -1,7 +1,8 @@
 import React from "react";
-import LoginWithUserPassword from "./LoginWithUser";
 import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
+
+import LoginWithUserPassword from "./LoginWithUser";
 
 function Login() {
   const userLogin = useSelector((state) => state.users);

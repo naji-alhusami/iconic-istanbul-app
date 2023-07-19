@@ -14,10 +14,9 @@ const LoginWithUser = () => {
   const navigate = useNavigate();
 
   // dispatch user login with email:
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = dispatch(loginUser({ email, password }));
-
+    const response = await dispatch(loginUser({ email, password }));
     if (response.meta.rejectedWithValue) {
       setError(response.payload);
       return;

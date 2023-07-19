@@ -8,9 +8,9 @@ import GoogleLogo from "../Images/GoogleLogo.svg";
 const LoginWithGoogle = () => {
   const dispatch = useDispatch();
 
-  const handleLoginGoogle = async (event) => {
+  const handleLoginGoogle = (event) => {
     event.preventDefault();
-    await dispatch(loginUserWithGoogle());
+    dispatch(loginUserWithGoogle());
   };
 
   return (

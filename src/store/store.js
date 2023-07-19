@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import usersSlice from "../features/users/usersSlice";
-import healthCentersSlice from "../features/healthCenters/healthCentersSlice";
+import iconicPlacesSlice from "../features/iconicPlaces/iconicPlacesSlice";
 
 export const store = configureStore({
   reducer: {
     users: usersSlice,
-    center: healthCentersSlice,
+    place: iconicPlacesSlice,
   },
 });

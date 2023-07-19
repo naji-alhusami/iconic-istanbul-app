@@ -115,7 +115,7 @@ const Navbar = () => {
                 </li>
                 <li className="w-fit">
                   <Link
-                    to="/healthcenters"
+                    to="/iconicplaces"
                     className="p-1 font-bold text-orange-900"
                     onClick={() => {
                       setShowNavbarInResponsive(!showNavbarInResponsive);
@@ -168,7 +168,7 @@ const Navbar = () => {
                           <div className="flex relative peer-hover:flex hover:flex w-[100px] flex-col bg-white drop-shadow-lg">
                             <Link
                               className="p-2 pl-5 text-black hover:bg-cyan-400 hover:text-white"
-                              to="/addcenter"
+                              to="/addplace"
                               onClick={() => {
                                 setShowNavbarInResponsive(
                                   !showNavbarInResponsive
@@ -216,7 +216,7 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link to="/healthcenters" className="font-bold text-orange-900">
+              <Link to="/iconicplaces" className="font-bold text-orange-900">
                 <motion.div
                   className="p-2"
                   whileHover={{
@@ -256,7 +256,7 @@ const Navbar = () => {
                   <div className="hidden absolute peer-hover:flex hover:flex w-[100px] flex-col bg-white drop-shadow-lg">
                     <Link
                       className="p-2 pl-6 text-black hover:bg-cyan-500 hover:text-white"
-                      to="/addcenter"
+                      to="/addplace"
                     >
                       Centers
                     </Link>

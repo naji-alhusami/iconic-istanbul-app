@@ -5,30 +5,30 @@ import L from "leaflet";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-  addHealthCenter,
-  getCenters,
-  deleteCenter,
-  editCenter,
-} from "../../features/healthCenters/healthCentersSlice";
+  addIconicPlace,
+  getPlaces,
+  deletePlace,
+  editPlace,
+} from "../../features/iconicPlaces/iconicPlacesSlice";
 import "leaflet/dist/leaflet.css";
-import "./AddCenter.css";
+import "./AddPlace.css";
 
 import markerIconx from "../Images/marker-icon.png";
 import markerIcon2x from "../Images/marker-icon-2x.png";
 
-const AddCenter = () => {
+const AddPlace = () => {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
 
-  const { center } = useSelector((state) => state.center);
-  const healthCenters = center;
+  const { place } = useSelector((state) => state.place);
+  const iconicPlaces = place;
+  console.log(iconicPlaces);
 
-  const listedHealthCenters = healthCenters.filter((center) => center.isListed);
-  console.log(listedHealthCenters);
+  const listedIconicPlaces = iconicPlaces.filter((place) => place.isListed);
 
   useEffect(() => {
     const getData = () => {
-      dispatch(getCenters());
+      dispatch(getPlaces());
     };
 
     getData();
@@ -48,7 +48,7 @@ const AddCenter = () => {
     const address = event.target.elements.address.value;
     const category = event.target.elements.category.value;
     const isListed = true;
-    dispatch(addHealthCenter({ name, address, category, isListed }));
+    dispatch(addIconicPlace({ name, address, category, isListed }));
 
     event.target.reset();
   };
@@ -56,7 +56,7 @@ const AddCenter = () => {
   const mapRef = useRef();
 
   useEffect(() => {
-    if (mapRef.current && healthCenters.length > 0) {
+    if (mapRef.current && iconicPlaces.length > 0) {
       mapRef.current.fitBounds(getBounds());
     } else if (mapRef.current) {
       mapRef.current.setView([41.0282, 28.9784], 13);
@@ -64,41 +64,41 @@ const AddCenter = () => {
 
     function getBounds() {
       const bounds = L.latLngBounds([[41.0282, 28.9784]]);
-      healthCenters.forEach((healthCenter) => {
-        bounds.extend([healthCenter.lat, healthCenter.lon]);
+      iconicPlaces.forEach((iconicPlace) => {
+        bounds.extend([iconicPlace.lat, iconicPlace.lon]);
       });
       return bounds;
     }
-  }, [healthCenters]);
+  }, [iconicPlaces]);
 
   function getBounds() {
     const bounds = L.latLngBounds([[41.0282, 28.9784]]);
-    healthCenters.forEach((healthCenter) => {
-      bounds.extend([healthCenter.lat, healthCenter.lon]);
+    iconicPlaces.forEach((iconicPlace) => {
+      bounds.extend([iconicPlace.lat, iconicPlace.lon]);
     });
     return bounds;
   }
 
   const handleCheckboxChange = (id, isListed) => {
     mapRef.current.flyToBounds(getBounds());
-    dispatch(editCenter({ id, isListed }));
+    dispatch(editPlace({ id, isListed }));
   };
 
-  const backToCentersHandler = () => {
+  const backToPlacesHandler = () => {
     mapRef.current.flyToBounds(getBounds());
     setShow(false);
   };
 
-  const deleteHealthCenter = (index) => {
+  const deleteIconicPlaces = (index) => {
     mapRef.current.flyToBounds(getBounds());
-    dispatch(deleteCenter(index));
+    dispatch(deletePlace(index));
     setShow(false);
   };
 
   return (
     <div className="container">
       <div className=" box">
-        {/* Health Centers Adding Form */}
+        {/* Iconic Place Adding Form */}
         <form
           onSubmit={handleAddressSubmit}
           className="bg-white rounded-md sm:m-6 xl:m-20 lg:m-12 sm:m-12 form sm:p-12"
@@ -150,7 +150,7 @@ const AddCenter = () => {
           </button>
         </form>
 
-        {/* Health Centers Table */}
+        {/* Iconic Places Table */}
         <table className=" bg-white table-fixed  border-collapse border border-gray-400 sm:m-12 table">
           <thead>
             <tr>
@@ -172,13 +172,13 @@ const AddCenter = () => {
             </tr>
           </thead>
           <tbody>
-            {healthCenters.map((healthCenter, index) => (
+            {iconicPlaces.map((iconicPlace, index) => (
               <tr key={index}>
                 <td className="border border-gray-400 sm:px-4 sm:py-2 table-name">
                   <input
                     type="text"
                     className="w-full"
-                    value={healthCenter.name}
+                    value={iconicPlace.name}
                     readOnly
                   />
                 </td>
@@ -186,7 +186,7 @@ const AddCenter = () => {
                   <input
                     type="text"
                     className="w-full"
-                    value={healthCenter.address}
+                    value={iconicPlace.address}
                     readOnly
                   />
                 </td>
@@ -194,7 +194,7 @@ const AddCenter = () => {
                   <input
                     type="text"
                     className="w-full"
-                    value={healthCenter.category}
+                    value={iconicPlace.category}
                     readOnly
                   />
                 </td>
@@ -202,7 +202,7 @@ const AddCenter = () => {
                   <button
                     className="my-2 sm:px-4 sm:py-2 rounded-md shadowtransition-all duration-250 bg-cyan-400 hover:bg-cyan-500 text-m table-button"
                     type="button"
-                    onClick={() => deleteHealthCenter(healthCenter.docRef)}
+                    onClick={() => deleteIconicPlaces(iconicPlace.docRef)}
                   >
                     Remove
                   </button>
@@ -211,11 +211,11 @@ const AddCenter = () => {
                   <input
                     type="checkbox"
                     className="form-checkbox h-5 w-5 sm:px-4 sm:py-2 text-gray-600"
-                    checked={healthCenter.isListed}
+                    checked={iconicPlace.isListed}
                     onChange={() =>
                       handleCheckboxChange(
-                        healthCenter.docRef,
-                        healthCenter.isListed
+                        iconicPlace.docRef,
+                        iconicPlace.isListed
                       )
                     }
                   />
@@ -239,15 +239,15 @@ const AddCenter = () => {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             {
-              listedHealthCenters.map((healthCenter, index) => (
+              listedIconicPlaces.map((iconicPlace, index) => (
                 <Marker
                   key={index}
-                  position={[healthCenter.lat, healthCenter.lon]}
+                  position={[iconicPlace.lat, iconicPlace.lon]}
                   icon={markerIcon}
                   eventHandlers={{
                     click: () => {
                       const map = mapRef.current;
-                      map.flyTo([healthCenter.lat, healthCenter.lon], 15, {
+                      map.flyTo([iconicPlace.lat, iconicPlace.lon], 15, {
                         animate: true,
                         duration: 2,
                       });
@@ -258,14 +258,14 @@ const AddCenter = () => {
                   {show && (
                     <Popup closeOnClick={true} closeButton={true}>
                       <div>
-                        <h3 className="p-0">Name: {healthCenter.name}</h3>
-                        <p className="p-0">Adress: {healthCenter.address}</p>
-                        <p className="p-0">Category: {healthCenter.category}</p>
+                        <h3 className="p-0">Name: {iconicPlace.name}</h3>
+                        <p className="p-0">Adress: {iconicPlace.address}</p>
+                        <p className="p-0">Category: {iconicPlace.category}</p>
                         <button
                           className="bg-cyan-300 p-2 rounded-md"
                           type="button"
                           onClick={() => {
-                            deleteHealthCenter(healthCenter.docRef);
+                            deleteIconicPlaces(iconicPlace.docRef);
                           }}
                         >
                           Remove
@@ -274,10 +274,10 @@ const AddCenter = () => {
                           className="bg-cyan-300 p-2 rounded-md m-2"
                           type="button"
                           onClick={() => {
-                            backToCentersHandler();
+                            backToPlacesHandler();
                           }}
                         >
-                          Back to All Health Centers
+                          Back to All Iconic Places
                         </button>
                       </div>
                     </Popup>
@@ -293,4 +293,4 @@ const AddCenter = () => {
   );
 };
 
-export default AddCenter;
+export default AddPlace;

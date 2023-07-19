@@ -4,25 +4,24 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getCenters } from "../../features/healthCenters/healthCentersSlice";
+import { getPlaces } from "../../features/iconicPlaces/iconicPlacesSlice";
 import "leaflet/dist/leaflet.css";
-import "./HealthCenters.css";
+import "./IconicPlaces.css";
 
 import markerIconx from "../Images/marker-icon.png";
 import markerIcon2x from "../Images/marker-icon-2x.png";
 
-const AddCenter = () => {
+const IconicPlaces = () => {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
 
-  const { center } = useSelector((state) => state.center);
-  const healthCenters = center;
-  const listedHealthCenters = healthCenters.filter((center) => center.isListed);
-  console.log(center);
+  const { place } = useSelector((state) => state.place);
+  const iconicPlaces = place;
+  const listedIconicPlaces = iconicPlaces.filter((place) => place.isListed);
 
   useEffect(() => {
     const getData = () => {
-      dispatch(getCenters());
+      dispatch(getPlaces());
     };
 
     getData();
@@ -39,7 +38,7 @@ const AddCenter = () => {
   const mapRef = useRef();
 
   useEffect(() => {
-    if (mapRef.current && healthCenters.length > 0) {
+    if (mapRef.current && iconicPlaces.length > 0) {
       mapRef.current.fitBounds(getBounds());
     } else if (mapRef.current) {
       mapRef.current.setView([41.0282, 28.9784], 13);
@@ -47,22 +46,22 @@ const AddCenter = () => {
 
     function getBounds() {
       const bounds = L.latLngBounds([[41.0282, 28.9784]]);
-      healthCenters.forEach((healthCenter) => {
-        bounds.extend([healthCenter.lat, healthCenter.lon]);
+      iconicPlaces.forEach((iconicPlace) => {
+        bounds.extend([iconicPlace.lat, iconicPlace.lon]);
       });
       return bounds;
     }
-  }, [healthCenters]);
+  }, [iconicPlaces]);
 
   function getBounds() {
     const bounds = L.latLngBounds([[41.0282, 28.9784]]);
-    healthCenters.forEach((healthCenter) => {
-      bounds.extend([healthCenter.lat, healthCenter.lon]);
+    iconicPlaces.forEach((iconicPlace) => {
+      bounds.extend([iconicPlace.lat, iconicPlace.lon]);
     });
     return bounds;
   }
 
-  const backToCentersHandler = () => {
+  const backToPlacesHandler = () => {
     mapRef.current.flyToBounds(getBounds());
     setShow(false);
   };
@@ -86,13 +85,13 @@ const AddCenter = () => {
             </tr>
           </thead>
           <tbody>
-            {healthCenters.map((healthCenter, index) => (
+            {iconicPlaces.map((iconicPlace, index) => (
               <tr key={index}>
                 <td className="border border-gray-400 sm:px-4 sm:py-2 table-name">
                   <input
                     type="text"
                     className="w-full"
-                    value={healthCenter.name}
+                    value={iconicPlace.name}
                     readOnly
                   />
                 </td>
@@ -100,7 +99,7 @@ const AddCenter = () => {
                   <input
                     type="text"
                     className="w-full"
-                    value={healthCenter.address}
+                    value={iconicPlace.address}
                     readOnly
                   />
                 </td>
@@ -108,7 +107,7 @@ const AddCenter = () => {
                   <input
                     type="text"
                     className="w-full"
-                    value={healthCenter.category}
+                    value={iconicPlace.category}
                     readOnly
                   />
                 </td>
@@ -131,15 +130,15 @@ const AddCenter = () => {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             {
-              listedHealthCenters.map((healthCenter, index) => (
+              listedIconicPlaces.map((iconicPlace, index) => (
                 <Marker
                   key={index}
-                  position={[healthCenter.lat, healthCenter.lon]}
+                  position={[iconicPlace.lat, iconicPlace.lon]}
                   icon={markerIcon}
                   eventHandlers={{
                     click: () => {
                       const map = mapRef.current;
-                      map.flyTo([healthCenter.lat, healthCenter.lon], 15, {
+                      map.flyTo([iconicPlace.lat, iconicPlace.lon], 15, {
                         animate: true,
                         duration: 2,
                       });
@@ -150,17 +149,17 @@ const AddCenter = () => {
                   {show && (
                     <Popup closeOnClick={true} closeButton={true}>
                       <div>
-                        <h3 className="p-0">Name: {healthCenter.name}</h3>
-                        <p className="p-0">Adress: {healthCenter.address}</p>
-                        <p className="p-0">Category: {healthCenter.category}</p>
+                        <h3 className="p-0">Name: {iconicPlace.name}</h3>
+                        <p className="p-0">Adress: {iconicPlace.address}</p>
+                        <p className="p-0">Category: {iconicPlace.category}</p>
                         <button
                           className="bg-cyan-300 p-2 rounded-md m-2"
                           type="button"
                           onClick={() => {
-                            backToCentersHandler();
+                            backToPlacesHandler();
                           }}
                         >
-                          Back to All Health Centers
+                          Back to All Iconic Places
                         </button>
                       </div>
                     </Popup>
@@ -176,4 +175,4 @@ const AddCenter = () => {
   );
 };
 
-export default AddCenter;
+export default IconicPlaces;
