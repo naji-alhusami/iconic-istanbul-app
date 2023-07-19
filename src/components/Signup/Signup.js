@@ -38,7 +38,7 @@ const Singup = () => {
   };
 
   return (
-    <div className="w-screen h-screen bg-cover bg-no-repeat">
+    <div className=" bg-cover bg-no-repeat">
       <div className="flex justify-center shadow-2xl">
         <form
           className="bg-white lg:px-10 m-12 lg:w-[500px]  px-4 py-4 flex flex-col gap-4 rounded-md "
