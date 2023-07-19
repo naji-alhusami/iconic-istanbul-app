@@ -25,6 +25,9 @@ const Navbar = () => {
     }
   };
 
+  const hoverBackgroundColor = "rgba(165, 42, 42, 1)";
+  const hoverTextColor = "rgb(255, 255, 255)";
+
   return (
     <nav className="w-screen sticky top-0 z-50 bg-white shadow font-poppins">
       <div className="justify-between px-4 mx-auto  md:items-center md:flex md:px-8">
@@ -101,8 +104,8 @@ const Navbar = () => {
                       className="p-2"
                       whileHover={{
                         scale: 1.07,
-                        backgroundColor: "brown",
-                        color: "white",
+                        backgroundColor: hoverBackgroundColor,
+                        color: hoverTextColor,
                         borderRadius: "0.25rem",
                       }}
                     >
@@ -122,8 +125,8 @@ const Navbar = () => {
                       className="p-2"
                       whileHover={{
                         scale: 1.07,
-                        backgroundColor: "brown",
-                        color: "white",
+                        backgroundColor: hoverBackgroundColor,
+                        color: hoverTextColor,
                         borderRadius: "0.25rem",
                       }}
                     >
@@ -203,8 +206,8 @@ const Navbar = () => {
                   className="p-2"
                   whileHover={{
                     scale: 1.07,
-                    backgroundColor: "brown",
-                    color: "white",
+                    backgroundColor: hoverBackgroundColor,
+                    color: hoverTextColor,
                     borderRadius: "0.25rem",
                   }}
                 >
@@ -218,8 +221,8 @@ const Navbar = () => {
                   className="p-2"
                   whileHover={{
                     scale: 1.07,
-                    backgroundColor: "brown",
-                    color: "white",
+                    backgroundColor: hoverBackgroundColor,
+                    color: hoverTextColor,
                     borderRadius: "0.25rem",
                   }}
                 >
