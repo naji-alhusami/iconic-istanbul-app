@@ -12,7 +12,10 @@ import Thanks from "./components/Thanks/Thanks";
 import RequireAuth from "./components/RequireAuth/RequireAuth";
 import IconicPlaces from "./components/IconicPlaces/IconicPlaces";
 import { loadUser } from "./features/users/usersSlice";
+import Loading from "./components/Loading/Loading";
 
+// import ClipLoader from "react-spinners/ClipLoader";
+// import spinnerLoading from "./components/Images/spinnerLoading.svg";
 import "./App.css";
 
 function App() {
@@ -37,7 +40,7 @@ function App() {
   }, [dispatch]);
 
   if (loading) {
-    return "Loading...";
+    return <Loading />;
   }
 
   return (
