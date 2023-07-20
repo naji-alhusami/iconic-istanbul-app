@@ -5,12 +5,13 @@ import L from "leaflet";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-  addIconicPlace,
   getPlaces,
   deletePlace,
   editPlace,
 } from "../../features/iconicPlaces/iconicPlacesSlice";
 import "leaflet/dist/leaflet.css";
+import AddPlaceForm from "./AddPlaceForm";
+import AddPlaceTable from "./AddPlaceTable";
 
 import markerIconx from "../Images/marker-icon.png";
 import markerIcon2x from "../Images/marker-icon-2x.png";
@@ -18,8 +19,7 @@ import markerIcon2x from "../Images/marker-icon-2x.png";
 const AddPlace = () => {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const inputRef = useRef(null);
+
   const mapRef = useRef();
 
   const { place } = useSelector((state) => state.place);
@@ -42,27 +42,6 @@ const AddPlace = () => {
     iconAnchor: [12, 41],
     popupAnchor: [0, -41],
   });
-
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedImage(file);
-  };
-
-  const handleAddressSubmit = (event) => {
-    event.preventDefault();
-    const name = event.target.elements.name.value;
-    const address = event.target.elements.address.value;
-    const category = event.target.elements.category.value;
-    const isListed = true;
-    if (selectedImage) {
-      console.log(selectedImage);
-      dispatch(
-        addIconicPlace({ category, name, address, selectedImage, isListed })
-      );
-    }
-
-    event.target.reset();
-  };
 
   useEffect(() => {
     if (mapRef.current && iconicPlaces.length > 0) {
@@ -110,162 +89,16 @@ const AddPlace = () => {
         <h1 className="m-10 text-2xl md:text-4xl font-bold text-white bg-orange-700 p-4 rounded-md">
           ADD PLACES
         </h1>
-        {/* Iconic Place Adding Form */}
-        <form
-          onSubmit={handleAddressSubmit}
-          className="bg-white rounded-md p-5 m-4 my-8 md:w-[40rem]"
-        >
-          <div className="mb-4">
-            <label htmlFor="category" className="block font-medium mb-2">
-              Category
-            </label>
-            <select
-              name="category"
-              className="border border-gray-300 rounded-md py-2 px-3 w-full"
-              required
-            >
-              <option value="">-- Select a category --</option>
-              <option value="Historical">Historical</option>
-              <option value="Restaurants">Restaurants</option>
-              <option value="Shopping">Shopping</option>
-              <option value="D">D</option>
-              <option value="E">E</option>
-              <option value="F">F</option>
-            </select>
-          </div>
-          <div className="mb-4">
-            <label htmlFor="name" className="block font-medium mb-2">
-              Name
-            </label>
-            <input
-              type="text"
-              name="name"
-              placeholder="Enter name"
-              className="border border-gray-300 rounded-md py-2 px-3 w-full"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="address" className="block font-medium mb-2">
-              Address
-            </label>
-            <input
-              type="text"
-              name="address"
-              placeholder="Enter address"
-              className="border border-gray-300 rounded-md py-2 px-3 w-full"
-              required
-            />
-          </div>
 
-          <div className="mb-4">
-            <label htmlFor="address" className="block font-medium mb-2">
-              Upload Pictures
-            </label>
-            <input
-              type="file"
-              name="image"
-              accept="image/*"
-              onChange={handleImageChange}
-              ref={inputRef}
-              className="border border-gray-300 rounded-md py-2 px-3 w-full"
-              multiple
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700"
-          >
-            Add To Map
-          </button>
-        </form>
+        {/* Iconic Place Adding Form */}
+        <AddPlaceForm />
 
         {/* Iconic Places Table */}
-        <table className="bg-white table-fixed border-collapse border border-gray-400 m-4 my-8 w-auto md:w-[40rem]">
-          <tbody>
-            <tr>
-              <th className=" border border-gray-400 p-2 md:w-[10rem]">
-                Category
-              </th>
-              {iconicPlaces.map((iconicPlace, index) => (
-                <td
-                  key={index}
-                  className="border border-gray-400 p-1 text-center"
-                >
-                  {iconicPlace.category}
-                </td>
-              ))}
-            </tr>
-            <tr>
-              <th className=" border border-gray-400 p-2 md:w-[10rem]">Name</th>
-              {iconicPlaces.map((iconicPlace, index) => (
-                <td
-                  key={index}
-                  className="border border-gray-400 p-1 text-center"
-                >
-                  {iconicPlace.name}
-                </td>
-              ))}
-            </tr>
-            <tr>
-              <th className=" border border-gray-400 p-2 md:w-[10rem]">
-                Address
-              </th>
-              {iconicPlaces.map((iconicPlace, index) => (
-                <td
-                  key={index}
-                  className="border border-gray-400 p-1 text-center"
-                >
-                  {iconicPlace.address}
-                </td>
-              ))}
-            </tr>
-
-            <tr>
-              <th className=" border border-gray-400 p-2 md:w-[10rem]">
-                Delete
-              </th>
-              {iconicPlaces.map((iconicPlace, index) => (
-                <td
-                  key={index}
-                  className="border border-gray-400 p-1 text-center"
-                >
-                  <button
-                    className="my-2 rounded-md shadowtransition-all duration-250 bg-cyan-400 hover:bg-cyan-500 text-m p-2"
-                    type="button"
-                    onClick={() => deleteIconicPlaces(iconicPlace.docRef)}
-                  >
-                    Remove
-                  </button>
-                </td>
-              ))}
-            </tr>
-            <tr>
-              <th className=" border border-gray-400 p-2 md:w-[10rem]">
-                List/Unlist
-              </th>
-              {iconicPlaces.map((iconicPlace, index) => (
-                <td
-                  key={index}
-                  className="border border-gray-400 p-1 text-center"
-                >
-                  <input
-                    type="checkbox"
-                    className="form-checkbox h-5 w-5 text-gray-600"
-                    checked={iconicPlace.isListed}
-                    onChange={() =>
-                      handleCheckboxChange(
-                        iconicPlace.docRef,
-                        iconicPlace.isListed
-                      )
-                    }
-                  />
-                </td>
-              ))}
-            </tr>
-          </tbody>
-        </table>
+        <AddPlaceTable
+          handleCheckboxChange={handleCheckboxChange}
+          iconicPlaces={iconicPlaces}
+          deleteIconicPlaces={deleteIconicPlaces}
+        />
       </div>
 
       {/* Health Centers Map */}
