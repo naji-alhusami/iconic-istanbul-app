@@ -9,29 +9,110 @@ import {
   deleteDoc,
   updateDoc,
 } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-import { db } from "../../firebase-config";
+import { db, storage } from "../../firebase-config";
+
+// Start of add iconic place (send it to Firebase):
+// export const addIconicPlace = createAsyncThunk(
+//   "place/addIconicPlace",
+//   async (payload, { rejectWithValue }) => {
+//     try {
+//       const { name, address, category, isListed, selectedImage } = payload;
+//       console.log(payload);
+//       const response = await axios.get(
+//         `https://nominatim.openstreetmap.org/search?q=${address}&format=json`
+//       );
+
+//       const { lat, lon } = response.data[0];
+//       const id = uuidv4();
+
+//       // Upload the profile picture to Firebase Storage
+//       const storageRef = ref(storage, `images/${id}`);
+//       const metadata = {
+//         contentType: selectedImage[0].type, // Set the correct MIME type of the file
+//       };
+//       const snapshot = await uploadBytes(
+//         storageRef,
+//         selectedImage[0],
+//         metadata
+//       );
+//       const downloadURL = await getDownloadURL(snapshot.ref);
+
+//       const docRef = await addDoc(collection(db, "iconic-places"), {
+//         id,
+//         category,
+//         name,
+//         address,
+//         imageURL: downloadURL,
+//         lat,
+//         lon,
+//         isListed,
+//       });
+
+//       return {
+//         id: docRef.id,
+//         name,
+//         address,
+//         category,
+//         lat,
+//         lon,
+//         isListed,
+//       };
+//     } catch (error) {
+//       return rejectWithValue(error.message);
+//     }
+//   }
+// );
+// End of add iconic place (send it to Firebase).
 
 // Start of add iconic place (send it to Firebase):
 export const addIconicPlace = createAsyncThunk(
   "place/addIconicPlace",
   async (payload, { rejectWithValue }) => {
     try {
-      const { name, address, category, isListed } = payload;
+      const id = uuidv4();
+      const { name, address, category, isListed, selectedImage } = payload;
+
       const response = await axios.get(
         `https://nominatim.openstreetmap.org/search?q=${address}&format=json`
       );
       const { lat, lon } = response.data[0];
+
+      // Upload the profile picture to Firebase Storage
+      const storageRef = ref(storage, id);
+      console.log(storageRef);
+      const metadata = {
+        contentType: selectedImage.type, // Set the correct MIME type of the file
+      };
+      const snapshot = await uploadBytes(
+        storageRef,
+        selectedImage,
+        metadata
+      );
+      const downloadURL = await getDownloadURL(snapshot.ref);
+
       const docRef = await addDoc(collection(db, "iconic-places"), {
-        id: uuidv4(),
+        id,
+        name,
+        address,
+        category,
+        profilePictureURL: downloadURL,
+        lat,
+        lon,
+        isListed,
+      });
+      
+      return {
+        docRef: docRef.id,
         name,
         address,
         category,
         lat,
         lon,
         isListed,
-      });
-      return { docRef: docRef.id, name, address, category, lat, lon, isListed };
+        downloadURL,
+      };
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -150,9 +231,7 @@ const iconicPlacesSlice = createSlice({
     builder.addCase(deletePlace.pending, (state) => {});
     builder.addCase(deletePlace.fulfilled, (state, action) => {
       state.loading = false;
-      state.place = state.place.filter(
-        (plc) => plc.docRef !== action.payload
-      );
+      state.place = state.place.filter((plc) => plc.docRef !== action.payload);
       state.error = null;
     });
     builder.addCase(deletePlace.rejected, (state, action) => {

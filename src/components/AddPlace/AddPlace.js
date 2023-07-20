@@ -18,10 +18,12 @@ import markerIcon2x from "../Images/marker-icon-2x.png";
 const AddPlace = () => {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const inputRef = useRef(null);
+  const mapRef = useRef();
 
   const { place } = useSelector((state) => state.place);
   const iconicPlaces = place;
-  console.log(iconicPlaces);
 
   const listedIconicPlaces = iconicPlaces.filter((place) => place.isListed);
 
@@ -41,18 +43,26 @@ const AddPlace = () => {
     popupAnchor: [0, -41],
   });
 
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedImage(file);
+  };
+
   const handleAddressSubmit = (event) => {
     event.preventDefault();
     const name = event.target.elements.name.value;
     const address = event.target.elements.address.value;
     const category = event.target.elements.category.value;
     const isListed = true;
-    dispatch(addIconicPlace({ name, address, category, isListed }));
+    if (selectedImage) {
+      console.log(selectedImage);
+      dispatch(
+        addIconicPlace({ category, name, address, selectedImage, isListed })
+      );
+    }
 
     event.target.reset();
   };
-
-  const mapRef = useRef();
 
   useEffect(() => {
     if (mapRef.current && iconicPlaces.length > 0) {
@@ -97,12 +107,32 @@ const AddPlace = () => {
   return (
     <div>
       <div className="flex flex-col justify-center items-center">
-      <h1 className="m-10 text-2xl md:text-4xl font-bold text-white bg-orange-700 p-4 rounded-md">ADD PLACES</h1>
+        <h1 className="m-10 text-2xl md:text-4xl font-bold text-white bg-orange-700 p-4 rounded-md">
+          ADD PLACES
+        </h1>
         {/* Iconic Place Adding Form */}
         <form
           onSubmit={handleAddressSubmit}
           className="bg-white rounded-md p-5 m-4 my-8 md:w-[40rem]"
         >
+          <div className="mb-4">
+            <label htmlFor="category" className="block font-medium mb-2">
+              Category
+            </label>
+            <select
+              name="category"
+              className="border border-gray-300 rounded-md py-2 px-3 w-full"
+              required
+            >
+              <option value="">-- Select a category --</option>
+              <option value="Historical">Historical</option>
+              <option value="Restaurants">Restaurants</option>
+              <option value="Shopping">Shopping</option>
+              <option value="D">D</option>
+              <option value="E">E</option>
+              <option value="F">F</option>
+            </select>
+          </div>
           <div className="mb-4">
             <label htmlFor="name" className="block font-medium mb-2">
               Name
@@ -112,6 +142,7 @@ const AddPlace = () => {
               name="name"
               placeholder="Enter name"
               className="border border-gray-300 rounded-md py-2 px-3 w-full"
+              required
             />
           </div>
           <div className="mb-4">
@@ -123,24 +154,24 @@ const AddPlace = () => {
               name="address"
               placeholder="Enter address"
               className="border border-gray-300 rounded-md py-2 px-3 w-full"
+              required
             />
           </div>
+
           <div className="mb-4">
-            <label htmlFor="category" className="block font-medium mb-2">
-              Category
+            <label htmlFor="address" className="block font-medium mb-2">
+              Upload Pictures
             </label>
-            <select
-              name="category"
+            <input
+              type="file"
+              name="image"
+              accept="image/*"
+              onChange={handleImageChange}
+              ref={inputRef}
               className="border border-gray-300 rounded-md py-2 px-3 w-full"
-            >
-              <option value="">-- Select a category --</option>
-              <option value="A">A</option>
-              <option value="B">B</option>
-              <option value="C">C</option>
-              <option value="D">D</option>
-              <option value="E">E</option>
-              <option value="F">F</option>
-            </select>
+              multiple
+              required
+            />
           </div>
           <button
             type="submit"
@@ -239,61 +270,56 @@ const AddPlace = () => {
 
       {/* Health Centers Map */}
       <div className="rounded-md bg-white p-2 m-4 md:m-36">
-        <MapContainer
-          className="z-40 h-[30rem]"
-          ref={mapRef}
-        >
+        <MapContainer className="z-40 h-[30rem]" ref={mapRef}>
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          {
-            listedIconicPlaces.map((iconicPlace, index) => (
-              <Marker
-                key={index}
-                position={[iconicPlace.lat, iconicPlace.lon]}
-                icon={markerIcon}
-                eventHandlers={{
-                  click: () => {
-                    const map = mapRef.current;
-                    map.flyTo([iconicPlace.lat, iconicPlace.lon], 15, {
-                      animate: true,
-                      duration: 2,
-                    });
-                    setShow(true);
-                  },
-                }}
-              >
-                {show && (
-                  <Popup closeOnClick={true} closeButton={true}>
-                    <div>
-                      <p className="p-0">Category: {iconicPlace.category}</p>
-                      <h3 className="p-0">Name: {iconicPlace.name}</h3>
-                      <p className="p-0">Adress: {iconicPlace.address}</p>
-                      <button
-                        className="bg-cyan-300 p-2 rounded-md"
-                        type="button"
-                        onClick={() => {
-                          deleteIconicPlaces(iconicPlace.docRef);
-                        }}
-                      >
-                        Remove
-                      </button>
-                      <button
-                        className="bg-cyan-300 p-2 rounded-md m-2"
-                        type="button"
-                        onClick={() => {
-                          backToPlacesHandler();
-                        }}
-                      >
-                        Back to All Iconic Places
-                      </button>
-                    </div>
-                  </Popup>
-                )}
-              </Marker>
-            ))
-          }
+          {listedIconicPlaces.map((iconicPlace, index) => (
+            <Marker
+              key={index}
+              position={[iconicPlace.lat, iconicPlace.lon]}
+              icon={markerIcon}
+              eventHandlers={{
+                click: () => {
+                  const map = mapRef.current;
+                  map.flyTo([iconicPlace.lat, iconicPlace.lon], 15, {
+                    animate: true,
+                    duration: 2,
+                  });
+                  setShow(true);
+                },
+              }}
+            >
+              {show && (
+                <Popup closeOnClick={true} closeButton={true}>
+                  <div>
+                    <p className="p-0">Category: {iconicPlace.category}</p>
+                    <h3 className="p-0">Name: {iconicPlace.name}</h3>
+                    <p className="p-0">Adress: {iconicPlace.address}</p>
+                    <button
+                      className="bg-cyan-300 p-2 rounded-md"
+                      type="button"
+                      onClick={() => {
+                        deleteIconicPlaces(iconicPlace.docRef);
+                      }}
+                    >
+                      Remove
+                    </button>
+                    <button
+                      className="bg-cyan-300 p-2 rounded-md m-2"
+                      type="button"
+                      onClick={() => {
+                        backToPlacesHandler();
+                      }}
+                    >
+                      Back to All Iconic Places
+                    </button>
+                  </div>
+                </Popup>
+              )}
+            </Marker>
+          ))}
         </MapContainer>
       </div>
     </div>
