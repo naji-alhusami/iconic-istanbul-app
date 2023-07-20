@@ -45,12 +45,12 @@ const AddPlaceForm = () => {
             required
           >
             <option value="">-- Select a category --</option>
-            <option value="Historical">Historical</option>
-            <option value="Restaurants">Restaurants</option>
-            <option value="Shopping">Shopping</option>
-            <option value="D">D</option>
-            <option value="E">E</option>
-            <option value="F">F</option>
+            <option value="Mosques and Religious Sites">Mosques and Religious Sites</option>
+            <option value="Palaces and Historical Residences">Palaces and Historical Residences</option>
+            <option value="Cafés and Coffee Shops">Cafés and Coffee Shops</option>
+            <option value="Shopping Malls and Centers">Shopping Malls and Centers</option>
+            <option value="Bridges and Landmarks">Bridges and Landmarks</option>
+            <option value="Other">Other</option>
           </select>
         </div>
         <div className="mb-4">

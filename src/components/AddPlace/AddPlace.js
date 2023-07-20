@@ -12,6 +12,7 @@ import {
 import "leaflet/dist/leaflet.css";
 import AddPlaceForm from "./AddPlaceForm";
 import AddPlaceTable from "./AddPlaceTable";
+import AddPlaceSlider from "./AddPlaceSlider";
 
 import markerIconx from "../Images/marker-icon.png";
 import markerIcon2x from "../Images/marker-icon-2x.png";
@@ -155,6 +156,7 @@ const AddPlace = () => {
           ))}
         </MapContainer>
       </div>
+      <AddPlaceSlider />
     </div>
   );
 };
