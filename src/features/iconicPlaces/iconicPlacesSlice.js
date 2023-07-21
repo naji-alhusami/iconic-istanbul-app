@@ -14,65 +14,12 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db, storage } from "../../firebase-config";
 
 // Start of add iconic place (send it to Firebase):
-// export const addIconicPlace = createAsyncThunk(
-//   "place/addIconicPlace",
-//   async (payload, { rejectWithValue }) => {
-//     try {
-//       const { name, address, category, isListed, selectedImage } = payload;
-//       console.log(payload);
-//       const response = await axios.get(
-//         `https://nominatim.openstreetmap.org/search?q=${address}&format=json`
-//       );
-
-//       const { lat, lon } = response.data[0];
-//       const id = uuidv4();
-
-//       // Upload the profile picture to Firebase Storage
-//       const storageRef = ref(storage, `images/${id}`);
-//       const metadata = {
-//         contentType: selectedImage[0].type, // Set the correct MIME type of the file
-//       };
-//       const snapshot = await uploadBytes(
-//         storageRef,
-//         selectedImage[0],
-//         metadata
-//       );
-//       const downloadURL = await getDownloadURL(snapshot.ref);
-
-//       const docRef = await addDoc(collection(db, "iconic-places"), {
-//         id,
-//         category,
-//         name,
-//         address,
-//         imageURL: downloadURL,
-//         lat,
-//         lon,
-//         isListed,
-//       });
-
-//       return {
-//         id: docRef.id,
-//         name,
-//         address,
-//         category,
-//         lat,
-//         lon,
-//         isListed,
-//       };
-//     } catch (error) {
-//       return rejectWithValue(error.message);
-//     }
-//   }
-// );
-// End of add iconic place (send it to Firebase).
-
-// Start of add iconic place (send it to Firebase):
 export const addIconicPlace = createAsyncThunk(
   "place/addIconicPlace",
   async (payload, { rejectWithValue }) => {
     try {
       const id = uuidv4();
-      const { name, address, category, isListed, selectedImage } = payload;
+      const { name, address, category,description, isListed, selectedImage } = payload;
 
       const response = await axios.get(
         `https://nominatim.openstreetmap.org/search?q=${address}&format=json`
@@ -94,20 +41,22 @@ export const addIconicPlace = createAsyncThunk(
 
       const docRef = await addDoc(collection(db, "iconic-places"), {
         id,
-        name,
-        address,
         category,
+        name,
+        description,
+        address,
         profilePictureURL: downloadURL,
         lat,
         lon,
         isListed,
       });
-      
+
       return {
         docRef: docRef.id,
         name,
         address,
         category,
+        description,
         lat,
         lon,
         isListed,

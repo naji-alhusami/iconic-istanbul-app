@@ -9,20 +9,35 @@ const AddPlaceForm = () => {
   const dispatch = useDispatch();
 
   const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedImage(file);
+    const files = event.target.files;
+    const selectedImages = [];
+  
+    // Convert FileList to an array
+    for (let i = 0; i < files.length; i++) {
+      selectedImages.push(files[i]);
+    }
+  
+    setSelectedImage(selectedImages);
   };
 
   const handleAddressSubmit = (event) => {
     event.preventDefault();
-    const name = event.target.elements.name.value;
-    const address = event.target.elements.address.value;
     const category = event.target.elements.category.value;
+    const name = event.target.elements.name.value;
+    const description = event.target.elements.description.value;
+    const address = event.target.elements.address.value;
     const isListed = true;
     if (selectedImage) {
       console.log(selectedImage);
       dispatch(
-        addIconicPlace({ category, name, address, selectedImage, isListed })
+        addIconicPlace({
+          category,
+          name,
+          address,
+          description,
+          selectedImage,
+          isListed,
+        })
       );
     }
 
@@ -45,10 +60,18 @@ const AddPlaceForm = () => {
             required
           >
             <option value="">-- Select a category --</option>
-            <option value="Mosques and Religious Sites">Mosques and Religious Sites</option>
-            <option value="Palaces and Historical Residences">Palaces and Historical Residences</option>
-            <option value="Cafés and Coffee Shops">Cafés and Coffee Shops</option>
-            <option value="Shopping Malls and Centers">Shopping Malls and Centers</option>
+            <option value="Mosques and Religious Sites">
+              Mosques and Religious Sites
+            </option>
+            <option value="Palaces and Historical Residences">
+              Palaces and Historical Residences
+            </option>
+            <option value="Cafés and Coffee Shops">
+              Cafés and Coffee Shops
+            </option>
+            <option value="Shopping Malls and Centers">
+              Shopping Malls and Centers
+            </option>
             <option value="Bridges and Landmarks">Bridges and Landmarks</option>
             <option value="Other">Other</option>
           </select>

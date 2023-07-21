@@ -27,6 +27,7 @@ const AddPlace = () => {
   const iconicPlaces = place;
 
   const listedIconicPlaces = iconicPlaces.filter((place) => place.isListed);
+  console.log(listedIconicPlaces);
 
   useEffect(() => {
     const getData = () => {
