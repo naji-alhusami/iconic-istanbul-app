@@ -66,6 +66,18 @@ const AddPlaceForm = () => {
           />
         </div>
         <div className="mb-4">
+          <label htmlFor="description" className="block font-medium mb-2">
+            Description
+          </label>
+          <input
+            type="text"
+            name="description"
+            placeholder="Enter name"
+            className="border border-gray-300 rounded-md py-2 px-3 w-full"
+            required
+          />
+        </div>
+        <div className="mb-4">
           <label htmlFor="address" className="block font-medium mb-2">
             Address
           </label>

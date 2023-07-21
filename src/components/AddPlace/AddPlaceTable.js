@@ -45,7 +45,7 @@ const AddPlaceTable = ({
                 type="button"
                 // onClick={() => deleteIconicPlaces(iconicPlace.docRef)}
               >
-                Information and Pictures
+                Show Information
               </button>
             </td>
           ))}

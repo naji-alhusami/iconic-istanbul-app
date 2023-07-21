@@ -156,7 +156,9 @@ const AddPlace = () => {
           ))}
         </MapContainer>
       </div>
-      <AddPlaceSlider />
+      <div className="md:flex md:flex-col md:items-center">
+        <AddPlaceSlider />
+      </div>
     </div>
   );
 };
