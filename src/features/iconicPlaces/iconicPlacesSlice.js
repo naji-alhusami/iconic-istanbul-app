@@ -19,25 +19,26 @@ export const addIconicPlace = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     try {
       const id = uuidv4();
-      const { name, address, category,description, isListed, selectedImage } = payload;
-
+      const { name, address, category, description, isListed, selectedImage } =
+        payload;
+      console.log(selectedImage);
       const response = await axios.get(
         `https://nominatim.openstreetmap.org/search?q=${address}&format=json`
       );
       const { lat, lon } = response.data[0];
 
-      // Upload the profile picture to Firebase Storage
-      const storageRef = ref(storage, id);
-      console.log(storageRef);
-      const metadata = {
-        contentType: selectedImage.type, // Set the correct MIME type of the file
-      };
-      const snapshot = await uploadBytes(
-        storageRef,
-        selectedImage,
-        metadata
+      // Upload the profile pictures to Firebase Storage
+      const downloadURLs = await Promise.all(
+        selectedImage.map(async (image) => {
+          const metadata = {
+            contentType: image.type, // Set the correct MIME type of the file
+          };
+          const storageRef = ref(storage, `${id}/${image.name}`);
+          const snapshot = await uploadBytes(storageRef, image, metadata);
+          const downloadURL = await getDownloadURL(snapshot.ref);
+          return downloadURL;
+        })
       );
-      const downloadURL = await getDownloadURL(snapshot.ref);
 
       const docRef = await addDoc(collection(db, "iconic-places"), {
         id,
@@ -45,7 +46,7 @@ export const addIconicPlace = createAsyncThunk(
         name,
         description,
         address,
-        profilePictureURL: downloadURL,
+        profilePictureURLs: downloadURLs,
         lat,
         lon,
         isListed,
@@ -60,7 +61,7 @@ export const addIconicPlace = createAsyncThunk(
         lat,
         lon,
         isListed,
-        downloadURL,
+        downloadURLs,
       };
     } catch (error) {
       return rejectWithValue(error.message);
