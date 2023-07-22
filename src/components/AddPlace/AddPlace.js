@@ -19,15 +19,15 @@ import markerIcon2x from "../Images/marker-icon-2x.png";
 
 const AddPlace = () => {
   const dispatch = useDispatch();
-  const [show, setShow] = useState(false);
-
+  const [showPlaceInfoOnMap, setShowPlaceInfoOnMap] = useState(false);
+  const [showPlaceSlider, setShowPlaceSlider] = useState(false);
   const mapRef = useRef();
+  const infoPlaceRef = useRef(null);
 
   const { place } = useSelector((state) => state.place);
   const iconicPlaces = place;
 
   const listedIconicPlaces = iconicPlaces.filter((place) => place.isListed);
-  console.log(listedIconicPlaces);
 
   useEffect(() => {
     const getData = () => {
@@ -36,6 +36,12 @@ const AddPlace = () => {
 
     getData();
   }, [dispatch]);
+
+  useEffect(() => {
+    if (showPlaceSlider) {
+      infoPlaceRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [showPlaceSlider]);
 
   const markerIcon = new L.Icon({
     iconUrl: markerIconx,
@@ -76,13 +82,13 @@ const AddPlace = () => {
 
   const backToPlacesHandler = () => {
     mapRef.current.flyToBounds(getBounds());
-    setShow(false);
+    setShowPlaceInfoOnMap(false);
   };
 
   const deleteIconicPlaces = (index) => {
     mapRef.current.flyToBounds(getBounds());
     dispatch(deletePlace(index));
-    setShow(false);
+    setShowPlaceInfoOnMap(false);
   };
 
   return (
@@ -100,6 +106,7 @@ const AddPlace = () => {
           handleCheckboxChange={handleCheckboxChange}
           iconicPlaces={iconicPlaces}
           deleteIconicPlaces={deleteIconicPlaces}
+          setShowPlaceSlider={setShowPlaceSlider}
         />
       </div>
 
@@ -122,11 +129,11 @@ const AddPlace = () => {
                     animate: true,
                     duration: 2,
                   });
-                  setShow(true);
+                  setShowPlaceInfoOnMap(true);
                 },
               }}
             >
-              {show && (
+              {showPlaceInfoOnMap && (
                 <Popup closeOnClick={true} closeButton={true}>
                   <div>
                     <p className="p-0">Category: {iconicPlace.category}</p>
@@ -157,9 +164,11 @@ const AddPlace = () => {
           ))}
         </MapContainer>
       </div>
-      <div className="md:flex md:flex-col md:items-center">
-        <AddPlaceSlider />
-      </div>
+      {showPlaceSlider && (
+        <div className="md:flex md:flex-col md:items-center" ref={infoPlaceRef}>
+          <AddPlaceSlider />
+        </div>
+      )}
     </div>
   );
 };

@@ -28,7 +28,6 @@ const AddPlaceForm = () => {
     const address = event.target.elements.address.value;
     const isListed = true;
     if (selectedImage) {
-      console.log(selectedImage);
       dispatch(
         addIconicPlace({
           category,

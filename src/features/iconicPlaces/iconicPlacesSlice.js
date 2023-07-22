@@ -21,7 +21,6 @@ export const addIconicPlace = createAsyncThunk(
       const id = uuidv4();
       const { name, address, category, description, isListed, selectedImage } =
         payload;
-      console.log(selectedImage);
       const response = await axios.get(
         `https://nominatim.openstreetmap.org/search?q=${address}&format=json`
       );
@@ -114,6 +113,20 @@ export const editPlace = createAsyncThunk(
 );
 // End of edit iconic places (get them from Firebase).
 
+// Start of showing iconic places:
+export const showPlace = createAsyncThunk(
+  "place/showPlace",
+  async (id, { rejectWithValue }) => {
+    try {
+      // await deleteDoc(doc(db, "iconic-places", id));
+      return id;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+// End of showing iconic places.
+
 // Start of deleting iconic places:
 export const deletePlace = createAsyncThunk(
   "place/deletePlace",
@@ -133,6 +146,7 @@ const iconicPlacesSlice = createSlice({
   initialState: {
     loading: false,
     place: [],
+    selectedPlace: [],
     error: null,
   },
 
@@ -173,6 +187,22 @@ const iconicPlacesSlice = createSlice({
       state.error = null;
     });
     builder.addCase(editPlace.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+
+    // Show iconic place cases:
+    builder.addCase(showPlace.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(showPlace.fulfilled, (state, action) => {
+      state.loading = false;
+      state.selectedPlace = [
+        state.place.find((plc) => plc.id === action.payload),
+      ];
+      state.error = null;
+    });
+    builder.addCase(showPlace.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });

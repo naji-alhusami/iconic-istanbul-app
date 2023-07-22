@@ -1,10 +1,23 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+
+import { showPlace } from "../../features/iconicPlaces/iconicPlacesSlice";
 
 const AddPlaceTable = ({
   handleCheckboxChange,
   iconicPlaces,
   deleteIconicPlaces,
+  setShowPlaceSlider,
 }) => {
+  console.log(iconicPlaces);
+  const dispatch = useDispatch();
+
+  const handleShowPlaceInfo = (id) => {
+    console.log(id);
+    setShowPlaceSlider(true);
+    dispatch(showPlace(id));
+  };
+
   return (
     <table className="bg-white table-fixed border-collapse border border-gray-400 m-4 my-8 w-auto md:w-auto">
       <tbody>
@@ -43,7 +56,7 @@ const AddPlaceTable = ({
               <button
                 className="my-2 rounded-md shadowtransition-all duration-250 bg-cyan-400 hover:bg-cyan-500 text-m p-2"
                 type="button"
-                // onClick={() => deleteIconicPlaces(iconicPlace.docRef)}
+                onClick={() => handleShowPlaceInfo(iconicPlace.id)}
               >
                 Show Information
               </button>
