@@ -2,18 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Loading from "../Loading/Loading";
 
-const AddPlaceSlider = () => {
+const AddPlaceSlider = ({ setShowTableInfo, setShowPlaceSlider }) => {
   const { loading } = useSelector((state) => state.place);
-  console.log(loading);
   const placeInfo = useSelector((state) => state.place.selectedPlace);
-  console.log(placeInfo[0]);
   const [activeSlide, setActiveSlide] = useState(0);
 
   useEffect(() => {
     const handleNextSlide = () => {
       setActiveSlide(
-        (prevSlide) =>
-          (prevSlide + 1) % placeInfo[0].profilePictureURLs.length
+        (prevSlide) => (prevSlide + 1) % placeInfo[0].profilePictureURLs.length
       );
     };
 
@@ -48,6 +45,11 @@ const AddPlaceSlider = () => {
       };
     }
   }, [activeSlide, placeInfo]);
+
+  const handleBackToTable = () => {
+    setShowTableInfo(true);
+    setShowPlaceSlider(false);
+  };
 
   if (loading) {
     return <Loading />;
@@ -99,6 +101,13 @@ const AddPlaceSlider = () => {
           <div className="bg-white w-auto rounded-xl p-8 absolute top-[16rem]  md:w-[15rem] md:left-[20rem] md:top-[8rem] lg:left-[30rem]">
             <p>{info.title}</p>
             <p>{info.description}</p>
+            <button
+              type="button"
+              className="bg-cyan-300 hover:bg-cyan-500 p-2 rounded-md"
+              onClick={handleBackToTable}
+            >
+              Back to Places Table
+            </button>
           </div>
         );
       })}

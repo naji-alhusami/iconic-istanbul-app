@@ -21,7 +21,9 @@ const AddPlace = () => {
   const dispatch = useDispatch();
   const [showPlaceInfoOnMap, setShowPlaceInfoOnMap] = useState(false);
   const [showPlaceSlider, setShowPlaceSlider] = useState(false);
+  const [showTableInfo, setShowTableInfo] = useState(false);
   const mapRef = useRef();
+  const infoTableRef = useRef(null);
   const infoPlaceRef = useRef(null);
 
   const { place } = useSelector((state) => state.place);
@@ -41,7 +43,10 @@ const AddPlace = () => {
     if (showPlaceSlider) {
       infoPlaceRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, [showPlaceSlider]);
+    if (showTableInfo) {
+      infoTableRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [showPlaceSlider, showTableInfo]);
 
   const markerIcon = new L.Icon({
     iconUrl: markerIconx,
@@ -103,6 +108,7 @@ const AddPlace = () => {
 
         {/* Iconic Places Table */}
         <AddPlaceTable
+          infoTableRef={infoTableRef}
           handleCheckboxChange={handleCheckboxChange}
           iconicPlaces={iconicPlaces}
           deleteIconicPlaces={deleteIconicPlaces}
@@ -166,7 +172,7 @@ const AddPlace = () => {
       </div>
       {showPlaceSlider && (
         <div className="md:flex md:flex-col md:items-center" ref={infoPlaceRef}>
-          <AddPlaceSlider />
+          <AddPlaceSlider setShowTableInfo={setShowTableInfo} setShowPlaceSlider={setShowPlaceSlider} />
         </div>
       )}
     </div>
