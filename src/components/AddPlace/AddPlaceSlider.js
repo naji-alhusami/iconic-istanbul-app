@@ -1,51 +1,57 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import Loading from "../Loading/Loading";
 
 const AddPlaceSlider = () => {
+  const { loading } = useSelector((state) => state.place);
+  console.log(loading);
   const placeInfo = useSelector((state) => state.place.selectedPlace);
-
+  console.log(placeInfo[0]);
   const [activeSlide, setActiveSlide] = useState(0);
 
-  const handleNextSlide = () => {
-    placeInfo.map((slide) => {
-      return setActiveSlide(
-        (prevSlide) => (prevSlide + 1) % slide.profilePictureURLs.length
-      );
-    });
-  };
-
-  const handlePrevSlide = () => {
-    placeInfo.map((slide) => {
-      return setActiveSlide(
-        (prevSlide) =>
-          (prevSlide - 1 + slide.profilePictureURLs) %
-          slide.profilePictureURLs.length
-      );
-    });
-  };
-
-  const handleScroll = (event) => {
-    // Determine the scroll direction (positive: down, negative: up)
-    const delta = event.deltaY;
-
-    // Update the active slide based on the scroll direction
-    if (delta > 0) {
-      handleNextSlide();
-    } else {
-      handlePrevSlide();
-    }
-  };
-
   useEffect(() => {
+    const handleNextSlide = () => {
+      setActiveSlide(
+        (prevSlide) =>
+          (prevSlide + 1) % placeInfo[0].profilePictureURLs.length
+      );
+    };
+
+    const handlePrevSlide = () => {
+      setActiveSlide(
+        (prevSlide) =>
+          (prevSlide - 1 + placeInfo[0].profilePictureURLs.length) %
+          placeInfo[0].profilePictureURLs.length
+      );
+    };
+
+    const handleScroll = (event) => {
+      // Determine the scroll direction (positive: down, negative: up)
+      const delta = event.deltaY;
+
+      // Update the active slide based on the scroll direction
+      if (delta > 0) {
+        handleNextSlide();
+      } else {
+        handlePrevSlide();
+      }
+    };
+
     // Attach the scroll event listener to the parent container
     const container = document.getElementById("slider-container");
-    container.addEventListener("wheel", handleScroll);
+    if (container) {
+      container.addEventListener("wheel", handleScroll);
 
-    // Clean up the event listener when the component unmounts
-    return () => {
-      container.removeEventListener("wheel", handleScroll);
-    };
-  }, []);
+      // Clean up the event listener when the component unmounts
+      return () => {
+        container.removeEventListener("wheel", handleScroll);
+      };
+    }
+  }, [activeSlide, placeInfo]);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div

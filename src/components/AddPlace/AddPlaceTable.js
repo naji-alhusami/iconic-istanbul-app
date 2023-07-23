@@ -9,11 +9,9 @@ const AddPlaceTable = ({
   deleteIconicPlaces,
   setShowPlaceSlider,
 }) => {
-  console.log(iconicPlaces);
   const dispatch = useDispatch();
 
   const handleShowPlaceInfo = (id) => {
-    console.log(id);
     setShowPlaceSlider(true);
     dispatch(showPlace(id));
   };
