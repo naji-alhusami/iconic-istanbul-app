@@ -3,9 +3,11 @@
 }
 
 body {
-  background-image: url("./components/Images/BackgroundImage.jpg");
+  margin: 0;
+  padding: 0;
+  /* background-image: url("./components/Images/bg1.jpg");
   background-size: cover;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; */
 }
 
 .App-logo {

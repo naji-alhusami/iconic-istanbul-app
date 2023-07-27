@@ -3,13 +3,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
+import "./Home.css";
+
 const Home = () => {
   return (
-    <div
-      className=" w-screen h-screen bg-cover bg-top bg-no-repeat"
-    >
-      <div className="flex flex-col pt-12 pb-12  items-end md:flex-col   lg:flex-row lg:justify-end md:items-end lg:pt-30 lg:pb-20 md:pt-20">
-        <div className="bg-opacity-90 bg-orange-800 rounded-l-md flex flex-col items-center p-4 md:p-8  md:flex-col md:items-center  lg:items-center">
+    <div className="slider w-screen h-screen flex flex-col items-center justify-center bg-cover bg-top bg-no-repeat">
+      <div className=" justify-center flex flex-col items-center md:flex-col lg:flex-row lg:justify-end md:items-end lg:pt-30 lg:pb-20 md:pt-20">
+        <div className=" bg-opacity-90 bg-orange-800 rounded-md flex flex-col items-center p-2 md:p-8  md:flex-col md:items-center  lg:items-center">
           <motion.p
             initial={{ x: 80, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
