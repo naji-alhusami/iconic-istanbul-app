@@ -1,29 +1,51 @@
 .slider {
-  /* height: fit-content; */
   width: 100%;
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
-  animation: slideImages 30s infinite; /* Change the animation duration as needed */
+  animation: slideImages 30s infinite;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
+
 
 @keyframes slideImages {
   0% {
     background-image: url("../Images/bg1.jpg");
   }
-  16.666% {
+  8% {
+    background-image: url("../Images/bg1.jpg");
+  }
+  16% {
     background-image: url("../Images/bg2.jpg");
   }
-  33.333% {
+  24% {
+    background-image: url("../Images/bg2.jpg");
+  }
+  32% {
     background-image: url("../Images/bg3.jpg");
   }
-  50% {
+  40% {
+    background-image: url("../Images/bg3.jpg");
+  }
+  48% {
     background-image: url("../Images/bg4.jpg");
   }
-  66.666% {
+  56% {
+    background-image: url("../Images/bg4.jpg");
+  }
+  64% {
     background-image: url("../Images/bg5.jpg");
   }
-  83.333% {
+  72% {
+    background-image: url("../Images/bg5.jpg");
+  }
+  80% {
     background-image: url("../Images/bg6.jpg");
+  }
+  88% {
+    background-image: url("../Images/bg6.jpg");
+  }
+  94% {
+    background-image: url("../Images/bg1.jpg");
   }
   100% {
     background-image: url("../Images/bg1.jpg");
