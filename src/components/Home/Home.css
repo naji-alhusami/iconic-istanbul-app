@@ -1,52 +1,6 @@
-/* .slider {
-  width: 100%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  animation: slideImages 36s infinite;
-} */
-/* 
-@keyframes slideImages {
-  0% {
-    background-image: url("../Images/bg1.jpg");
-  }
-  9% {
-    background-image: url("../Images/bg1.jpg");
-  }
-  18% {
-    background-image: url("../Images/bg2.jpg");
-  }
-  27% {
-    background-image: url("../Images/bg2.jpg");
-  }
-  36% {
-    background-image: url("../Images/bg3.jpg");
-  }
-  45% {
-    background-image: url("../Images/bg3.jpg");
-  }
-  54% {
-    background-image: url("../Images/bg4.jpg");
-  }
-  63% {
-    background-image: url("../Images/bg4.jpg");
-  }
-  72% {
-    background-image: url("../Images/bg5.jpg");
-  }
-  81% {
-    background-image: url("../Images/bg5.jpg");
-  }
-  90% {
-    background-image: url("../Images/bg6.jpg");
-  }
-  100% {
-    background-image: url("../Images/bg6.jpg");
-  }
-} */
-
 @keyframes fadeIn {
   from {
-    opacity: 0;
+    opacity: 0.4;
   }
   to {
     opacity: 1;

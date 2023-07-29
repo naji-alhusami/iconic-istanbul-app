@@ -8,39 +8,39 @@ import bg6 from "../Images/bg6.jpg";
 export const SlidesData = [
   {
     background: bg1,
-    heading: "Start your journey of discovery in Istanbul,",
-    subheading: "where others have ventured before you.",
+    heading: "Start Your Journey Of Discovery In Istanbul,",
+    subheading: "Where Others Have Ventured Before You.",
     buttonText: "ICONIC PLACES",
   },
   {
     background: bg2,
-    heading: "Escape to Istanbul,",
-    subheading: "your dream destination brought to life.",
+    heading: "Escape To Istanbul,",
+    subheading: "Your Dream Destination Brought To Life.",
     buttonText: "ICONIC PLACES",
   },
   {
     background: bg3,
-    heading: "Help others uncover new places in Istanbul,",
-    subheading: "making their exploration more remarkable.",
+    heading: "Help Others Uncover New Places In Istanbul,",
+    subheading: "Making Their Exploration More Remarkable.",
     buttonText: "ICONIC PLACES",
   },
   {
     background: bg4,
-    heading: "Unearth the captivating sights of Istanbul,",
-    subheading: "cherished by all who venture there.",
+    heading: "Unearth The Captivating Sights Of Istanbul,",
+    subheading: "Cherished By All Who Venture There.",
     buttonText: "ICONIC PLACES",
   },
   {
     background: bg5,
-    heading: "Discover unique views in Istanbul,",
+    heading: "Discover Unique Views In Istanbul,",
     subheading:
-      "where the captivating combination of Eastern and Western cultures awaits.",
+      "Where The Eastern and Western Cultures Awaits.",
     buttonText: "ICONIC PLACES",
   },
   {
     background: bg6,
-    heading: "Remember to capture the mesmerizing moments,",
-    subheading: "and share them on our website.",
+    heading: "Remember To Capture The Mesmerizing Moments,",
+    subheading: "And Share Them On Our Website.",
     buttonText: "ICONIC PLACES",
   },
 ];
