@@ -28,7 +28,7 @@ const AddPlaceTable = ({
             {iconicPlaces.map((iconicPlace, index) => (
               <td
                 key={index}
-                className="border border-gray-400 p-1 text-center"
+                className="border border-gray-400 p-1 text-center font-bold"
               >
                 {iconicPlace.category}
               </td>
@@ -70,7 +70,7 @@ const AddPlaceTable = ({
                 className="border border-gray-400 p-1 text-center"
               >
                 <button
-                  className="my-2 rounded-md shadowtransition-all duration-250 bg-cyan-400 hover:bg-cyan-500 text-m p-2"
+                  className="my-2 rounded-md shadowtransition-all duration-250 bg-orange-400 hover:bg-orange-900 text-m p-2 hover:text-white"
                   type="button"
                   onClick={() => handleShowPlaceInfo(iconicPlace.id)}
                 >
@@ -88,7 +88,7 @@ const AddPlaceTable = ({
                 className="border border-gray-400 p-1 text-center"
               >
                 <button
-                  className="my-2 rounded-md shadowtransition-all duration-250 bg-cyan-400 hover:bg-cyan-500 text-m p-2"
+                  className="my-2 rounded-md shadowtransition-all duration-250 bg-orange-400 hover:bg-orange-900 text-m p-2 hover:text-white"
                   type="button"
                   onClick={() => deleteIconicPlaces(iconicPlace.docRef)}
                 >

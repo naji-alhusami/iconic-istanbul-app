@@ -247,7 +247,7 @@ const Navbar = () => {
               </li>
             )}
             {userLogin.userlogin && (
-              <li className="hover:text-indigo-100 hover:rounded-md cursor-pointer ">
+              <li className="hover:text-indigo-100 hover:rounded-t-md cursor-pointer ">
                 <div className="relative absolute">
                   <div className="flex peer text-white p-2 bg-orange-400 hover:bg-orange-800 hover:text-white rounded-md">
                     {userInfo.name}

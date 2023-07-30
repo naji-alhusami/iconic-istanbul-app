@@ -129,7 +129,7 @@ const AddPlaceForm = () => {
         </div>
         <button
           type="submit"
-          className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700"
+          className="bg-orange-400 hover:text-white font-bold py-2 px-4 rounded hover:bg-orange-900"
         >
           Add To Map
         </button>

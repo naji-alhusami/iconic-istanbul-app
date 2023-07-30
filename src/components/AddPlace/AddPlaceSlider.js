@@ -103,7 +103,7 @@ const AddPlaceSlider = ({ setShowTableInfo, setShowPlaceSlider }) => {
             <p>{info.description}</p>
             <button
               type="button"
-              className="bg-cyan-300 hover:bg-cyan-500 p-2 rounded-md"
+              className="bg-orange-400 hover:bg-orange-900 hover:text-white p-2 rounded-md"
               onClick={handleBackToTable}
             >
               Back to Places Table
