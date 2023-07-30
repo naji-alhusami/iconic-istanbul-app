@@ -7,6 +7,7 @@ import Home from "./components/Home/Home";
 import Navbar from "./components/Navbar/Navbar";
 import Singup from "./components/Signup/Signup";
 import Login from "./components/Login/Login";
+import Card from "./components/Card/Card";
 import AddPlace from "./components/AddPlace/AddPlace";
 import Thanks from "./components/Thanks/Thanks";
 import RequireAuth from "./components/RequireAuth/RequireAuth";
@@ -49,6 +50,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/card" element={<Card />} />
         <Route element={<RequireAuth />}>
           <Route path="/addplace" element={<AddPlace />} />
         </Route>

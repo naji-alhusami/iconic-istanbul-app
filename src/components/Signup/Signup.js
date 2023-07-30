@@ -59,7 +59,7 @@ const Singup = () => {
                 })}
                 type="text"
                 placeholder="First Name"
-                className="px-3 broder-solid border-2 rounded-md  placeholder-gray-300 lg:w-48 md:w-96 h-12 "
+                className="px-3 broder-solid border-2 rounded-md  placeholder-gray-300 lg:w-48 md:w-96 h-12"
                 aria-invalid={errors.firstName ? "true" : "false"}
                 required
               />
@@ -262,3 +262,16 @@ const Singup = () => {
   );
 };
 export default Singup;
+
+// import React from "react";
+
+// const LoginSignupCard = () => {
+//   return (
+//     <div className="card">
+//       <div className="card-back">Back</div>
+//       <div className="card-front">Front</div>
+//     </div>
+//   );
+// };
+
+// export default LoginSignupCard;

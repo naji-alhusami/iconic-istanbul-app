@@ -145,7 +145,7 @@ const Navbar = () => {
                           whileTap={{ scale: 0.9 }}
                         >
                           <Link
-                            to="/login"
+                            to="/card"
                             className="flex justify-center px-4 py-2 text-center font-bold rounded-md shadow transition-all duration-250 bg-cyan-400 bg-orange-400 hover:bg-orange-800 hover:text-white text-m"
                           >
                             Login
@@ -238,7 +238,7 @@ const Navbar = () => {
                   whileTap={{ scale: 0.9 }}
                 >
                   <Link
-                    to="/login"
+                    to="/card"
                     className="flex justify-center px-4 py-2 text-center font-bold rounded-md shadow transition-all duration-250 bg-orange-400 hover:bg-orange-800 hover:text-white text-m"
                   >
                     Login
