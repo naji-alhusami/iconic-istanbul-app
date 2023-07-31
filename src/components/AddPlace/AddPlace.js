@@ -28,7 +28,7 @@ const AddPlace = () => {
 
   const { place } = useSelector((state) => state.place);
   const iconicPlaces = place;
-
+  
   const listedIconicPlaces = iconicPlaces.filter((place) => place.isListed);
 
   useEffect(() => {
@@ -172,7 +172,10 @@ const AddPlace = () => {
       </div>
       {showPlaceSlider && (
         <div className="md:flex md:flex-col md:items-center" ref={infoPlaceRef}>
-          <AddPlaceSlider setShowTableInfo={setShowTableInfo} setShowPlaceSlider={setShowPlaceSlider} />
+          <AddPlaceSlider
+            setShowTableInfo={setShowTableInfo}
+            setShowPlaceSlider={setShowPlaceSlider}
+          />
         </div>
       )}
     </div>

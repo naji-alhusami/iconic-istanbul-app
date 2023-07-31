@@ -12,9 +12,9 @@ const AddPlaceTable = ({
 }) => {
   const dispatch = useDispatch();
 
-  const handleShowPlaceInfo = (id) => {
+  const handleShowPlaceInfo = async (id) => {
     setShowPlaceSlider(true);
-    dispatch(showPlace(id));
+    await dispatch(showPlace(id));
   };
 
   return (
@@ -74,7 +74,7 @@ const AddPlaceTable = ({
                   type="button"
                   onClick={() => handleShowPlaceInfo(iconicPlace.id)}
                 >
-                  Show Information
+                  Show Gallery
                 </button>
               </td>
             ))}

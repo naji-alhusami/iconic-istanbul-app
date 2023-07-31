@@ -51,9 +51,12 @@ const AddPlaceSlider = ({ setShowTableInfo, setShowPlaceSlider }) => {
     setShowPlaceSlider(false);
   };
 
-  if (loading) {
+  if (loading || !placeInfo || placeInfo.length === 0) {
     return <Loading />;
   }
+
+  const selectedPlace = placeInfo[0];
+  const profilePictureURLs = selectedPlace.downloadURLs;
 
   return (
     <div
@@ -62,8 +65,8 @@ const AddPlaceSlider = ({ setShowTableInfo, setShowPlaceSlider }) => {
     >
       {/* Slider Container */}
       <div className=" bg-white w-[17rem] rounded-xl shadow-xl h-[15rem] m-5 overflow-hidden absolute top-[4rem] transform -translate-y-1/2 md:transform md:-translate-y-1/2 md:top-[13.5rem] md:left-[-6rem] md:w-[24rem] md:h-[20rem] lg:w-[33rem] lg:h-[25rem] lg:top-[16rem]">
-        {placeInfo.map((slide) => {
-          return slide.profilePictureURLs.map((image, index) => (
+        {profilePictureURLs.map((image, index) => {
+          return (
             <div
               key={index}
               className={`bg-gray-400 p-2 absolute w-full h-full top-0 transition-opacity duration-500 ${
@@ -76,13 +79,13 @@ const AddPlaceSlider = ({ setShowTableInfo, setShowPlaceSlider }) => {
                 className="w-full h-full object-cover"
               />
             </div>
-          ));
+          );
         })}
       </div>
       {/* Dots */}
       <div className="flex justify-center pb-3 md:flex md:flex-col absolute top-[14rem] md:left-[35.5rem] md:top-[12rem] lg:left-[48rem]">
-        {placeInfo.map((slide) => {
-          return slide.profilePictureURLs.map((_, index) => (
+        {profilePictureURLs.map((_, index) => {
+          return (
             <div
               key={index}
               className={`w-2 h-2 rounded-full mx-1 md:my-2 cursor-pointer transition-colors duration-300 ${
@@ -92,7 +95,7 @@ const AddPlaceSlider = ({ setShowTableInfo, setShowPlaceSlider }) => {
               }`}
               onClick={() => setActiveSlide(index)}
             />
-          ));
+          );
         })}
       </div>
 

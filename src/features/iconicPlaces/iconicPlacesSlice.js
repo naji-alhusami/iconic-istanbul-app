@@ -53,6 +53,7 @@ export const addIconicPlace = createAsyncThunk(
 
       return {
         docRef: docRef.id,
+        id,
         name,
         address,
         category,
