@@ -19,16 +19,18 @@ import markerIcon2x from "../Images/marker-icon-2x.png";
 
 const AddPlace = () => {
   const dispatch = useDispatch();
+
   const [showPlaceInfoOnMap, setShowPlaceInfoOnMap] = useState(false);
   const [showPlaceSlider, setShowPlaceSlider] = useState(false);
   const [showTableInfo, setShowTableInfo] = useState(false);
+  
   const mapRef = useRef();
   const infoTableRef = useRef(null);
   const infoPlaceRef = useRef(null);
 
   const { place } = useSelector((state) => state.place);
   const iconicPlaces = place;
-  
+
   const listedIconicPlaces = iconicPlaces.filter((place) => place.isListed);
 
   useEffect(() => {

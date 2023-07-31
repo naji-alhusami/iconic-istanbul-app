@@ -51,13 +51,14 @@ const AddPlaceSlider = ({ setShowTableInfo, setShowPlaceSlider }) => {
     setShowPlaceSlider(false);
   };
 
-  if (loading || !placeInfo || placeInfo.length === 0) {
+  if (loading) {
     return <Loading />;
   }
 
   const selectedPlace = placeInfo[0];
+  console.log(selectedPlace);
   const profilePictureURLs = selectedPlace.downloadURLs;
-
+  
   return (
     <div
       id="slider-container"
@@ -101,7 +102,10 @@ const AddPlaceSlider = ({ setShowTableInfo, setShowPlaceSlider }) => {
 
       {placeInfo.map((info) => {
         return (
-          <div className="bg-white w-auto rounded-xl p-8 absolute top-[16rem]  md:w-[15rem] md:left-[20rem] md:top-[8rem] lg:left-[30rem]">
+          <div
+            key={info.id}
+            className="bg-white w-auto rounded-xl p-8 absolute top-[16rem]  md:w-[15rem] md:left-[20rem] md:top-[8rem] lg:left-[30rem]"
+          >
             <p>{info.title}</p>
             <p>{info.description}</p>
             <button

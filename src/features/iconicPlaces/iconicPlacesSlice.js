@@ -45,7 +45,7 @@ export const addIconicPlace = createAsyncThunk(
         name,
         description,
         address,
-        profilePictureURLs: downloadURLs,
+        downloadURLs,
         lat,
         lon,
         isListed,
