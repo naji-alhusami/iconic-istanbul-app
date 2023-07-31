@@ -23,7 +23,7 @@ const AddPlace = () => {
   const [showPlaceInfoOnMap, setShowPlaceInfoOnMap] = useState(false);
   const [showPlaceSlider, setShowPlaceSlider] = useState(false);
   const [showTableInfo, setShowTableInfo] = useState(false);
-  
+
   const mapRef = useRef();
   const infoTableRef = useRef(null);
   const infoPlaceRef = useRef(null);
