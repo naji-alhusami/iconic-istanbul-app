@@ -4,6 +4,8 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import { useDispatch, useSelector } from "react-redux";
 
+import "./AddPlace.css";
+
 import {
   getPlaces,
   deletePlace,
@@ -99,8 +101,8 @@ const AddPlace = () => {
   };
 
   return (
-    <div>
-      <div className="flex flex-col justify-center items-center">
+    <div className="bg-container">
+      <div className=" flex flex-col justify-center items-center">
         <h1 className="m-10 text-2xl md:text-4xl font-bold text-white bg-orange-700 p-4 rounded-md">
           ADD PLACES
         </h1>
@@ -119,7 +121,7 @@ const AddPlace = () => {
       </div>
 
       {/* Health Centers Map */}
-      <div className="rounded-md bg-white p-2 m-4 md:m-36">
+      <div className="rounded-md bg-white p-2 m-4 md:m-36 md:mb-0">
         <MapContainer className="z-40 h-[30rem]" ref={mapRef}>
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -173,7 +175,7 @@ const AddPlace = () => {
         </MapContainer>
       </div>
       {showPlaceSlider && (
-        <div className="md:flex md:flex-col md:items-center" ref={infoPlaceRef}>
+        <div className="md:flex md:flex-col md:items-center md:mt-[10rem]" ref={infoPlaceRef}>
           <AddPlaceSlider
             setShowTableInfo={setShowTableInfo}
             setShowPlaceSlider={setShowPlaceSlider}
