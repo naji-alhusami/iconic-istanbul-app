@@ -46,10 +46,10 @@ const AddPlaceSlider = ({ setShowTableInfo, setShowPlaceSlider }) => {
     }
   }, [activeSlide, placeInfo]);
 
-  // const handleBackToTable = () => {
-  //   setShowTableInfo(true);
-  //   setShowPlaceSlider(false);
-  // };
+  const handleBackToTable = () => {
+    setShowTableInfo(true);
+    setShowPlaceSlider(false);
+  };
 
   if (loading) {
     return <Loading />;
@@ -57,15 +57,15 @@ const AddPlaceSlider = ({ setShowTableInfo, setShowPlaceSlider }) => {
 
   const selectedPlace = placeInfo[0];
   console.log(selectedPlace);
-  const profilePictureURLs = selectedPlace.downloadURLs;
+  // const profilePictureURLs = selectedPlace.downloadURLs;
 
   return (
     <div
       id="slider-container"
-      className="flex justify-center items-center bg-white w-auto rounded-xl m-4 my-16"
+      className="flex justify-center items-center bg-white w-auto rounded-xl m-4 my-16 p-4"
     >
       {/* Slider Container */}
-      <div className="bg-gray-400 rounded-xl m-5">
+      {/* <div className="bg-gray-400 rounded-xl m-5">
         <div
           className=" w-[17rem] h-[17rem] rounded-xl shadow-xl m-5"
           style={{
@@ -74,7 +74,7 @@ const AddPlaceSlider = ({ setShowTableInfo, setShowPlaceSlider }) => {
             backgroundRepeat: "no-repeat",
           }}
         ></div>
-      </div>
+      </div> */}
       {/* Dots */}
       {/* <div className="flex items-center justify-center pb-3 md:flex md:flex-col absolute top-[14rem] md:left-[35.5rem] md:top-[12rem] lg:left-[48rem]">
           {profilePictureURLs.map((_, index) => {
@@ -92,20 +92,20 @@ const AddPlaceSlider = ({ setShowTableInfo, setShowPlaceSlider }) => {
           })}
         </div> */}
 
-      {/* <div className="flex flex-col justify-center items-center bg-white w-auto h-auto rounded-xl absolute top-[16rem]  md:w-[15rem] md:left-[20rem] md:top-[8rem] lg:left-[30rem]">
-          <h1 className="text-orange-900 text-2xl font-bold">
-            {selectedPlace.name}
-          </h1>
-          <p>{selectedPlace.title}</p>
-          <p className="px-10 py-5">{selectedPlace.description}</p>
-          <button
-            type="button"
-            className="bg-orange-400 hover:bg-orange-900 hover:text-white p-2 rounded-md"
-            onClick={handleBackToTable}
-          >
-            Back to Places Table
-          </button>
-        </div> */}
+      <div className="bg-white w-auto h-auto rounded-xl flex flex-col justify-center items-center">
+        <h1 className="text-orange-900 text-2xl font-bold">
+          {selectedPlace.name}
+        </h1>
+        <p>{selectedPlace.title}</p>
+        <p className="px-10 py-5">{selectedPlace.description}</p>
+        <button
+          type="button"
+          className="bg-orange-400 hover:bg-orange-900 hover:text-white p-2 rounded-md"
+          onClick={handleBackToTable}
+        >
+          Back to Places Table
+        </button>
+      </div>
     </div>
   );
 };
