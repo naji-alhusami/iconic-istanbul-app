@@ -79,55 +79,57 @@ const AddPlaceSlider = ({ setShowTableInfo, setShowPlaceSlider }) => {
   return (
     <div
       id="slider-container"
-      className={`flex flex-col justify-center items-center bg-white w-auto rounded-xl m-4 my-16 p-4 ${
-        isSmall ? "overflow-hidden" : ""
-      }`}
+      className="flex flex-col justify-center items-center bg-white w-auto rounded-xl m-4 mt-56 p-4 relative z-10 md:flex md:flex-row md:justify-center md:items-center md:my-32 md:mx-20 lg:mx-40 lg:m-26"
     >
       {/* Slider Container */}
-      <div className="bg-gray-400 rounded-xl m-2">
-        <div
-          className=" w-[17rem] h-[18rem] rounded-xl shadow-md m-2"
-          style={{
-            backgroundImage: `url(${profilePictureURLs[activeSlide]})`,
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
-          }}
-        ></div>
-      </div>
-      {/* Dots & Buttons */}
-      <div className="flex items-center justify-center pb-3 md:flex md:flex-col">
-        {isSmall ? (
-          <>
-            <button
-              type="button"
-              className="bg-orange-400 p-2 rounded-md hover:bg-orange-900 hover:text-white mx-2"
-              onClick={handlePrevSlide}
-            >
-              Prev
-            </button>
-            <button
-              type="button"
-              className="bg-orange-400 p-2 rounded-md hover:bg-orange-900 hover:text-white"
-              onClick={handleNextSlide}
-            >
-              Next
-            </button>
-          </>
-        ) : (
-          profilePictureURLs.map((_, index) => (
-            <div
-              key={index}
-              className={`w-2 h-2 rounded-full mx-1 md:my-2 cursor-pointer transition-colors duration-300 ${
-                index === activeSlide
-                  ? "bg-orange-800 w-8 md:h-8 md:w-2"
-                  : "bg-gray-300"
-              }`}
-              onClick={() => setActiveSlide(index)}
-            />
-          ))
-        )}
+      <div className="md:flex md:flex-col">
+        <div className="bg-gray-400 rounded-xl m-2 p-[0.1rem] mt-[-10rem] relative z-20">
+          <div
+            className=" w-[17rem] h-[17rem] rounded-xl shadow-md m-2 md:w-[22rem] md:h-[22rem] md:w-[26rem] md:h-[26rem]"
+            style={{
+              backgroundImage: `url(${profilePictureURLs[activeSlide]})`,
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+            }}
+          ></div>
+        </div>
+
+        {/* Dots & Buttons */}
+        <div className="flex items-center justify-center my-5 pb-3 md:flex md:flex-row ">
+          {isSmall ? (
+            <>
+              <button
+                type="button"
+                className="bg-orange-400 p-2 rounded-md hover:bg-orange-900 hover:text-white mx-2"
+                onClick={handlePrevSlide}
+              >
+                Prev
+              </button>
+              <button
+                type="button"
+                className="bg-orange-400 p-2 rounded-md hover:bg-orange-900 hover:text-white"
+                onClick={handleNextSlide}
+              >
+                Next
+              </button>
+            </>
+          ) : (
+            profilePictureURLs.map((_, index) => (
+              <div
+                key={index}
+                className={`w-2 h-2 rounded-full mx-1 cursor-pointer transition-colors duration-300 ${
+                  index === activeSlide
+                    ? "bg-orange-800 w-8 "
+                    : "bg-gray-300"
+                }`}
+                onClick={() => setActiveSlide(index)}
+              />
+            ))
+          )}
+        </div>
       </div>
 
+      {/* Information */}
       <div className="bg-white w-auto h-auto rounded-xl flex flex-col justify-center items-center">
         <h1 className="text-orange-900 text-2xl font-bold">
           {selectedPlace.name}
