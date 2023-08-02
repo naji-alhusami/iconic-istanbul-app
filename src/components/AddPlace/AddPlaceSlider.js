@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSelector } from "react-redux";
 import Loading from "../Loading/Loading";
 
@@ -8,24 +8,21 @@ const AddPlaceSlider = ({ setShowTableInfo, setShowPlaceSlider }) => {
 
   const [activeSlide, setActiveSlide] = useState(0);
 
-  const isSmallScreen = () => {
-    return window.innerWidth <= 768;
-  };
-  const [isSmall, setIsSmall] = useState(isSmallScreen());
+  const [isSmall, setIsSmall] = useState(null);
 
-  const handleNextSlide = () => {
+  const handleNextSlide = useCallback(() => {
     setActiveSlide(
       (prevSlide) => (prevSlide + 1) % placeInfo[0].downloadURLs.length
     );
-  };
+  }, [placeInfo]);
 
-  const handlePrevSlide = () => {
+  const handlePrevSlide = useCallback(() => {
     setActiveSlide(
       (prevSlide) =>
         (prevSlide - 1 + placeInfo[0].downloadURLs.length) %
         placeInfo[0].downloadURLs.length
     );
-  };
+  }, [placeInfo]);
 
   useEffect(() => {
     const handleScroll = (event) => {
@@ -41,7 +38,7 @@ const AddPlaceSlider = ({ setShowTableInfo, setShowPlaceSlider }) => {
     };
 
     const handleResize = () => {
-      setIsSmall(isSmallScreen());
+      setIsSmall(window.innerWidth <= 768);
     };
 
     // Attach or detach the event listener based on the screen size
@@ -61,7 +58,7 @@ const AddPlaceSlider = ({ setShowTableInfo, setShowPlaceSlider }) => {
         window.removeEventListener("resize", handleResize);
       };
     }
-  }, [isSmall]);
+  }, [isSmall, handleNextSlide, handlePrevSlide]);
 
   const handleBackToTable = () => {
     setShowTableInfo(true);
@@ -118,9 +115,7 @@ const AddPlaceSlider = ({ setShowTableInfo, setShowPlaceSlider }) => {
               <div
                 key={index}
                 className={`w-2 h-2 rounded-full mx-1 cursor-pointer transition-colors duration-300 ${
-                  index === activeSlide
-                    ? "bg-orange-800 w-8 "
-                    : "bg-gray-300"
+                  index === activeSlide ? "bg-orange-800 w-8 " : "bg-gray-300"
                 }`}
                 onClick={() => setActiveSlide(index)}
               />

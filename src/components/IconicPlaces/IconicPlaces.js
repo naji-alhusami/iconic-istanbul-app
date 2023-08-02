@@ -4,15 +4,24 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import { useDispatch, useSelector } from "react-redux";
 
+import AddPlaceSlider from "../AddPlace/AddPlaceSlider";
 import { getPlaces } from "../../features/iconicPlaces/iconicPlacesSlice";
 import "leaflet/dist/leaflet.css";
+import "../AddPlace/AddPlace.css";
 
 import markerIconx from "../Images/marker-icon.png";
 import markerIcon2x from "../Images/marker-icon-2x.png";
+import AddPlaceTable from "../AddPlace/AddPlaceTable";
 
 const IconicPlaces = () => {
   const dispatch = useDispatch();
+
   const [show, setShow] = useState(false);
+  const [showPlaceSlider, setShowPlaceSlider] = useState(false);
+  const [showTableInfo, setShowTableInfo] = useState(false);
+
+  const infoTableRef = useRef(null);
+  const infoPlaceRef = useRef(null);
 
   const { place } = useSelector((state) => state.place);
   const iconicPlaces = place;
@@ -25,6 +34,15 @@ const IconicPlaces = () => {
 
     getData();
   }, [dispatch]);
+
+  useEffect(() => {
+    if (showPlaceSlider) {
+      infoPlaceRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+    if (showTableInfo) {
+      infoTableRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [showPlaceSlider, showTableInfo]);
 
   const markerIcon = new L.Icon({
     iconUrl: markerIconx,
@@ -66,51 +84,17 @@ const IconicPlaces = () => {
   };
 
   return (
-    <div>
+    <div className="bg-container">
       <div className="flex flex-col justify-center items-center">
-        <h1 className="m-10 text-2xl md:text-4xl font-bold text-white bg-orange-700 p-4 rounded-md">ICONIC PLACES</h1>
+        <h1 className="m-10 text-2xl md:text-4xl font-bold text-white bg-orange-700 p-4 rounded-md">
+          ICONIC PLACES
+        </h1>
         {/* Health Center Table */}
-        <table className="bg-white table-fixed border-collapse border border-gray-400 m-4 my-8 w-auto md:w-[40rem]">
-          <tbody>
-            <tr>
-              <th className=" border border-gray-400 p-2 md:w-[10rem]">
-                Category
-              </th>
-              {iconicPlaces.map((iconicPlace, index) => (
-                <td
-                  key={index}
-                  className="border border-gray-400 p-1 text-center"
-                >
-                  {iconicPlace.category}
-                </td>
-              ))}
-            </tr>
-            <tr>
-              <th className=" border border-gray-400 p-2 md:w-[10rem]">Name</th>
-              {iconicPlaces.map((iconicPlace, index) => (
-                <td
-                  key={index}
-                  className="border border-gray-400 p-1 text-center"
-                >
-                  {iconicPlace.name}
-                </td>
-              ))}
-            </tr>
-            <tr>
-              <th className=" border border-gray-400 p-2 md:w-[10rem]">
-                Address
-              </th>
-              {iconicPlaces.map((iconicPlace, index) => (
-                <td
-                  key={index}
-                  className="border border-gray-400 p-1 text-center"
-                >
-                  {iconicPlace.address}
-                </td>
-              ))}
-            </tr>
-          </tbody>
-        </table>
+        <AddPlaceTable
+          iconicPlaces={listedIconicPlaces}
+          infoTableRef={infoTableRef}
+          setShowPlaceSlider={setShowPlaceSlider}
+        />
       </div>
 
       {/* Health Center Map */}
@@ -158,6 +142,17 @@ const IconicPlaces = () => {
           ))}
         </MapContainer>
       </div>
+      {showPlaceSlider && (
+        <div
+          className="md:flex md:flex-col md:items-center md:mt-[10rem]"
+          ref={infoPlaceRef}
+        >
+          <AddPlaceSlider
+            setShowTableInfo={setShowTableInfo}
+            setShowPlaceSlider={setShowPlaceSlider}
+          />
+        </div>
+      )}
     </div>
   );
 };

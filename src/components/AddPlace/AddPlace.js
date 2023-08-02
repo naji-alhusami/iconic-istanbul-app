@@ -102,7 +102,7 @@ const AddPlace = () => {
 
   return (
     <div className="bg-container">
-      <div className=" flex flex-col justify-center items-center">
+      <div className="flex flex-col justify-center items-center">
         <h1 className="m-10 text-2xl md:text-4xl font-bold text-white bg-orange-700 p-4 rounded-md">
           ADD PLACES
         </h1>
@@ -117,6 +117,7 @@ const AddPlace = () => {
           iconicPlaces={iconicPlaces}
           deleteIconicPlaces={deleteIconicPlaces}
           setShowPlaceSlider={setShowPlaceSlider}
+          showRows="true"
         />
       </div>
 
@@ -175,7 +176,10 @@ const AddPlace = () => {
         </MapContainer>
       </div>
       {showPlaceSlider && (
-        <div className="md:flex md:flex-col md:items-center md:mt-[10rem]" ref={infoPlaceRef}>
+        <div
+          className="md:flex md:flex-col md:items-center md:mt-[10rem]"
+          ref={infoPlaceRef}
+        >
           <AddPlaceSlider
             setShowTableInfo={setShowTableInfo}
             setShowPlaceSlider={setShowPlaceSlider}

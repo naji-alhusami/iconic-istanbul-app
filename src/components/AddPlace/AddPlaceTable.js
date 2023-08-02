@@ -9,6 +9,7 @@ const AddPlaceTable = ({
   iconicPlaces,
   deleteIconicPlaces,
   setShowPlaceSlider,
+  showRows,
 }) => {
   const dispatch = useDispatch();
 
@@ -79,48 +80,52 @@ const AddPlaceTable = ({
               </td>
             ))}
           </tr>
-
-          <tr>
-            <th className=" border border-gray-400 p-2 md:w-[10rem]">Delete</th>
-            {iconicPlaces.map((iconicPlace, index) => (
-              <td
-                key={index}
-                className="border border-gray-400 p-1 text-center"
-              >
-                <button
-                  className="my-2 rounded-md shadowtransition-all duration-250 bg-orange-400 hover:bg-orange-900 text-m p-2 hover:text-white"
-                  type="button"
-                  onClick={() => deleteIconicPlaces(iconicPlace.docRef)}
-                >
-                  Remove
-                </button>
-              </td>
-            ))}
-          </tr>
-
-          <tr>
-            <th className=" border border-gray-400 p-2 md:w-[10rem]">
-              List/Unlist
-            </th>
-            {iconicPlaces.map((iconicPlace, index) => (
-              <td
-                key={index}
-                className="border border-gray-400 p-1 text-center"
-              >
-                <input
-                  type="checkbox"
-                  className="form-checkbox h-5 w-5 text-gray-600"
-                  checked={iconicPlace.isListed}
-                  onChange={() =>
-                    handleCheckboxChange(
-                      iconicPlace.docRef,
-                      iconicPlace.isListed
-                    )
-                  }
-                />
-              </td>
-            ))}
-          </tr>
+          {showRows && (
+            <>
+              <tr>
+                <th className=" border border-gray-400 p-2 md:w-[10rem]">
+                  Delete
+                </th>
+                {iconicPlaces.map((iconicPlace, index) => (
+                  <td
+                    key={index}
+                    className="border border-gray-400 p-1 text-center"
+                  >
+                    <button
+                      className="my-2 rounded-md shadowtransition-all duration-250 bg-orange-400 hover:bg-orange-900 text-m p-2 hover:text-white"
+                      type="button"
+                      onClick={() => deleteIconicPlaces(iconicPlace.docRef)}
+                    >
+                      Remove
+                    </button>
+                  </td>
+                ))}
+              </tr>
+              <tr>
+                <th className=" border border-gray-400 p-2 md:w-[10rem]">
+                  List/Unlist
+                </th>
+                {iconicPlaces.map((iconicPlace, index) => (
+                  <td
+                    key={index}
+                    className="border border-gray-400 p-1 text-center"
+                  >
+                    <input
+                      type="checkbox"
+                      className="form-checkbox h-5 w-5 text-gray-600"
+                      checked={iconicPlace.isListed}
+                      onChange={() =>
+                        handleCheckboxChange(
+                          iconicPlace.docRef,
+                          iconicPlace.isListed
+                        )
+                      }
+                    />
+                  </td>
+                ))}
+              </tr>
+            </>
+          )}
         </tbody>
       </table>
     </div>
