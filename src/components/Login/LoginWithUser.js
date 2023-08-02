@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 import { loginUser } from "../../features/users/usersSlice";
-import LoginWithGoogle from "./LoginWithGoogle";
+// import LoginWithGoogle from "./LoginWithGoogle";
 
 const LoginWithUser = () => {
   const [email, setEmail] = useState("");
@@ -65,7 +65,7 @@ const LoginWithUser = () => {
           </Link>
         </div>
       </form>
-      <LoginWithGoogle />
+      {/* <LoginWithGoogle /> */}
     </div>
   );
 };

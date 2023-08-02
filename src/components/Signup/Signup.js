@@ -5,10 +5,11 @@ import { Link, useNavigate } from "react-router-dom";
 
 import {
   signupUser,
-  loginUserWithGoogle,
+  // loginUserWithGoogle,
 } from "../../features/users/usersSlice";
 
-import googleicon from "../Images/GoogleLogo.svg";
+import "../AddPlace/AddPlace.css";
+// import googleicon from "../Images/GoogleLogo.svg";
 
 const Singup = () => {
   const {
@@ -38,7 +39,7 @@ const Singup = () => {
   };
 
   return (
-    <div className=" bg-cover bg-no-repeat">
+    <div className="bg-container bg-cover bg-no-repeat">
       <div className="flex justify-center shadow-2xl">
         <form
           className="bg-white lg:px-10 m-12 lg:w-[500px]  px-4 py-4 flex flex-col gap-4 rounded-md "
@@ -241,7 +242,7 @@ const Singup = () => {
               </button>
             </Link>
           </div>
-          <div className="flex justify-around">
+          {/* <div className="flex justify-around">
             <p className="text-bold text-xl">OR</p>
           </div>
           <div className="flex justify-center my-6 gap-x-12">
@@ -255,7 +256,7 @@ const Singup = () => {
             >
               <img src={googleicon} alt="Google Icon" />{" "}
             </button>
-          </div>
+          </div> */}
         </form>
       </div>
     </div>

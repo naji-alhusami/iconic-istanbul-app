@@ -76,7 +76,7 @@ const AddPlaceSlider = ({ setShowTableInfo, setShowPlaceSlider }) => {
   return (
     <div
       id="slider-container"
-      className="flex flex-col justify-center items-center bg-white w-auto rounded-xl m-4 mt-56 p-4 relative z-10 md:flex md:flex-row md:justify-center md:items-center md:my-32 md:mx-20 lg:mx-40 lg:m-26"
+      className="flex flex-col justify-center items-center bg-white w-auto rounded-xl mx-[2rem] mb-[10rem] mt-[15rem] p-4 relative z-10 md:flex md:flex-row md:justify-center md:items-center md:mt-[10rem] md:mx-20 lg:mx-40 lg:mt-[10rem]"
     >
       {/* Slider Container */}
       <div className="md:flex md:flex-col">

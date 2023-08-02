@@ -98,53 +98,56 @@ const IconicPlaces = () => {
       </div>
 
       {/* Health Center Map */}
-      <div className="rounded-md bg-white p-2 m-4 md:m-36">
-        <MapContainer className="z-40 h-[30rem]" ref={mapRef}>
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          {listedIconicPlaces.map((iconicPlace, index) => (
-            <Marker
-              key={index}
-              position={[iconicPlace.lat, iconicPlace.lon]}
-              icon={markerIcon}
-              eventHandlers={{
-                click: () => {
-                  const map = mapRef.current;
-                  map.flyTo([iconicPlace.lat, iconicPlace.lon], 15, {
-                    animate: true,
-                    duration: 2,
-                  });
-                  setShow(true);
-                },
-              }}
-            >
-              {show && (
-                <Popup closeOnClick={true} closeButton={true}>
-                  <div>
-                    <p className="p-0">Category: {iconicPlace.category}</p>
-                    <h3 className="p-0">Name: {iconicPlace.name}</h3>
-                    <p className="p-0">Adress: {iconicPlace.address}</p>
-                    <button
-                      className="bg-cyan-300 p-2 rounded-md m-2"
-                      type="button"
-                      onClick={() => {
-                        backToPlacesHandler();
-                      }}
-                    >
-                      Back to All Iconic Places
-                    </button>
-                  </div>
-                </Popup>
-              )}
-            </Marker>
-          ))}
-        </MapContainer>
+      <div className="flex flex-col">
+        <div className="rounded-md bg-white p-2 m-4 md:m-36">
+          <MapContainer className="z-40 h-[30rem]" ref={mapRef}>
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            {listedIconicPlaces.map((iconicPlace, index) => (
+              <Marker
+                key={index}
+                position={[iconicPlace.lat, iconicPlace.lon]}
+                icon={markerIcon}
+                eventHandlers={{
+                  click: () => {
+                    const map = mapRef.current;
+                    map.flyTo([iconicPlace.lat, iconicPlace.lon], 15, {
+                      animate: true,
+                      duration: 2,
+                    });
+                    setShow(true);
+                  },
+                }}
+              >
+                {show && (
+                  <Popup closeOnClick={true} closeButton={true}>
+                    <div>
+                      <p className="p-0">Category: {iconicPlace.category}</p>
+                      <h3 className="p-0">Name: {iconicPlace.name}</h3>
+                      <p className="p-0">Adress: {iconicPlace.address}</p>
+                      <button
+                        className="bg-cyan-300 p-2 rounded-md m-2"
+                        type="button"
+                        onClick={() => {
+                          backToPlacesHandler();
+                        }}
+                      >
+                        Back to All Iconic Places
+                      </button>
+                    </div>
+                  </Popup>
+                )}
+              </Marker>
+            ))}
+          </MapContainer>
+        </div>
       </div>
+
       {showPlaceSlider && (
         <div
-          className="md:flex md:flex-col md:items-center md:mt-[10rem]"
+          className="flex flex-col items-center"
           ref={infoPlaceRef}
         >
           <AddPlaceSlider
