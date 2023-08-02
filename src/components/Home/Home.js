@@ -16,6 +16,7 @@ const Home = () => {
   }, []);
 
   return (
+    // <div className="h-[1rem]"></div>
     <div
       key={currentSlideIndex}
       className="h-screen w-screen flex items-center justify-center bg-cover bg-top bg-no-repeat"

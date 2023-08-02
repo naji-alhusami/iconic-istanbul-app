@@ -84,7 +84,7 @@ const Navbar = () => {
 
         {/* mobile screens */}
         <div
-          className={`flex-1 z-10 justify-self-center bg-cyan-50 pt-4 pl-4 h-full text-base left-[-250px]  transition duration-300 transform fixed w-[250px] pb-3 md:block md:pb-0 md:mt-0 ${
+          className={`flex-1 z-10 justify-self-center bg-white pt-4 pl-4 h-full text-base left-[-250px]  transition duration-300 transform fixed w-[250px] pb-3 md:block md:pb-0 md:mt-0 ${
             showNavbarInResponsive
               ? "translate-x-full "
               : "translate-x-[-250px]"
@@ -131,11 +131,31 @@ const Navbar = () => {
                         borderRadius: "0.25rem",
                       }}
                     >
-                      ICONIC ISTANBUL
+                      ICONIC PLACES
                     </motion.div>
                   </Link>
                 </li>
-
+                <li className="w-fit">
+                  <Link
+                    to="/"
+                    className=" font-bold text-orange-900"
+                    onClick={() => {
+                      setShowNavbarInResponsive(!showNavbarInResponsive);
+                    }}
+                  >
+                    <motion.div
+                      className="p-2"
+                      whileHover={{
+                        scale: 1.07,
+                        backgroundColor: hoverBackgroundColor,
+                        color: hoverTextColor,
+                        borderRadius: "0.25rem",
+                      }}
+                    >
+                      ABOUT
+                    </motion.div>
+                  </Link>
+                </li>
                 <li className="w-fit hover:text-indigo-100 hover:rounded-md cursor-pointer ">
                   <div className=" relative  absolute">
                     {!userLogin.userlogin && (
@@ -227,7 +247,22 @@ const Navbar = () => {
                     borderRadius: "0.25rem",
                   }}
                 >
-                  ICONIC ISTANBUL
+                  ICONIC PLACES
+                </motion.div>
+              </Link>
+            </li>
+            <li>
+              <Link to="/about" className="font-bold text-orange-900">
+                <motion.div
+                  className="p-2"
+                  whileHover={{
+                    scale: 1.07,
+                    backgroundColor: hoverBackgroundColor,
+                    color: hoverTextColor,
+                    borderRadius: "0.25rem",
+                  }}
+                >
+                  ABOUT
                 </motion.div>
               </Link>
             </li>

@@ -5,6 +5,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 import Home from "./components/Home/Home";
 import Navbar from "./components/Navbar/Navbar";
+import Footer from "./components/Footer/Footer";
 import Singup from "./components/Signup/Signup";
 import Login from "./components/Login/Login";
 import AddPlace from "./components/AddPlace/AddPlace";
@@ -56,6 +57,7 @@ function App() {
         <Route path="/thanks" element={<Thanks />} />
         <Route path="/iconicplaces" element={<IconicPlaces />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }
