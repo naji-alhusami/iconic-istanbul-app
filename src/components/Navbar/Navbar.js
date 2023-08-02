@@ -135,9 +135,9 @@ const Navbar = () => {
                     </motion.div>
                   </Link>
                 </li>
-                <li className="w-fit">
+                <li className="w-fit mb-8">
                   <Link
-                    to="/"
+                    to="/about"
                     className=" font-bold text-orange-900"
                     onClick={() => {
                       setShowNavbarInResponsive(!showNavbarInResponsive);

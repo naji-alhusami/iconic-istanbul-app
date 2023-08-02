@@ -5,6 +5,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 import Home from "./components/Home/Home";
 import Navbar from "./components/Navbar/Navbar";
+import AboutContent from "./components/AboutContent/AboutContent";
 import Footer from "./components/Footer/Footer";
 import Singup from "./components/Signup/Signup";
 import Login from "./components/Login/Login";
@@ -50,6 +51,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/about" element={<AboutContent />} />
         <Route element={<RequireAuth />}>
           <Route path="/addplace" element={<AddPlace />} />
         </Route>

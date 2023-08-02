@@ -56,7 +56,7 @@ const Footer = () => {
 
           <li className="hover:text-white">
             <Link
-              to="/"
+              to="/about"
               className={`mx-1 p-3 hover:text-white transition duration-300 font-bold ${
                 activeLink === "About" ? "text-white active" : "text-black"
               } `}
