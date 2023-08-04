@@ -53,8 +53,7 @@ const AddPlace = () => {
   useEffect(() => {
     if (showPlaceSlider) {
       infoPlaceRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-    if (showTableInfo) {
+    } else if (showTableInfo) {
       infoTableRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [showPlaceSlider, showTableInfo]);
