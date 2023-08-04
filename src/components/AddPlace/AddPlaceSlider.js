@@ -26,28 +26,26 @@ const AddPlaceSlider = ({ setShowTableInfo, setShowPlaceSlider }) => {
 
   useEffect(() => {
     const handleScroll = (event) => {
-      // Determine the scroll direction (positive: down, negative: up)
       const delta = event.deltaY;
 
-      // Update the active slide based on the scroll direction
       if (delta > 0) {
         handleNextSlide();
       } else {
         handlePrevSlide();
       }
+      event.preventDefault();
     };
 
     const handleResize = () => {
       setIsSmall(window.innerWidth <= 768);
     };
 
-    // Attach or detach the event listener based on the screen size
     const container = document.getElementById("slider-container");
     if (container) {
       if (isSmall) {
         container.removeEventListener("wheel", handleScroll);
       } else {
-        container.addEventListener("wheel", handleScroll);
+        container.addEventListener("wheel", handleScroll, { passive: false });
       }
 
       window.addEventListener("resize", handleResize);

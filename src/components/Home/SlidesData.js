@@ -9,7 +9,7 @@ export const SlidesData = [
   {
     background: bg1,
     heading: "Start Your Journey Of Discovery In Istanbul,",
-    subheading: "Where Others Have Ventured Before You.",
+    subheading: "Where Others Have Ventured Before You",
     buttonText: "ICONIC PLACES",
   },
   {
@@ -21,26 +21,26 @@ export const SlidesData = [
   {
     background: bg3,
     heading: "Help Others Uncover New Places In Istanbul,",
-    subheading: "Making Their Exploration More Remarkable.",
+    subheading: "Making Their Exploration More Remarkable",
     buttonText: "ICONIC PLACES",
   },
   {
     background: bg4,
     heading: "Unearth The Captivating Sights Of Istanbul,",
-    subheading: "Cherished By All Who Venture There.",
+    subheading: "Cherished By All Who Venture There",
     buttonText: "ICONIC PLACES",
   },
   {
     background: bg5,
     heading: "Discover Unique Views In Istanbul,",
     subheading:
-      "Where The Eastern and Western Cultures Awaits.",
+      "Where The Eastern and Western Cultures Awaits",
     buttonText: "ICONIC PLACES",
   },
   {
     background: bg6,
     heading: "Remember To Capture The Mesmerizing Moments,",
-    subheading: "And Share Them On Our Website.",
+    subheading: "And Share Them On Our Website",
     buttonText: "ICONIC PLACES",
   },
 ];
