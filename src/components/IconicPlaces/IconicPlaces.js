@@ -5,7 +5,10 @@ import L from "leaflet";
 import { useDispatch, useSelector } from "react-redux";
 
 import AddPlaceSlider from "../AddPlace/AddPlaceSlider";
-import { getPlaces } from "../../features/iconicPlaces/iconicPlacesSlice";
+import {
+  getPlaces,
+  showPlace,
+} from "../../features/iconicPlaces/iconicPlacesSlice";
 import "leaflet/dist/leaflet.css";
 import "../AddPlace/AddPlace.css";
 
@@ -26,6 +29,11 @@ const IconicPlaces = () => {
   const { place } = useSelector((state) => state.place);
   const iconicPlaces = place;
   const listedIconicPlaces = iconicPlaces.filter((place) => place.isListed);
+
+  const handleShowPlaceInfo = async (id) => {
+    setShowPlaceSlider(true);
+    await dispatch(showPlace(id));
+  };
 
   useEffect(() => {
     const getData = () => {
@@ -126,16 +134,25 @@ const IconicPlaces = () => {
                     <div>
                       <p className="p-0">Category: {iconicPlace.category}</p>
                       <h3 className="p-0">Name: {iconicPlace.name}</h3>
-                      <p className="p-0">Adress: {iconicPlace.address}</p>
-                      <button
-                        className="bg-cyan-300 p-2 rounded-md m-2"
-                        type="button"
-                        onClick={() => {
-                          backToPlacesHandler();
-                        }}
-                      >
-                        Back to All Iconic Places
-                      </button>
+                      <p className="p-0">Address: {iconicPlace.address}</p>
+                      <div className="flex flex-col md:flex md:flex-row">
+                        <button
+                          className="bg-orange-400 hover:bg-orange-900 hover:text-white p-2 rounded-md"
+                          type="button"
+                          onClick={() => handleShowPlaceInfo(iconicPlace.id)}
+                        >
+                          Show Gallery
+                        </button>
+                        <button
+                          className="bg-orange-400 hover:bg-orange-900 hover:text-white p-2 rounded-md ml-1"
+                          type="button"
+                          onClick={() => {
+                            backToPlacesHandler();
+                          }}
+                        >
+                          Back to All Places
+                        </button>
+                      </div>
                     </div>
                   </Popup>
                 )}
@@ -146,10 +163,7 @@ const IconicPlaces = () => {
       </div>
 
       {showPlaceSlider && (
-        <div
-          className="flex flex-col items-center"
-          ref={infoPlaceRef}
-        >
+        <div className="flex flex-col items-center" ref={infoPlaceRef}>
           <AddPlaceSlider
             setShowTableInfo={setShowTableInfo}
             setShowPlaceSlider={setShowPlaceSlider}
