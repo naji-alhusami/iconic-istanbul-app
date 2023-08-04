@@ -166,7 +166,7 @@ const AddPlace = () => {
                           Show Gallery
                         </button>
                         <button
-                          className="bg-orange-400 hover:bg-orange-900 hover:text-white p-2 rounded-md "
+                          className="bg-orange-400 hover:bg-orange-900 hover:text-white p-2 rounded-md mx-1"
                           type="button"
                           onClick={() => {
                             backToPlacesHandler();
