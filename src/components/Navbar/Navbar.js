@@ -30,7 +30,7 @@ const Navbar = () => {
   const hoverTextColor = "rgb(255, 255, 255)";
 
   return (
-    <nav className="w-screen sticky top-0 z-50 bg-white shadow font-poppins">
+    <nav className=" sticky top-0 z-50 bg-white shadow font-poppins">
       <div className="justify-between px-4 mx-auto  md:items-center md:flex md:px-8">
         <div className="flex items-center md:block">
           <div className=" md:hidden">
@@ -159,7 +159,7 @@ const Navbar = () => {
                 <li className="w-fit hover:text-indigo-100 hover:rounded-md cursor-pointer ">
                   <div className=" relative  absolute">
                     {!userLogin.userlogin && (
-                      <li>
+                      // <li>
                         <motion.div
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
@@ -171,7 +171,7 @@ const Navbar = () => {
                             Login
                           </Link>
                         </motion.div>
-                      </li>
+                      // </li>
                     )}
                     {userLogin.userlogin && (
                       <div className="w-fit hover:text-indigo-100 hover:rounded-md cursor-pointer relative  absolute">
